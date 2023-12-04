@@ -2,5 +2,5 @@
 
 int main()
 {
-   
+   "Segundo teste";
 }
