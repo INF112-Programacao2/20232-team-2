@@ -103,6 +103,15 @@ void Jogador::exibirInfo()
       
       std::cout << "Fichas de " << fichas[i].first << " : " << fichas[i].second << "\n";
    }
+   std::cout << "\n";
+   if(cobriu)
+   {
+      std::cout << "Você já cobriu o valor da aposta mais alta da mesa\n";
+   }
+   else
+   {
+      std::cout << "Você ainda não cobriu o valor da aposta mais alta da mesa\n";
+   }
 }
 
 Mao Jogador::get_Mao()
@@ -133,6 +142,16 @@ bool Jogador::isTrue_Big_Blind()
 bool Jogador::isTrue_Small_Blind()
 {
    return small_Blind;
+}
+
+void Jogador::set_small_blind(bool small)
+{
+   small_Blind = small;
+}
+
+void Jogador::set_big_blind(bool big)
+{
+   big_Blind = big;
 }
 
 /*void Jogador::comprarFichas()
