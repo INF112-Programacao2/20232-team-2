@@ -16,6 +16,16 @@ Dealer::Dealer()
 
 Dealer::~Dealer() {}
 
+int Dealer::getValorMesa()
+{
+    return valorMesa;
+}
+
+void Dealer::setValorMesa(int valorMesa)
+{
+    this->valorMesa = valorMesa;
+}
+
 void Dealer::criarSala()
 {
     std::cout << "Digite a quantidade de jogadores da partida: " << std::endl;
