@@ -8,18 +8,15 @@
 class Jogador
 {
    private:
-      //Nome do jogador
-      const std::string nome; 
-      
-      //Individualizar  cada jogador
-      const std::string CPF;  
-      
+      //Apelido do jogador
+      std::string nickname;
+
       //Mão composta por 2 cartas
       Mao *mao; 
       
       //Vetor de pairs relativos ao valor da ficha bem como suas quantidades
       //Valores já pré estabelecidos {1, 5, 10, 20, 50, 100, 1000} -> Limitaremos o valor em mil para evitar vícios
-      std::vector<std::pair<int,int>> Fichas; 
+      std::vector<std::pair<int,int>> fichas; 
 
       //Saldo total em fichas
       int saldo;
@@ -47,7 +44,7 @@ class Jogador
 
    public:
       //Construtor
-      Jogador(std::string nome);
+      Jogador(std::string nick);
       
       //Destrutor
       ~Jogador();

@@ -8,13 +8,14 @@
 #include <algorithm>
 #include "Carta.hpp"
 #include "Jogador.hpp"
+#include "Usuario.hpp"
 
 class Dealer
 {
 private:
-    std::vector<Carta> *baralho; 
-    std::vector<Carta> *mesa;
-    std::vector<Jogador> *jogadores;
+    std::vector<Carta> baralho; 
+    std::vector<Carta> mesa;
+    std::vector<Jogador> jogadores;
     int posicao;
     int quantidadeJogadores;
 

@@ -16,24 +16,31 @@ void Dealer::criarSala()
 {
     std::cout << "Digite a quantidade de jogadores da partida: " << std::endl;
     std::cin >> quantidadeJogadores;
-    jogadores = new Jogador*[quantidadeJogadores];
+    for (int i = 1; i <= quantidadeJogadores; i++)
+    {
+        std::string nick;
+        std::cout << "Apelido do jogador " << i << ": ";
+        std::cin >> nick;
+        jogadores.push_back(nick);
+    }
 }
 
 void Dealer::criarBaralho()
 {
+
 }
 
 void Dealer::embaralharCartas() 
 {
     srand(time(NULL));
-    std::random_shuffle(baralho->begin(), baralho->end());
+    std::random_shuffle(baralho.begin(), baralho.end());
 }
 
 void Dealer::darCartas()
 {
     for (int i = 0; i < quantidadeJogadores; i++) 
     {
-        std::cout << "Digite o nome do jogador " << i+1 << std::endl;
+        std::cout << "Digite o nome do jogador: " << i+1 << std::endl;
         std::string nome;
         std::cin >> nome;
         Jogador *jogador = new Jogador(nome);
