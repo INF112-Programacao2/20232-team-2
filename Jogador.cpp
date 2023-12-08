@@ -5,11 +5,6 @@
 #include "Carta.hpp"
 #include "Mao.hpp"
 
-//Carta *carta1 = new Carta(3,'O');
-//Carta *carta2 = new Carta(4,'P');
-//std::vector<Carta> cartas = {carta1, carta2};
-
-
 Jogador::Jogador(std::string nick)
 {
    nickname = nick;
@@ -29,10 +24,10 @@ Jogador::~Jogador()
 
 }
 
-/*void Jogador::receberCarta(Carta carta)
+void Jogador::receberCarta(Carta carta)
 {
-   mao.adicionarCarta(carta);
-}*/
+   mao->adicionarCarta(carta);
+}
 
 void Jogador::check(int &valorMesa)
 {
