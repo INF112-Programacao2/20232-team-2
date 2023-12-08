@@ -110,7 +110,7 @@ void Jogador::exibirInfo()
    }
 }
 
-void Jogador::comprarFichas()
+/*void Jogador::comprarFichas()
 {
    std::cout << "\nConversão Real-Fichas: 1 Real -> 250  fichas\n";
    std::cout << "Quantos reais (numero inteiro) deseja inserir?: ";
@@ -122,7 +122,7 @@ void Jogador::comprarFichas()
    while (Injetar >= 500) Fichas[2].second ++;
    while (Injetar >= 100) Fichas[1].second ++;
    while (Injetar >= 25) Fichas[0].second ++;
-}
+}*/
 
 
 int main()

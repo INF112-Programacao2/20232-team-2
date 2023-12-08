@@ -7,8 +7,9 @@ class Carta
 {
    private:
       int valorCarta; // Varia de 2 a 14; 11 é valete, 12 é dama, 13 é rei, e 14 é ás
-      char naipe; // Ouros, Espadas, Copas ou Paus
+      std::string naipe; // Ouros, Espadas, Copas ou Paus
    public:
+      static std::string Carta::naipes_possiveis[4];
       Carta(int valorCarta, std::string naipe);
       ~Carta();
 
