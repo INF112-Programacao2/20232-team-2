@@ -15,7 +15,7 @@ class Jogador
       Mao *mao; 
       
       //Vetor de pairs relativos ao valor da ficha bem como suas quantidades
-      //Valores já pré estabelecidos {1, 5, 10, 20, 50, 100, 1000} -> Limitaremos o valor em mil para evitar vícios
+      //Valores já pré estabelecidos {1, 5, 10, 20, 50, 100, 500} -> Limitaremos o valor em mil para evitar vícios
       std::vector<std::pair<int,int>> fichas; 
 
       //Saldo total em fichas
