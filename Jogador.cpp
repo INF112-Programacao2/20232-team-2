@@ -124,8 +124,3 @@ void Jogador::exibirInfo()
    while (Injetar >= 25) Fichas[0].second ++;
 }*/
 
-
-int main()
-{
-   Jogador *jogador1 = new Jogador("Carlos");
-}

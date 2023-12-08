@@ -10,7 +10,7 @@
 #include "Jogador.hpp"
 #include "Usuario.hpp"
 
-std::string Carta::naipes_possiveis[4] = {"Ouros", "Espadas", "Copas", "Paus"};
+
 
 class Dealer
 {
