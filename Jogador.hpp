@@ -98,9 +98,9 @@ class Jogador
       //Essa eu não entendi muito bem
       void exibirInfo();
 
-      void set_small_blind(){}
+      void set_small_blind(bool){}
 
-      void set_big_blind(){}
+      void set_big_blind(bool){}
 
 };
 
