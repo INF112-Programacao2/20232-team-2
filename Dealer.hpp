@@ -16,9 +16,7 @@ private:
     std::vector<Carta> *mesa;
     std::vector<Jogador> *jogadores;
     int posicao;
-    int jogadorAtual;
-    int jogadorAnterior;
-    int jogadorProximo;
+    int quantidadeJogadores;
 
 public:
     //Construtor
@@ -32,6 +30,9 @@ public:
     
     //Embaralhar as cartas para inicar o jogo
     void embaralharCartas();
+
+    //Definir a quantidade de jogadores
+    void set_QuantidaDeJogadores(int quantidaDeJogadores);
 
     //Distribuir as cartas aos jogadores da partida
     void darCartas();     
