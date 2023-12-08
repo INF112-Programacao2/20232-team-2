@@ -10,11 +10,11 @@ Carta *carta2 = new Carta(4,'P');
 std::vector<Carta> cartas = {carta1, carta2};
 
 
-Jogador::Jogador(std::string nome) : nome(nome)
+Jogador::Jogador(std::string nick)
 {
-
+   nickname = nick;
    ativo = true;
-   vez  = cobriu = small_Blind = big_Blind = false;
+   vez  = cobriu = ativo = small_Blind = big_Blind = false;
    mao = new Mao(cartas);
    /*Fichas.push_back({8, 25}); // 8 de 25, 8 de 100, 4 de 500, 2 de 1000, 1 de 5000
    Fichas.push_back({8, 100});
@@ -101,18 +101,18 @@ void Jogador::aumentar()
 
 void Jogador::exibirInfo()
 {
-   std::cout << "\nNome: " << nome << "\n";
+   std::cout << "\nNickname: " << nickname << "\n";
    std::cout << "\nFichas:\n";
    for (int i = 0; i < 5; i++)
    {
       
-      std::cout << "De " << Fichas[i].first << " : " << Fichas[i].second << "\n";
+      std::cout << "De " << fichas[i].first << " : " << fichas[i].second << "\n";
    }
 }
 
 void Jogador::comprarFichas()
 {
-   std::cout << "\nConversão Real-Fichas: 1 Real -> 250 fichas\n";
+   std::cout << "\nConversão Real-Fichas: 1 Real -> 250  fichas\n";
    std::cout << "Quantos reais (numero inteiro) deseja inserir?: ";
    unsigned int adicionar;
    std::cin >> adicionar;
