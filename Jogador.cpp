@@ -105,6 +105,36 @@ void Jogador::exibirInfo()
    }
 }
 
+Mao Jogador::get_Mao()
+{ 
+
+}
+
+bool Jogador::isTrue_Vez()
+{
+   return vez;
+}
+      
+bool Jogador::isTrue_Ativo()
+{
+   return ativo;
+}
+     
+bool Jogador::isTrue_Cobriu()
+{
+   return cobriu;
+}
+
+bool Jogador::isTrue_Big_Blind()
+{
+   return big_Blind;
+}
+
+bool Jogador::isTrue_Small_Blind()
+{
+   return small_Blind;
+}
+
 /*void Jogador::comprarFichas()
 {
    std::cout << "\nConversão Real-Fichas: 1 Real -> 250  fichas\n";
