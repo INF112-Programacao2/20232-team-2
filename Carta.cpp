@@ -1,4 +1,6 @@
 #include "Carta.hpp"
+//declare os naipes possiveis?
+std::string Carta::naipes_possiveis[4] = {"Ouros", "Espadas", "Copas", "Paus"};
 
 Carta::Carta(int valorCarta, std::string naipe)
 {

@@ -58,25 +58,25 @@ class Jogador
       const std::string get_Nome();
 
       //Receber cartas
-      void receberCarta(Carta carta);
+      void receberCarta(Carta carta){}
       
       //Só poderá ser chamado pelo Dealer na última rodada
       Mao get_Mao();
 
       //Verifica se é a vez do jogador
-      bool isTrue_Vez();
+      bool isTrue_Vez(){}
       
       //Retornar o status do jogador(ativo ou inativo -> PS: Acredito que melhoraremos a qualidade do código se Criarmos os jogadores como objetos dinâmicos e sempre removê-los da memória após desistirem, mantendo seus dados em um arquivo)
-      bool isTrue_Ativo();
+      bool isTrue_Ativo(){}
      
       //Identificar se o jogador deu check com a aposta atual
-      bool isTrue_Cobriu();
+      bool isTrue_Cobriu(){}
 
       //Definir se esse jogador será ou não um big blind
-      bool isTrue_Big_Blind();
+      bool isTrue_Big_Blind(){}
 
       //Definir se esse jogador será ou não um small blind
-      bool isTrue_Small_Blind();
+      bool isTrue_Small_Blind(){}
 
       //Métodos de controle da classe
       
@@ -90,17 +90,17 @@ class Jogador
       void apostar(int &valorMesa);
 
       //Igualar a aposta ao valor da mesa
-      void Igualar();
+      void igualar();
       
       //Aumentar o valor da aposta atual
-      void Aumentar();
+      void aumentar();
 
       //Essa eu não entendi muito bem
       void exibirInfo();
 
-      void set_small_blind();
+      void set_small_blind(){}
 
-      void set_big_blind();
+      void set_big_blind(){}
 
 };
 
