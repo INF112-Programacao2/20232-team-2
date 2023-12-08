@@ -10,7 +10,10 @@ class Mao
 
     public:
         // Construtor
-        Mao(std::vector<Carta> &cartas);
+        Mao();
+
+        // Destrutor
+        ~Mao();
 
         // Getters
         std::vector<Carta> getCartas();

@@ -6,7 +6,13 @@
 #include "Jogador.hpp"
 #include "Carta.hpp"
 
-Dealer::Dealer() {}
+Dealer::Dealer() 
+{
+    criarBaralho();
+    criarSala();
+    darCartas();
+    criarMesa();
+}
 
 Dealer::~Dealer() {}
 
@@ -58,7 +64,8 @@ void Dealer::darCartas()
 
 void Dealer::criarMesa()
 {   
-    for (int i = 0; i < 3; i++)
+    embaralharCartas();
+    for (int i = 0; i < 5; i++)
     {   
         mesa.push_back(baralho.back());
         baralho.pop_back();

@@ -1,7 +1,5 @@
 #include "Carta.hpp"
 
-//std::string Carta::Naipes_list[4] = ("Ouros", "Espadas", "Copas", "Paus");
-
 Carta::Carta(int valorCarta, std::string naipe)
 {
    this->valorCarta = valorCarta;

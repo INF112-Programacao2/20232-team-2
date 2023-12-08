@@ -21,6 +21,9 @@ class Jogador
       //Saldo total em fichas
       int saldo;
 
+      //Comprar fichas
+      void comprarFichas();
+
       //Verifica se está na vez do jogador x
       bool vez; 
 

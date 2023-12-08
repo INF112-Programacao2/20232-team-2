@@ -2,5 +2,6 @@
 
 int main()
 {
-   "Segundo teste";
+   Dealer ricardo;
+   
 }
