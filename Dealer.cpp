@@ -22,6 +22,10 @@ void Dealer::criarSala()
         Jogador temporario(nick);
         jogadores.push_back(temporario);
     }
+    int big = rand()%jogadores.size();
+    jogadores[big].set_big_blind();
+    if(big == jogadores.size())
+    
 }
 
 void Dealer::criarBaralho()
@@ -54,18 +58,22 @@ void Dealer::darCartas()
 
 void Dealer::criarMesa()
 {   
-    embaralharCartas();
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 3; i++)
     {   
         mesa.push_back(baralho.back());
         baralho.pop_back();
     }
-
+    for (int i = 0; i < 2; i++)
+    {
+        baralho.pop_back();
+        mesa.push_back(baralho.back());
+    }
 }
 
 void Dealer::designarSmallBlind()
 {
-
+    
+    
 }
 
 void Dealer::designarBigBlind()
