@@ -1,24 +1,50 @@
 {
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "C/C++ Runner: Debug Session",
-      "type": "cppdbg",
-      "request": "launch",
-      "args": [],
-      "stopAtEntry": false,
-      "externalConsole": true,
-      "cwd": "c:/Users/gabri/OneDrive/Documentos/c++/INF 112/TrabalhoFinal/20232-team-2/20232-team-2",
-      "program": "c:/Users/gabri/OneDrive/Documentos/c++/INF 112/TrabalhoFinal/20232-team-2/20232-team-2/build/Debug/outDebug",
-      "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
-      "setupCommands": [
+    "version": "0.2.0",
+    "configurations": [
         {
-          "description": "Enable pretty-printing for gdb",
-          "text": "-enable-pretty-printing",
-          "ignoreFailures": true
+            "name": "C/C++ Runner: Debug Session",
+            "type": "cppdbg",
+            "request": "launch",
+            "args": [],
+            "stopAtEntry": true,
+            "externalConsole": true,
+            "cwd": "c:/Users/gabri/OneDrive/Documentos/c++/INF 112/TrabalhoFinal/20232-team-2/20232-team-2",
+            "program": "c:/Users/gabri/OneDrive/Documentos/c++/INF 112/TrabalhoFinal/20232-team-2/20232-team-2/build/Debug/outDebug",
+            "MIMode": "gdb",
+            "miDebuggerPath": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "C/C++: gcc.exe build and debug active file",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "C:/MinGW/bin",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:\\MinGW\\bin\\gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "C/C++: gcc.exe build active file"
         }
-      ]
-    }
-  ]
+    ]
 }

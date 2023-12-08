@@ -5,11 +5,17 @@
 #include "Carta.hpp"
 #include "Mao.hpp"
 
+Carta *carta1 = new Carta(3,'O');
+Carta *carta2 = new Carta(4,'P');
+std::vector<Carta> cartas = {carta1, carta2};
+
+
 Jogador::Jogador(std::string nome) : nome(nome)
 {
 
    ativo = true;
-   Vez  = Cobriu = Small_Blind = Big_Blind = false;
+   vez  = cobriu = small_Blind = big_Blind = false;
+   mao = new Mao(cartas);
    /*Fichas.push_back({8, 25}); // 8 de 25, 8 de 100, 4 de 500, 2 de 1000, 1 de 5000
    Fichas.push_back({8, 100});
    Fichas.push_back({4, 500});
@@ -22,17 +28,16 @@ Jogador::~Jogador()
 
 }
 
-void Jogador::receberCarta(Carta carta)
+/*void Jogador::receberCarta(Carta carta)
 {
    mao.adicionarCarta(carta);
-}
+}*/
 
 void Jogador::check(int &valorMesa)
 {
-   if (valorMesa == apostado && Vez)
+   if (valorMesa == apostado && vez)
    {
       cobriu = true;
-      return;
    }
 
    else 
@@ -57,7 +62,7 @@ void Jogador::apostar(int &valorMesa)
          std::cout << "Seu saldo é menor ou igual ao valor da mesa, deseja entrar no modo all in?\n";
          std::cin >> confirma;
          //criar a classe de exceção All_in
-         if(confirma)   throw All_in("Agora você está no modo All in");
+         //if(confirma)   throw all_in("Agora você está no modo All in");
       }
 
       saldo -= aposta;
@@ -66,11 +71,11 @@ void Jogador::apostar(int &valorMesa)
    {
       std::cerr << e.what() << '\n';
    }
-   catch(const All_inn& e)
+   /*catch(const All_inn& e)
    {
-      All_in = true;
+      all_in = true;
       std::cerr << e.what() << '\n';
-   }
+   }*/
 
 
 }
@@ -119,3 +124,8 @@ void Jogador::exibirInfo()
    while (Injetar >= 25) Fichas[0].second ++;
 }
 */
+
+int main()
+{
+   Jogador *jogador1 = new Jogador("Carlos");
+}

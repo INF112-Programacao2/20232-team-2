@@ -15,30 +15,39 @@ class Jogador
       const std::string CPF;  
       
       //Mão composta por 2 cartas
-      Mao mao; 
+      Mao *mao; 
       
       //Vetor de pairs relativos ao valor da ficha bem como suas quantidades
       //Valores já pré estabelecidos {1, 5, 10, 20, 50, 100, 1000} -> Limitaremos o valor em mil para evitar vícios
       std::vector<std::pair<int,int>> Fichas; 
 
-      // Verifica se está na vez do jogador x
-      bool Vez; 
+      //Saldo total em fichas
+      int saldo;
 
-      // Verifica se o jogador está na rodada ou se desistiu da rodada
-      bool Ativo; 
+      //Verifica se está na vez do jogador x
+      bool vez; 
 
-      // Verifica se o jogador cobriu o valor proposto por outro jogador
-      bool Cobriu; 
+      //Verifica se o jogador está na rodada ou se desistiu da rodada
+      bool ativo; 
 
-      // Verificar se o tipo do jogador é Big Blind
-      bool Big_Blind; 
+      //Verifica se o jogador cobriu o valor proposto por outro jogador
+      bool cobriu; 
 
-      // Verificar se o tipo do jogador é Small Blind
-      bool Small_Blind; 
+      //Verificar se o tipo do jogador é Big Blind
+      bool big_Blind; 
+
+      //Verificar se o tipo do jogador é Small Blind
+      bool small_Blind; 
+
+      //Indica se o jogador está no modo All in
+      bool all_in;
+
+      //Valor que o jogador já tem apostado
+      int apostado;
 
    public:
       //Construtor
-      Jogador(std::string nome, Mao mao);
+      Jogador(std::string nome);
       
       //Destrutor
       ~Jogador();
@@ -72,13 +81,13 @@ class Jogador
       //Métodos de controle da classe
       
       //Verificar se o jogador concorda em aceitar o atual valor da aposta
-      void Check();
+      void check(int &valorMesa);
       
       //Verificar se o jogador desiste da rodada
-      void Desistir();
+      void desistir();
       
       //Verificar se o jogador quer apostar
-      void Apostar();
+      void apostar(int &valorMesa);
 
       //Igualar a aposta ao valor da mesa
       void Igualar();
@@ -87,7 +96,7 @@ class Jogador
       void Aumentar();
 
       //Essa eu não entendi muito bem
-      void ExibirInfo();
+      void exibirInfo();
 };
 
 #endif
