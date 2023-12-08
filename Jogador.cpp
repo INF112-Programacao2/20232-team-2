@@ -95,7 +95,7 @@ void Jogador::aumentar()
 
 }
 
-void Jogador::exibirInfo()
+void Jogador::exibirInfo(int ValorMesa)
 {
    std::cout << "\nNickname: " << nickname << "\n";
    for (int i = 0; i < 5; i++)
@@ -106,11 +106,20 @@ void Jogador::exibirInfo()
    std::cout << "\n";
    if(cobriu)
    {
-      std::cout << "Você já cobriu o valor da aposta mais alta da mesa\n";
+      std::cout << "Você já cobriu o valor da aposta (" << ValorMesa << ") mais alta da mesa\n";
    }
    else
    {
-      std::cout << "Você ainda não cobriu o valor da aposta mais alta da mesa\n";
+      std::cout << "Você ainda não cobriu o valor da aposta (" << ValorMesa << ") mais alta da mesa\n";
+      std::cout << "Voce já apostou " << apostado << "nessa rodada\n";
+   }
+   if(small_Blind)
+   {
+      std::cout << "Você é o small blind nessa rodada\n";
+   }
+   if(big_Blind)
+   {
+      std::cout << "Você é o big blind nessa rodada\n";
    }
 }
 

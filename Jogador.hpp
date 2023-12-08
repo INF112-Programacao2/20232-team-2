@@ -96,7 +96,7 @@ class Jogador
       void aumentar();
 
       //Exibe as informações do jogador
-      void exibirInfo();
+      void exibirInfo(int ValorMesa);
 
       void set_small_blind(bool);
 
