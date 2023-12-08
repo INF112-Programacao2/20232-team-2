@@ -1,12 +1,12 @@
 #include "Jogador.hpp"
 #include <iostream>
-#include <string>
 #include <vector>
+#include "Carta.hpp"
+#include "Mao.hpp"
 
-
-Jogador::Jogador(std::string nome)
+Jogador::Jogador(std::string nome, Mao mao) : nome(nome), mao(mao)
 {
-   Nome = nome;
+
    Vez = Ativo = Cobriu = Small_Blind = Big_Blind = false;
    /*Fichas.push_back({8, 25}); // 8 de 25, 8 de 100, 4 de 500, 2 de 1000, 1 de 5000
    Fichas.push_back({8, 100});
@@ -47,7 +47,7 @@ void Jogador::Aumentar()
 
 void Jogador::ExibirInfo()
 {
-   std::cout << "\nNome: " << Nome << "\n";
+   std::cout << "\nNome: " << nome << "\n";
    std::cout << "\nFichas:\n";
    for (int i = 0; i < 5; i++)
    {
@@ -56,7 +56,7 @@ void Jogador::ExibirInfo()
    }
 }
 
-void Jogador::InjetarFichas()
+/*void Jogador::InjetarFichas()
 {
    std::cout << "\nConversão Real-Fichas: 1 Real -> 250 fichas\n";
    std::cout << "Quantos reais (numero inteiro) deseja inserir?: ";
@@ -69,8 +69,4 @@ void Jogador::InjetarFichas()
    while (Injetar >= 100) Fichas[1].second ++;
    while (Injetar >= 25) Fichas[0].second ++;
 }
-
-void Jogador::SetCartas()
-{
-   
-}
+*/

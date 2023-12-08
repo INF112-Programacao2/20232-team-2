@@ -1,12 +1,11 @@
 #include "Carta.hpp"
 
-std::string Carta::Naipes_list[4] = ("Ouros", "Espadas", "Copas", "Paus");
+//std::string Carta::Naipes_list[4] = ("Ouros", "Espadas", "Copas", "Paus");
 
-Carta::Carta(int caractere, std::string naipe, bool comunitaria)
+Carta::Carta(int valorCarta, char naipe)
 {
-   Caractere = caractere;
-   Naipe = naipe;
-   Comunitaria = comunitaria;
+   this->valorCarta = valorCarta;
+   this->naipe = naipe;
 }
 
 Carta::~Carta()
@@ -14,17 +13,12 @@ Carta::~Carta()
 
 }
 
-int Carta::GetCaractere()
+int Carta::get_Valor_Carta()
 {
-   return Caractere;
+   return valorCarta;
 }
 
-std::string Carta::GetNaipe()
+char Carta::get_Naipe()
 {
-   return Naipe;
-}
-
-bool Carta::GetComunitaria()
-{
-   return Comunitaria;
+   return naipe;
 }

@@ -1,17 +1,17 @@
-#include <string>
+#ifndef CARTA_H
+#define CARTA_H
 #include <vector>
 
 class Carta
 {
    private:
-      int Caractere; // Varia de 2 a 14; 11 é valete, 12 é dama, 13 é rei, e 14 é ás
-      std::string Naipe; // Ouros, Espadas, Copas ou Paus
-      static std::string Naipes_list[4];
-      bool Comunitaria;
+      int valorCarta; // Varia de 2 a 14; 11 é valete, 12 é dama, 13 é rei, e 14 é ás
+      char naipe; // Ouros, Espadas, Copas ou Paus
    public:
-      Carta(int, std::string, bool);
+      Carta(int valorCarta, char Naipe);
       ~Carta();
-      int GetCaractere();
-      std::string GetNaipe();
-      bool GetComunitaria();
+      int get_Valor_Carta();
+      char get_Naipe();
 };
+
+#endif
