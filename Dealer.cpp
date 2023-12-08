@@ -29,12 +29,16 @@ void Dealer::criarSala()
         jogadores.push_back(temporario);
     }
     int big = rand()%jogadores.size();
-    jogadores[big].set_big_blind();
+    jogadores[big].set_big_blind(true);
     for (int i = 0; i < jogadores.size(); i++)
     {
-        if(big == jogadores.size())
+        if(big == jogadores.size()-1)
         {
-
+            jogadores[0].set_small_blind(true);
+        }
+        else
+        {
+            jogadores[big+1].set_small_blind(true);
         }
     }
     
@@ -87,11 +91,38 @@ void Dealer::criarMesa()
 
 void Dealer::designarSmallBlind()
 {
-    
-    
+    for (int i = 0; i < jogadores.size(); i++)
+    {
+        if(jogadores[i].isTrue_Small_Blind())
+        {
+            jogadores[i].set_small_blind(false);
+            if(i == jogadores.size()-1)
+            {
+                jogadores[0].set_small_blind(true);
+            }
+            else
+            {
+                jogadores[i].set_small_blind(true);
+            }
+        }
+    }
 }
 
 void Dealer::designarBigBlind()
 {
-
+    for (int i = 0; i < jogadores.size(); i++)
+    {
+        if(jogadores[i].isTrue_Big_Blind())
+        {
+            jogadores[i].set_big_blind(false);
+            if(i == jogadores.size()-1)
+            {
+                jogadores[0].set_big_blind(true);
+            }
+            else
+            {
+                jogadores[i].set_big_blind(true);
+            }
+        }
+    }
 }
