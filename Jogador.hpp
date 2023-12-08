@@ -47,6 +47,9 @@ class Jogador
 
       //Nome do jogador
       const std::string get_Nome();
+
+      //Receber cartas
+      void receberCarta(Carta carta);
       
       //Só poderá ser chamado pelo Dealer na última rodada
       Mao get_Mao();
