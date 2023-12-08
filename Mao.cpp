@@ -2,10 +2,9 @@
 #include "Mao.hpp"
 #include "Carta.hpp"
 
-Mao::Mao(std::vector<Carta> &cartas) : cartas(cartas) 
-{
-        
-}
+Mao::Mao() {}
+
+Mao::~Mao() {}
 
 std::vector<Carta> Mao::getCartas() 
 { 
