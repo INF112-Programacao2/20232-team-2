@@ -20,6 +20,7 @@ private:
     std::vector<Jogador> jogadores;
     int posicao;
     int quantidadeJogadores;
+    int valorMesa;
 
 public:
     //Construtor
@@ -27,6 +28,12 @@ public:
     
     //Destrutor
     ~Dealer();
+
+    //get do valor atual da aposta
+    int getValorMesa();
+
+    //set para atualizar o valor da aposta
+    void setValorMesa(int valor);
 
     //Criar a sala da partida
     void criarSala();

@@ -106,7 +106,18 @@ bool Mao::is_Flush()
 
 bool Mao::is_FullHouse()
 {
-    //implementar aqui
+    //Função para descobrir se as cartas do objeto Mao formam um FullHouse
+    for (int i = 0; i < cartas.size(); i++)
+    {
+        if (cartas[i].get_Valor_Carta() == 
+        cartas[i + 1].get_Valor_Carta() && 
+        cartas[i].get_Valor_Carta() == 
+        cartas[i + 2].get_Valor_Carta())
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool Mao::is_Quatro()
