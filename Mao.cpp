@@ -93,7 +93,15 @@ bool Mao::is_StraightFlush()
 
 bool Mao::is_Flush()
 {
-    //implementar aqui
+    //Função para descobrir se as cartas do objeto Mao formam um flush
+    for (int i = 0; i < cartas.size(); i++)
+    {
+        if (cartas[i].get_Naipe().compare(cartas[i + 1].get_Naipe()) != 0)
+            {
+                return false;
+            }
+    }
+    return true;
 }
 
 bool Mao::is_FullHouse()
