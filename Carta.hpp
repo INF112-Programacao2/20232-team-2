@@ -1,28 +1,20 @@
 #ifndef CARTA_H
 #define CARTA_H
 #include <vector>
+#include <iostream>
 
 class Carta
 {
    private:
-      //Ordenação do valor de cada carta no jogo, variando de 2 a 13 => "Ás" pode se comportar como 1 ou 14
-      int valorCarta; 
-
-      //Ouros(O), Espadas(E), Copas(C) ou Paus(P)
-      char naipe;
-
+      int valorCarta; // Varia de 2 a 14; 11 é valete, 12 é dama, 13 é rei, e 14 é ás
+      char naipe; // Ouros, Espadas, Copas ou Paus
    public:
-      //Construtor das cartas 
-      Carta(int valorCarta, char Naipe);
-
-      //Destrutor das cartas
+      Carta(int valorCarta, std::string naipe);
       ~Carta();
 
       //Retornar o valor das cartas
       int get_Valor_Carta();
-
-      //Retornar o naipe 
-      char get_Naipe();
+      std::string get_Naipe();
 };
 
 #endif

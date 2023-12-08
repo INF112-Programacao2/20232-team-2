@@ -1,6 +1,6 @@
 #include "Carta.hpp"
 
-Carta::Carta(int valorCarta, char naipe)
+Carta::Carta(int valorCarta, std::string naipe)
 {
    this->valorCarta = valorCarta;
    this->naipe = naipe;
@@ -16,7 +16,7 @@ int Carta::get_Valor_Carta()
    return valorCarta;
 }
 
-char Carta::get_Naipe()
+std::string Carta::get_Naipe()
 {
    return naipe;
 }

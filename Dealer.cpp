@@ -4,6 +4,7 @@
 #include <ctime>
 #include "Dealer.hpp"
 #include "Jogador.hpp"
+#incldue "Carta.hpp"
 
 Dealer::Dealer() 
 {
@@ -21,13 +22,19 @@ void Dealer::criarSala()
         std::string nick;
         std::cout << "Apelido do jogador " << i << ": ";
         std::cin >> nick;
-        jogadores.push_back(nick);
+        Jogador temporario(nick);
+        jogadores.push_back(temporario);
     }
 }
 
 void Dealer::criarBaralho()
 {
-
+    for (int i = 2; i <= 14; i++) {
+        for (int j = 0; j < 4; j++) {
+            baralho.push_back(Carta(i, Carta::naipes_possiveis[j]));
+        }
+    }
+    embaralharCartas();
 }
 
 void Dealer::embaralharCartas() 

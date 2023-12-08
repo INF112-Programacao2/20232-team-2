@@ -5,9 +5,9 @@
 #include "Carta.hpp"
 #include "Mao.hpp"
 
-Carta *carta1 = new Carta(3,'O');
-Carta *carta2 = new Carta(4,'P');
-std::vector<Carta> cartas = {carta1, carta2};
+//Carta *carta1 = new Carta(3,'O');
+//Carta *carta2 = new Carta(4,'P');
+//std::vector<Carta> cartas = {carta1, carta2};
 
 
 Jogador::Jogador(std::string nick)
@@ -15,12 +15,13 @@ Jogador::Jogador(std::string nick)
    nickname = nick;
    ativo = true;
    vez  = cobriu = ativo = small_Blind = big_Blind = false;
-   mao = new Mao(cartas);
-   /*Fichas.push_back({8, 25}); // 8 de 25, 8 de 100, 4 de 500, 2 de 1000, 1 de 5000
-   Fichas.push_back({8, 100});
-   Fichas.push_back({4, 500});
-   Fichas.push_back({2, 1000});
-   Fichas.push_back({1, 5000});*/
+   //mao = new Mao(cartas);
+   fichas.push_back({5, 10});// 8 de 25, 8 de 100, 4 de 500, 2 de 1000, 1 de 5000
+   fichas.push_back({10, 5});
+   fichas.push_back({20, 5});
+   fichas.push_back({50, 2});
+   fichas.push_back({100, 2});
+   fichas.push_back({500, 1});
 }
 
 Jogador::~Jogador()
@@ -102,11 +103,10 @@ void Jogador::aumentar()
 void Jogador::exibirInfo()
 {
    std::cout << "\nNickname: " << nickname << "\n";
-   std::cout << "\nFichas:\n";
    for (int i = 0; i < 5; i++)
    {
       
-      std::cout << "De " << fichas[i].first << " : " << fichas[i].second << "\n";
+      std::cout << "Fichas de " << fichas[i].first << " : " << fichas[i].second << "\n";
    }
 }
 
