@@ -30,7 +30,15 @@ void Dealer::criarSala()
     }
     int big = rand()%jogadores.size();
     jogadores[big].set_big_blind();
-    if(big == jogadores.size());
+    for (int i = 0; i < jogadores.size(); i++)
+    {
+        if(big == jogadores.size())
+        {
+
+        }
+    }
+    
+    
     
 }
 
