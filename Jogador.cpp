@@ -1,13 +1,15 @@
 #include "Jogador.hpp"
 #include <iostream>
 #include <vector>
+#include <stdexcept>
 #include "Carta.hpp"
 #include "Mao.hpp"
 
 Jogador::Jogador(std::string nome) : nome(nome)
 {
 
-   Vez = Ativo = Cobriu = Small_Blind = Big_Blind = false;
+   ativo = true;
+   Vez  = Cobriu = Small_Blind = Big_Blind = false;
    /*Fichas.push_back({8, 25}); // 8 de 25, 8 de 100, 4 de 500, 2 de 1000, 1 de 5000
    Fichas.push_back({8, 100});
    Fichas.push_back({4, 500});
@@ -25,13 +27,51 @@ void Jogador::receberCarta(Carta carta)
    mao.adicionarCarta(carta);
 }
 
-void Jogador::Check()
+void Jogador::check(int &valorMesa)
 {
+   if (valorMesa == apostado && Vez)
+   {
+      cobriu = true;
+      return;
+   }
 
+   else 
+   {
+      std::cout << "Você não pode selecionar essa opção até que o valor da sua aposta seja maior ou igual ao atual valor da mesa\n";
+   }
 }
 
-void Jogador::Apostar()
+void Jogador::apostar(int &valorMesa)
 {
+
+   //Ainda falta implementar a forma com que o usuário escolherá as fichas que serão apostadas
+   try
+   {
+      std::cout << "Digite o valor que deseja apostar";
+      int aposta;
+      std::cin >> aposta;
+      if (aposta < valorMesa && saldo > valorMesa) throw std::invalid_argument("Aposta insuficiente, por favor, aumente ela");   
+      else if (aposta >= valorMesa && saldo <= valorMesa) 
+      {
+         bool confirma = false;
+         std::cout << "Seu saldo é menor ou igual ao valor da mesa, deseja entrar no modo all in?\n";
+         std::cin >> confirma;
+         //criar a classe de exceção All_in
+         if(confirma)   throw All_in("Agora você está no modo All in");
+      }
+
+      saldo -= aposta;
+   }
+   catch(const std::invalid_argument& e)
+   {
+      std::cerr << e.what() << '\n';
+   }
+   catch(const All_inn& e)
+   {
+      All_in = true;
+      std::cerr << e.what() << '\n';
+   }
+
 
 }
 
@@ -40,17 +80,21 @@ void Jogador::Igualar()
 
 }
 
-void Jogador::Desistir()
+void Jogador::desistir()
 {
-
+   std::cout << "Realmente deseja desistir? digite SIM para confirma\n";
+   std::string confirmacao;
+   std::cin >> confirmacao;
+   if(confirmacao.compare("SIM") == 0) ativo = false;
 }
 
+//Acredito que não valha a pena separar os métodos apostar, aumentar e igualar
 void Jogador::Aumentar()
 {
 
 }
 
-void Jogador::ExibirInfo()
+void Jogador::exibirInfo()
 {
    std::cout << "\nNome: " << nome << "\n";
    std::cout << "\nFichas:\n";
