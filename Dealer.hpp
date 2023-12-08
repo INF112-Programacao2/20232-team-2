@@ -12,7 +12,7 @@
 class Dealer
 {
 private:
-    std::list<Carta>; 
+    std::vector<Carta> *baralho; 
     std::vector<Carta> *mesa;
     std::vector<Jogador> *jogadores;
     int posicao;
@@ -31,17 +31,21 @@ public:
     void criarBaralho();
     
     //Embaralhar as cartas para inicar o jogo
-    void embaralharCartas(std::vector<Carta>& cartas);
+    void embaralharCartas();
+
+    //Distribuir as cartas aos jogadores da partida
+    void darCartas();     
+
+    //criar as cartas da mesa   
+    void criarMesa();
+
+    //Designar o Small blind
+    void designarSmallBlind();
+
+    //Designar o big blind
+    void designarBigBlind();
 
 
 };
 #endif
-
-Dealer::Dealer()
-{
-}
-
-Dealer::~Dealer()
-{
-}
 

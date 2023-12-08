@@ -4,7 +4,37 @@
 #include <ctime>
 #include "Dealer.hpp"
 
-void Dealer::embaralharCartas(std::vector<Carta>& cartas) {
+Dealer::Dealer() {}
+
+Dealer::~Dealer() {}
+
+void Dealer::criarBaralho()
+{
+
+}
+
+void Dealer::embaralharCartas() 
+{
     srand(time(NULL));
-    std::random_shuffle(cartas.begin(), cartas.end());
+    std::random_shuffle(baralho->begin(), baralho->end());
+}
+
+void Dealer::darCartas()
+{
+
+}
+
+void Dealer::criarMesa()
+{
+    mesa = new std::vector<Carta>;
+}
+
+void Dealer::designarSmallBlind()
+{
+
+}
+
+void Dealer::designarBigBlind()
+{
+
 }
