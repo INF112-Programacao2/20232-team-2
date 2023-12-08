@@ -53,11 +53,12 @@ void Dealer::darCartas()
 }
 
 void Dealer::criarMesa()
-{
-    mesa = new std::vector<Carta>;
+{   
+    embaralharCartas();
     for (int i = 0; i < 5; i++)
     {   
-        mesa->push_back(baralho->at(i));
+        mesa.push_back(baralho.back());
+        baralho.pop_back();
     }
 
 }
