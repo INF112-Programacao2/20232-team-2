@@ -64,19 +64,19 @@ class Jogador
       Mao get_Mao();
 
       //Verifica se é a vez do jogador
-      bool isTrue_Vez(){}
+      bool isTrue_Vez();
       
       //Retornar o status do jogador(ativo ou inativo -> PS: Acredito que melhoraremos a qualidade do código se Criarmos os jogadores como objetos dinâmicos e sempre removê-los da memória após desistirem, mantendo seus dados em um arquivo)
-      bool isTrue_Ativo(){}
+      bool isTrue_Ativo();
      
       //Identificar se o jogador deu check com a aposta atual
-      bool isTrue_Cobriu(){}
+      bool isTrue_Cobriu();
 
       //Definir se esse jogador será ou não um big blind
-      bool isTrue_Big_Blind(){}
+      bool isTrue_Big_Blind();
 
       //Definir se esse jogador será ou não um small blind
-      bool isTrue_Small_Blind(){}
+      bool isTrue_Small_Blind();
 
       //Métodos de controle da classe
       
