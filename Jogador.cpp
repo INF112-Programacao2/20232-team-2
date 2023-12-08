@@ -80,7 +80,7 @@ void Jogador::apostar(int &valorMesa)
 
 }
 
-void Jogador::Igualar()
+void Jogador::igualar()
 {
 
 }
@@ -94,7 +94,7 @@ void Jogador::desistir()
 }
 
 //Acredito que não valha a pena separar os métodos apostar, aumentar e igualar
-void Jogador::Aumentar()
+void Jogador::aumentar()
 {
 
 }
@@ -110,12 +110,12 @@ void Jogador::exibirInfo()
    }
 }
 
-/*void Jogador::InjetarFichas()
+void Jogador::comprarFichas()
 {
    std::cout << "\nConversão Real-Fichas: 1 Real -> 250 fichas\n";
    std::cout << "Quantos reais (numero inteiro) deseja inserir?: ";
-   unsigned int Injetar;
-   std::cin >> Injetar;
+   unsigned int adicionar;
+   std::cin >> adicionar;
    Injetar *= 250;
    while (Injetar >= 5000) Fichas[4].second ++;
    while (Injetar >= 1000) Fichas[3].second ++;
@@ -123,7 +123,7 @@ void Jogador::exibirInfo()
    while (Injetar >= 100) Fichas[1].second ++;
    while (Injetar >= 25) Fichas[0].second ++;
 }
-*/
+
 
 int main()
 {
