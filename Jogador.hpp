@@ -22,7 +22,7 @@ class Jogador
       int saldo;
 
       //Comprar fichas
-      void comprarFichas();
+      void comprarFichas(){}
 
       //Verifica se está na vez do jogador x
       bool vez; 
@@ -95,12 +95,12 @@ class Jogador
       //Aumentar o valor da aposta atual
       void aumentar();
 
-      //Essa eu não entendi muito bem
+      //Exibe as informações do jogador
       void exibirInfo();
 
-      void set_small_blind(bool){}
+      void set_small_blind(bool);
 
-      void set_big_blind(bool){}
+      void set_big_blind(bool);
 
 };
 
