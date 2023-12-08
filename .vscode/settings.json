@@ -101,5 +101,6 @@
     "tuple": "cpp",
     "type_traits": "cpp",
     "list": "cpp"
-  }
+  },
+  "C_Cpp.errorSquiggles": "disabled"
 }

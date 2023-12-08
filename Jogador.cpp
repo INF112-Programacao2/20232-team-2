@@ -4,7 +4,7 @@
 #include "Carta.hpp"
 #include "Mao.hpp"
 
-Jogador::Jogador(std::string nome, Mao mao) : nome(nome), mao(mao)
+Jogador::Jogador(std::string nome) : nome(nome)
 {
 
    Vez = Ativo = Cobriu = Small_Blind = Big_Blind = false;
@@ -18,6 +18,11 @@ Jogador::Jogador(std::string nome, Mao mao) : nome(nome), mao(mao)
 Jogador::~Jogador()
 {
 
+}
+
+void Jogador::receberCarta(Carta carta)
+{
+   mao.adicionarCarta(carta);
 }
 
 void Jogador::Check()

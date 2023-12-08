@@ -25,14 +25,14 @@ public:
     //Destrutor
     ~Dealer();
 
+    //Criar a sala da partida
+    void criarSala();
+
     //Criar um baralho
     void criarBaralho();
     
     //Embaralhar as cartas para inicar o jogo
     void embaralharCartas();
-
-    //Definir a quantidade de jogadores
-    void set_QuantidaDeJogadores(int quantidaDeJogadores);
 
     //Distribuir as cartas aos jogadores da partida
     void darCartas();     
@@ -45,8 +45,7 @@ public:
 
     //Designar o big blind
     void designarBigBlind();
-
-
 };
+
 #endif
 
