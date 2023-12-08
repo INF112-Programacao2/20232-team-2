@@ -89,12 +89,6 @@ class Jogador
       //Verificar se o jogador quer apostar
       void apostar(int &valorMesa);
 
-      //Igualar a aposta ao valor da mesa
-      void igualar();
-      
-      //Aumentar o valor da aposta atual
-      void aumentar();
-
       //Exibe as informações do jogador
       void exibirInfo(int ValorMesa);
 

@@ -72,13 +72,6 @@ void Jogador::apostar(int &valorMesa)
       all_in = true;
       std::cerr << e.what() << '\n';
    }*/
-
-
-}
-
-void Jogador::igualar()
-{
-
 }
 
 void Jogador::desistir()
@@ -87,12 +80,6 @@ void Jogador::desistir()
    std::string confirmacao;
    std::cin >> confirmacao;
    if(confirmacao.compare("SIM") == 0) ativo = false;
-}
-
-//Acredito que não valha a pena separar os métodos apostar, aumentar e igualar
-void Jogador::aumentar()
-{
-
 }
 
 void Jogador::exibirInfo(int ValorMesa)
@@ -125,7 +112,7 @@ void Jogador::exibirInfo(int ValorMesa)
 
 Mao Jogador::get_Mao()
 { 
-
+   return mao;
 }
 
 bool Jogador::isTrue_Vez()
