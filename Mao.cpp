@@ -78,11 +78,11 @@ bool Mao::is_Trinca()
 
 bool Mao::is_StraightFlush()
 {
-    for (int i = 0; i < cartas.size() - 1)
+    for (int i = 0; i < cartas.size(); i++)
     {
         if (cartas[i].get_Valor_Carta() != cartas[i + 1].get_Valor_Carta() - 1)
         {
-            if (cartas[i].get_Naipe.compare(cartas[i+1].get_Naipe) != 0)
+            if (cartas[i].get_Naipe().compare(cartas[i+1].get_Naipe()) != 0)
             {
                 return false;
             }
