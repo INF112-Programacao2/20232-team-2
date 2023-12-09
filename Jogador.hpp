@@ -100,6 +100,9 @@ class Jogador
 
       //Converte fichas de um tipo em fichas de outro tipo
       void converte();
+
+      //Converte valor extra da aposta em outras fichas menores
+      void converte_sobressalente(int valor_sobressalente)
 };
 
 #endif
