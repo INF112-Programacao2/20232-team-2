@@ -31,7 +31,12 @@ bool Mao::is_CartaMenor(int index)
     return is_CartaMenor(index + 1);
 }
 
-bool Mao::is_Pair()
+bool Mao::is_CartaAlta()
+{
+
+}
+
+bool Mao::is_Par()
 {
     for (int i = 0; i < cartas.size() - 1; i++) {
     if (cartas[i].get_Valor_Carta() != cartas[i + 1].get_Valor_Carta()) 
@@ -40,29 +45,11 @@ bool Mao::is_Pair()
     }
     }
     return true;
-} 
-
-bool Mao::is_Dobro()
-{
-    for (int i = 0; i < cartas.size() - 1; i++) {
-        if (cartas[i].get_Valor_Carta() != cartas[i + 1].get_Valor_Carta() - 1) 
-        {
-            return false;
-        }
-    }
-    return true;    
 }
 
-bool Mao::is_Sequencia()
+bool Mao::is_DoisPares()
 {
-    for (int i = 0; i < cartas.size() - 2; i++) 
-    {
-        if (cartas[i].get_Valor_Carta() != cartas[i + 1].get_Valor_Carta() - 1 || cartas[i].get_Valor_Carta() != cartas[i + 2].get_Valor_Carta() - 2) 
-        {
-            return false;
-        }
-    }
-    return true;
+    //implementar aqui
 }
 
 bool Mao::is_Trinca()
@@ -76,19 +63,9 @@ bool Mao::is_Trinca()
     return false;
 }
 
-bool Mao::is_StraightFlush()
+bool Mao::is_Straight()
 {
-    for (int i = 0; i < cartas.size(); i++)
-    {
-        if (cartas[i].get_Valor_Carta() != cartas[i + 1].get_Valor_Carta() - 1)
-        {
-            if (cartas[i].get_Naipe().compare(cartas[i+1].get_Naipe()) != 0)
-            {
-                return false;
-            }
-        }    
-    }
-    return true;
+    //implementar aqui
 }
 
 bool Mao::is_Flush()
@@ -120,14 +97,29 @@ bool Mao::is_FullHouse()
     return false;
 }
 
-bool Mao::is_Quatro()
+bool Mao::is_Quadra()
 {
     //implementar aqui
 }
 
-bool Mao::is_Straight()
+bool Mao::is_StraightFlush()
 {
-    //implementar aqui
+    for (int i = 0; i < cartas.size(); i++)
+    {
+        if (cartas[i].get_Valor_Carta() != cartas[i + 1].get_Valor_Carta() - 1)
+        {
+            if (cartas[i].get_Naipe().compare(cartas[i+1].get_Naipe()) != 0)
+            {
+                return false;
+            }
+        }    
+    }
+    return true;
+}
+
+bool Mao::is_RoyalFlush()
+{
+
 }
 
 bool Mao::is_TrincaFlush()
@@ -135,9 +127,27 @@ bool Mao::is_TrincaFlush()
     //implementar aqui
 }
 
-bool Mao::is_DoisPares()
+bool Mao::is_Dobro()
 {
-    //implementar aqui
+    for (int i = 0; i < cartas.size() - 1; i++) {
+        if (cartas[i].get_Valor_Carta() != cartas[i + 1].get_Valor_Carta() - 1) 
+        {
+            return false;
+        }
+    }
+    return true;    
+}
+
+bool Mao::is_Sequencia()
+{
+    for (int i = 0; i < cartas.size() - 2; i++) 
+    {
+        if (cartas[i].get_Valor_Carta() != cartas[i + 1].get_Valor_Carta() - 1 || cartas[i].get_Valor_Carta() != cartas[i + 2].get_Valor_Carta() - 2) 
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 int Mao::valorMao()
