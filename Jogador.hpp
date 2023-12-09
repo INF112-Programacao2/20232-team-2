@@ -97,6 +97,9 @@ class Jogador
 
       //Alterar a posição do Big Blind
       void set_big_blind(bool);
+
+      //Converte fichas de um tipo em fichas de outro tipo
+      void converte();
 };
 
 #endif

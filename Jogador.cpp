@@ -11,7 +11,7 @@ Jogador::Jogador(std::string nick)
    ativo = true;
    vez  = cobriu = ativo = small_Blind = big_Blind = false;
    //mao = new Mao(cartas);
-   fichas.push_back({5, 10});// 8 de 25, 8 de 100, 4 de 500, 2 de 1000, 1 de 5000
+   fichas.push_back({5, 10});// 10 de 5, 5 de 10, 5 de 20, 2 de 50, 2 de 100, 1 de 500
    fichas.push_back({10, 5});
    fichas.push_back({20, 5});
    fichas.push_back({50, 2});
@@ -48,7 +48,7 @@ void Jogador::apostar(int &valorMesa)
    //Falta implementar tratamento de exceçoes
    while(true)
    {
-      std::cout << "Seu saldo é: " << saldo  << "\nO valor da mesa é: " << valorMesa << "\nDigite o valor que deseja apostar (aposte tudo para entrar em all in):";
+      std::cout << "\nSeu saldo é: " << saldo  << "\nO valor da mesa é: " << valorMesa << "\nDigite o valor que deseja apostar (aposte tudo para entrar em all in):";
       int aposta;
       std::cin >> aposta;
       if(aposta > saldo)
@@ -106,7 +106,6 @@ void Jogador::exibirInfo(int ValorMesa)
    std::cout << "\nNickname: " << nickname << "\n";
    for (int i = 0; i < 5; i++)
    {
-      
       std::cout << "Fichas de " << fichas[i].first << " : " << fichas[i].second << "\n";
    }
    std::cout << "\n";
@@ -183,3 +182,91 @@ void Jogador::set_big_blind(bool big)
    while (Injetar >= 25) Fichas[0].second ++;
 }*/
 
+void Jogador::converte()
+{
+   std::cout << "Suas fichas atuais sao:\n\n";
+   for (int i = 0; i < 5; i++)
+   {
+      std::cout << "Fichas de " << fichas[i].first << " : " << fichas[i].second << "\n";
+   }
+
+   int a_converter, convertido;
+   int quantidade_a_converter, quantidade_convertida;
+   while (true)
+   {
+      std::cout << "Deseja converter fichas de qual valor?: ";
+      std::cin >> a_converter;
+      if(a_converter != 5 && a_converter != 10 && a_converter != 20 && a_converter != 50 && a_converter != 100 && a_converter != 500)
+      {
+         std::cout << "Insira uma ficha de valor valido para converter (5, 10, 20, 50, 100 ou 500)\n";
+      }
+      else
+      {
+         break;
+      }
+   }
+
+   std::cout << "Quantas fichas do tipo "<< a_converter << " serão convertidas?: ";
+   std::cin >> quantidade_a_converter;
+   for (int i = 0; i < fichas.size(); i++)
+   {
+      if(fichas[i].first == a_converter)
+      {
+         if(quantidade_a_converter > fichas[i].second)
+         {
+            std::cout << "Você nao possui fichas do tipo "<< a_converter << " suficientes\n";
+            return;
+         }
+      }
+   }
+   
+   while (true)
+   {
+      std::cout << "\nEssas fichas do tipo " << a_converter << " serao convertidas em fichas de qual valor?: ";
+      std::cin >> convertido;
+      if(convertido == a_converter)
+      {
+         std::cout << "O tipo de ficha a converter deve ser diferente do tipo de ficha resultante!\n";
+      }
+      else if(convertido != 5 && convertido != 10 && convertido != 20 && convertido != 50 && convertido != 100 && convertido != 500)
+      {
+         std::cout << "Insira uma ficha de valor valido para converter (5, 10, 20, 50, 100 ou 500)\n";
+      }
+      else
+      {
+         break;
+      }
+   }
+
+   for (int i = 0; i < fichas.size(); i++)
+   {
+      if(fichas[i].first == convertido)
+      {
+         if(quantidade_a_converter * a_converter < convertido)
+         {
+            std::cout << quantidade_a_converter << " fichas de " << a_converter << " não são fichas o suficiente para converter em fichas de " << convertido << "\n";
+            return;
+         }
+         else
+         {
+            quantidade_convertida = ((quantidade_a_converter * a_converter) / convertido);
+            for (int i = 0; i < fichas.size(); i++)
+            {
+               if(fichas[i].first == convertido)
+               {
+                 fichas[i].second += quantidade_convertida;
+                 break
+               }
+            }
+            for (int i = 0; i < fichas.size(); i++)
+            {
+               if(fichas[i].first == a_converter)
+               {
+                 fichas[i].second -= (quantidade_convertida * convertido) / a_converter ;
+                 break;
+               }
+            }
+         }
+      }
+   }
+}
