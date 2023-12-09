@@ -10,9 +10,6 @@ class Usuario : public Jogador
       
       //Individualizar  cada jogador
       const std::string CPF;
-
-      
-
 };
 
 #endif
