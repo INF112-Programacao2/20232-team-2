@@ -31,20 +31,32 @@ bool Mao::is_CartaMenor(int index)
     return is_CartaMenor(index + 1);
 }
 
-bool Mao::is_CartaAlta()
+int Mao::CartaAlta()
 {
-
+    int maior = 0;
+    for (int i = 0; i < cartas.size(); i++)
+    {
+        if(cartas[i].get_Valor_Carta() > maior)
+        {
+            maior = cartas[i].get_Valor_Carta();
+        }
+    }
+    return maior;
 }
 
-bool Mao::is_Par()
+//A maioria dos metodos abaixo so funcionarão caso o vetor cartas esteja em ordem crescente pelo valor da carta
+//A maioria dos metodos abaixo so funcionarão caso o vetor cartas tenha 5 cartas apenas. A realidade costuma ter 7
+
+std::pair<int,bool> Mao::is_Par()
 {
-    for (int i = 0; i < cartas.size() - 1; i++) {
-    if (cartas[i].get_Valor_Carta() != cartas[i + 1].get_Valor_Carta()) 
+    for (int i = 0; i < cartas.size() - 1; i++) 
     {
-        return false;
+        if (cartas[i].get_Valor_Carta() == cartas[i + 1].get_Valor_Carta()) 
+        {
+            return {cartas[i].get_Valor_Carta(), true};
+        }
     }
-    }
-    return true;
+    return {0, false};
 }
 
 bool Mao::is_DoisPares()
@@ -52,31 +64,39 @@ bool Mao::is_DoisPares()
     //implementar aqui
 }
 
-bool Mao::is_Trinca()
+std::pair<int,bool> Mao::is_Trinca()
 {
-    for (int i = 0; i < cartas.size() - 2; i++) {
+    for (int i = 0; i < cartas.size() - 2; i++) 
+    {
         if (cartas[i].get_Valor_Carta() == cartas[i + 1].get_Valor_Carta() && cartas[i].get_Valor_Carta() == cartas[i + 2].get_Valor_Carta()) 
         {
-            return true;
+            return {cartas[i].get_Valor_Carta(),true};
         }
     }
-    return false;
+    return {0,false};
 }
 
-bool Mao::is_Straight()
+std::pair<int,bool> Mao::is_Straight()
 {
-    //implementar aqui
+    for (int i = 1; i < cartas.size(); i++)
+    {
+        if(cartas[i].get_Valor_Carta() != cartas[i-1].get_Valor_Carta() + 1)
+        {
+            return {0, false};
+        }
+    }
+    return {cartas[0].get_Valor_Carta, true};
 }
 
 bool Mao::is_Flush()
 {
     //Função para descobrir se as cartas do objeto Mao formam um flush
-    for (int i = 0; i < cartas.size(); i++)
+    for (int i = 1; i < cartas.size(); i++)
     {
-        if (cartas[i].get_Naipe().compare(cartas[i + 1].get_Naipe()) != 0)
-            {
-                return false;
-            }
+        if (cartas[0].get_Naipe().compare(cartas[i].get_Naipe()) != 0)
+        {
+            return false;
+        }
     }
     return true;
 }
@@ -97,29 +117,66 @@ bool Mao::is_FullHouse()
     return false;
 }
 
-bool Mao::is_Quadra()
+std::pair<int,bool> Mao::is_Quadra()
 {
-    //implementar aqui
+    for (int i = 0; i < cartas.size() - 3; i++) 
+    {
+        if (cartas[i].get_Valor_Carta() == cartas[i + 1].get_Valor_Carta() && cartas[i].get_Valor_Carta() == cartas[i + 2].get_Valor_Carta() && cartas[i].get_Valor_Carta() == cartas[i + 3].get_Valor_Carta()) 
+        {
+            return {cartas[i].get_Valor_Carta(),true};
+        }
+    }
+    return {0,false};
 }
 
-bool Mao::is_StraightFlush()
+std::pair<int,bool> Mao::is_StraightFlush()
 {
-    for (int i = 0; i < cartas.size(); i++)
+    // Parte flush
+    for (int i = 1; i < cartas.size(); i++)
     {
-        if (cartas[i].get_Valor_Carta() != cartas[i + 1].get_Valor_Carta() - 1)
+        if (cartas[0].get_Naipe().compare(cartas[i].get_Naipe()) != 0)
         {
-            if (cartas[i].get_Naipe().compare(cartas[i+1].get_Naipe()) != 0)
-            {
-                return false;
-            }
-        }    
+            return {0, false};
+        }
     }
-    return true;
+    
+    //Parte Straight
+    for (int i = 1; i < cartas.size(); i++)
+    {
+        if(cartas[i].get_Valor_Carta() != cartas[i-1].get_Valor_Carta() + 1)
+        {
+            return {0, false};
+        }
+    }
+    return {cartas[0].get_Valor_Carta, true};
+
 }
 
 bool Mao::is_RoyalFlush()
 {
+    if(cartas[0] != 10)
+    {
+        return false;
+    }
+    // Parte flush
+    for (int i = 1; i < cartas.size(); i++)
+    {
+        if (cartas[0].get_Naipe().compare(cartas[i].get_Naipe()) != 0)
+        {
+            return false;
+        }
+    }
+    
+    //Parte Straight
+    for (int i = 1; i < cartas.size(); i++)
+    {
+        if(cartas[i].get_Valor_Carta() != cartas[i-1].get_Valor_Carta() + 1)
+        {
+            return false;
+        }
+    }
 
+    return true;
 }
 
 bool Mao::is_TrincaFlush()
