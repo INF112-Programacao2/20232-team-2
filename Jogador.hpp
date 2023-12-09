@@ -92,10 +92,11 @@ class Jogador
       //Exibe as informações do jogador
       void exibirInfo(int ValorMesa);
 
+      //Alterar a posição do Small Blind
       void set_small_blind(bool);
 
+      //Alterar a posição do Big Blind
       void set_big_blind(bool);
-
 };
 
 #endif
