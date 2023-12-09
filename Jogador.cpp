@@ -112,7 +112,7 @@ void Jogador::exibirInfo(int ValorMesa)
 
 Mao Jogador::get_Mao()
 { 
-   return mao;
+   return *mao;
 }
 
 bool Jogador::isTrue_Vez()
