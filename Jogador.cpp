@@ -44,30 +44,49 @@ void Jogador::check(int &valorMesa)
 
 void Jogador::apostar(int &valorMesa)
 {
-
    //Ainda falta implementar a forma com que o usuário escolherá as fichas que serão apostadas
-   try
+   //Falta implementar tratamento de exceçoes
+   while(true)
    {
-      std::cout << "Digite o valor que deseja apostar";
+      std::cout << "Seu saldo é: " << saldo  << "\nO valor da mesa é: " << valorMesa << "\nDigite o valor que deseja apostar (aposte tudo para entrar em all in):";
       int aposta;
       std::cin >> aposta;
-      if (aposta < valorMesa && saldo > valorMesa) throw std::invalid_argument("Aposta insuficiente, por favor, aumente ela");   
-      else if (aposta >= valorMesa && saldo <= valorMesa) 
+      if(aposta > saldo)
       {
-         bool confirma = false;
-         std::cout << "Seu saldo é menor ou igual ao valor da mesa, deseja entrar no modo all in?\n";
-         std::cin >> confirma;
-         //criar a classe de exceção All_in
-         //if(confirma)   throw all_in("Agora você está no modo All in");
+         apostado += aposta;
+         saldo -= aposta;
+      }
+      else if(aposta == saldo)
+      {
+         std::cout << "Seu saldo se esgotou, com essa aposta voce entrará em modo all in. Deseja prosseguir? digite SIM para confirmar\n";
+         std::string confirmacao;
+         std::cin >> confirmacao;
+         if(confirmacao.compare("SIM") == 0)
+         {
+            all_in = true;
+            saldo  = 0;
+         }
+      }
+      else
+      {
+         std::cout << "Saldo insuficiente, aposte um valor mais baixo\n";
       }
 
-      saldo -= aposta;
+      if (apostado < valorMesa && !all_in)
+      {
+         std::cout << "Aposta insuficiente, por favor, aumente ela\n"; //throw std::invalid_argument("Aposta insuficiente, por favor, aumente ela");
+      }
+      else
+      {
+           break;
+      }
    }
-   catch(const std::invalid_argument& e)
+
+   /*catch(const std::invalid_argument& e)
    {
       std::cerr << e.what() << '\n';
    }
-   /*catch(const All_inn& e)
+   catch(const All_inn& e)
    {
       all_in = true;
       std::cerr << e.what() << '\n';
@@ -76,7 +95,7 @@ void Jogador::apostar(int &valorMesa)
 
 void Jogador::desistir()
 {
-   std::cout << "Realmente deseja desistir? digite SIM para confirma\n";
+   std::cout << "Realmente deseja desistir? digite SIM para confirmar\n";
    std::string confirmacao;
    std::cin >> confirmacao;
    if(confirmacao.compare("SIM") == 0) ativo = false;
