@@ -32,7 +32,7 @@ void Jogador::receberCarta(Carta carta)
 
 void Jogador::check(int &valorMesa)
 {
-   if (valorMesa == apostado && vez)
+   if (valorMesa <= apostado)
    {
       cobriu = true;
    }
@@ -329,5 +329,5 @@ void Jogador::converte_sobressalente(int aposta_em_fichas)
    while (aposta_em_fichas >= 50) fichas[3].second++;
    while (aposta_em_fichas >= 20) fichas[2].second++;
    while (aposta_em_fichas >= 10) fichas[1].second++;
-   while (aposta_em_fichas >= 5) fichas[0].second++
+   while (aposta_em_fichas >= 5) fichas[0].second++;
 }
