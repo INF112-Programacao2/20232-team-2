@@ -29,16 +29,16 @@ class Mao
         int CartaAlta();
         
         // Verifica se a mão é um par (duas cartas iguais)
-        std::pair<int,bool> is_Par();
+        bool is_Par();
 
         // Verifica se a mão é um dois pares (dois pares de cartas iguais)
         bool is_DoisPares();
 
         // Verifica se a mão é um trinca (três cartas iguais)
-        std::pair<int,bool> is_Trinca();
+        bool is_Trinca();
 
         // Verifica se a mão é um straigth (sequência de cinco cartas)
-        std::pair<int,bool> is_Straight();
+        bool is_Straight();
 
         // Verifica se a mão é um flush (cinco cartas no mesmo naipe)
         bool is_Flush();
@@ -47,10 +47,10 @@ class Mao
         bool is_FullHouse();
 
         // Verifica se a mão é uma quadra (quatro cartas iguais)
-        std::pair<int,bool> is_Quadra();
+        bool is_Quadra();
 
         // Verifica se a mão é uma straight flush (sequência de cinco cartas no mesmo naipe)
-        std::pair<int,bool> is_StraightFlush();
+        bool is_StraightFlush();
 
         // Verifica se a mao é um royal flush (Sequência de 10 a Ás do mesmo naipe)
         bool is_RoyalFlush();
