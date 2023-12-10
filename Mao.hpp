@@ -6,8 +6,17 @@
 class Mao 
 {
     private:
-        std::vector<Carta> cartas; // Armazena as cartas da mão
-        static bool compare(Carta &a, Carta &b);
+        // Armazena as cartas da mão
+        std::vector<Carta> cartas; 
+        
+        // Função compare para organizar o vetor de acordo com os valores
+        static bool compareValorCartas(Carta &a, Carta &b);
+        
+        // Função compare para organizar o vetor de acordo com os naipes
+        static bool compareNaipe(Carta &carta1, Carta &carta2);
+
+        // Verifica se a mão é uma sequência (três ou mais cartas em sequência)
+        bool is_Sequencia(int n, std::string tipo);
     public:
         // Construtor
         Mao();
@@ -15,7 +24,6 @@ class Mao
         // Destrutor
         ~Mao();
 
-        
         // Getters
         std::vector<Carta> getCartas();
 
@@ -58,9 +66,6 @@ class Mao
         // Verifica se a mão é um dobro (duas cartas iguais, em sequência)
         bool is_Dobro();
            
-        // Verifica se a mão é uma sequência (três ou mais cartas em sequência)
-        bool is_Sequencia();
-
         // Verifica se a mão é um trinca flush (três cartas iguais no mesmo naipe)
         bool is_TrincaFlush();
 
