@@ -24,21 +24,21 @@ class Mao
 
         // Verifica se a mão é uma carta menor (ace a 2)
         bool is_CartaMenor(int index); 
+
+        //Menor pontuação, verifica qual a maior carta do jogador
+        int CartaAlta();
         
         // Verifica se a mão é um par (duas cartas iguais)
-        bool is_Pair();
+        std::pair<int,bool> is_Par();
 
-        // Verifica se a mão é um dobro (duas cartas iguais, em sequência)
-        bool is_Dobro();
-           
-        // Verifica se a mão é uma sequência (três ou mais cartas em sequência)
-        bool is_Sequencia();
+        // Verifica se a mão é um dois pares (dois pares de cartas iguais)
+        bool is_DoisPares();
 
         // Verifica se a mão é um trinca (três cartas iguais)
-        bool is_Trinca();
+        std::pair<int,bool> is_Trinca();
 
-        // Verifica se a mão é uma straight flush (sequência de cinco cartas no mesmo naipe)
-        bool is_StraightFlush();
+        // Verifica se a mão é um straigth (sequência de cinco cartas)
+        std::pair<int,bool> is_Straight();
 
         // Verifica se a mão é um flush (cinco cartas no mesmo naipe)
         bool is_Flush();
@@ -46,17 +46,23 @@ class Mao
         // Verifica se a mão é um full house (três cartas iguais e um par)
         bool is_FullHouse();
 
-        // Verifica se a mão é um quatro (quatro cartas iguais)
-        bool is_Quatro();
+        // Verifica se a mão é uma quadra (quatro cartas iguais)
+        std::pair<int,bool> is_Quadra();
 
-        // Verifica se a mão é um straigth (sequência de cinco cartas)
-        bool is_Straight();
+        // Verifica se a mão é uma straight flush (sequência de cinco cartas no mesmo naipe)
+        std::pair<int,bool> is_StraightFlush();
+
+        // Verifica se a mao é um royal flush (Sequência de 10 a Ás do mesmo naipe)
+        bool is_RoyalFlush();
+
+        // Verifica se a mão é um dobro (duas cartas iguais, em sequência)
+        bool is_Dobro();
+           
+        // Verifica se a mão é uma sequência (três ou mais cartas em sequência)
+        bool is_Sequencia();
 
         // Verifica se a mão é um trinca flush (três cartas iguais no mesmo naipe)
         bool is_TrincaFlush();
-
-        // Verifica se a mão é um dois pares (dois pares de cartas iguais)
-        bool is_DoisPares();
 
         // Retorna o valor da mão, em termos de pontuação
         int valorMao();
