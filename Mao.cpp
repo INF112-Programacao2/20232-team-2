@@ -7,9 +7,14 @@ Mao::Mao() {}
 
 Mao::~Mao() {}
 
-bool Mao::compare(Carta &carta1, Carta &carta2)
+bool Mao::compareValorCartas(Carta &carta1, Carta &carta2)
 {
     return carta1.get_Valor_Carta() < carta2.get_Valor_Carta();
+}
+
+bool Mao::compareNaipe(Carta &carta1, Carta &carta2)
+{
+    return carta1.get_Naipe() < carta2.get_Naipe();
 }
 
 std::vector<Carta> Mao::getCartas() 
@@ -20,7 +25,7 @@ std::vector<Carta> Mao::getCartas()
 void Mao::adicionarCarta(Carta carta) 
 {
     cartas.push_back(carta);
-    std::sort(cartas.begin(), cartas.end(), compare);
+    std::sort(cartas.begin(), cartas.end(), compareValorCartas);
 }
 
 bool Mao::is_CartaMenor(int index) 
@@ -39,7 +44,7 @@ bool Mao::is_CartaMenor(int index)
 }
 
 // Método testado e funcionando
-bool Mao::is_Pair()
+bool Mao::is_Par()
 {
     for (int i = 0; i < cartas.size() - 1; i++) {
         if (cartas[i].get_Valor_Carta() == cartas[i + 1].get_Valor_Carta()) 
@@ -50,7 +55,7 @@ bool Mao::is_Pair()
     return false;
 } 
 
-
+//Ainda incompleto(por conta da ordenação)
 bool Mao::is_Dobro()
 {
     //Método para verificar se as duas primeiras cartas adicionadas é um dobro
@@ -61,17 +66,40 @@ bool Mao::is_Dobro()
     return false;
 }
 
-//Método testado e funcionando
-bool Mao::is_Sequencia()
+//Método testado e funcionando para valores de n acima de 3
+bool Mao::is_Sequencia(int n, std::string tipo)
 {
-    for (int i = 0; i < cartas.size() - 2; i++) 
+    //Temos aqui um uso do conceito de polimorfismo, pois o método is_Sequencia dará um retorno de acordo com seu chamado(tipo), que pode ser sequência por "naipe" ou "valor"
+    if(tipo.compare("valor") == 0)
     {
-        if (cartas[i].get_Valor_Carta() != cartas[i + 1].get_Valor_Carta() - 1 || cartas[i].get_Valor_Carta() != cartas[i + 2].get_Valor_Carta() - 2) 
-        {
-            return false;
-        }
+        if(cartas.size() >= n)
+            for (int i = 0; i < cartas.size() - n + 1; i++) 
+            {
+                //A lógica, nesse caso, é que o vetor está organizado segundo o valor das cartas. Então, se eu tenho um vetor de 5 caracteres e eles não formam um par nem um trinca entre si e 
+                //o valor da última carta será o mesmo que o da primeira adicionada ao tamanho da sequencia, 5 para o caso (dá para fazer para n, trocando '4' por n e '-5' pelo tamanho da sequência) 
+                if (cartas[i].get_Valor_Carta() == cartas[i + n-1].get_Valor_Carta() - n && !is_Par() && !is_Trinca()) 
+                {
+                    return true;
+                }
+            }
+        return false;
     }
-    return true;
+    if (tipo.compare("naipe") == 0)
+    {
+        std::vector<Carta> copiaCartas = cartas;
+        sort(copiaCartas.begin(), copiaCartas.end(), compareNaipe);
+        if(cartas.size() >= n)
+            for (int i = 0; i < cartas.size() - n + 1; i++) 
+            {
+                //A lógica, nesse caso, é que o vetor está organizado segundo o naipe, portanto teremos primeiramente todas as cartas do naipe de copas, depois todas de espadas... Portanto, se em alguma parte do vetor tivermos que se a carta[i] for igual à carta [i+n-1], então n é a quantidade de cartas que temos daquele naipe
+                //Dado isso, aqui estamos perguntando se a sequência de cartas(tamanho n) ordenadas pelo naipe existe ou não
+                if (cartas[i].get_Naipe() == cartas[i + n-1].get_Naipe() ) 
+                {
+                    return true;
+                }
+            }
+        return false;
+    }
 }
 
 //Método testado e funcionando
@@ -80,35 +108,23 @@ bool Mao::is_Trinca()
     for (int i = 0; i < cartas.size() - 2; i++) {
         if (cartas[i].get_Valor_Carta() == cartas[i + 1].get_Valor_Carta() && cartas[i].get_Valor_Carta() == cartas[i + 2].get_Valor_Carta()) 
         {
-            return {cartas[i].get_Valor_Carta(),true};
+            return true;
         }
     }
-    return {0,false};
+    return false;
 }
 
-std::pair<int,bool> Mao::is_Straight()
+// Caso específico de sequência
+bool Mao::is_Straight()
 {
-    for (int i = 1; i < cartas.size(); i++)
-    {
-        if(cartas[i].get_Valor_Carta() != cartas[i-1].get_Valor_Carta() + 1)
-        {
-            return {0, false};
-        }
-    }
-    return {cartas[0].get_Valor_Carta, true};
+    return is_Sequencia(5, "valor");
 }
 
+// Caso específico de sequência
 bool Mao::is_Flush()
-{
-    for (int i = 0; i < cartas.size(); i++)
-    {
-        if (cartas[i].get_Naipe().compare(cartas[i + 1].get_Naipe()) != 02
-        )
-            {
-                return false;
-            }
-    }
-    return true;
+{   
+    return is_Sequencia(5, "naipe");
+    
 }
 
 bool Mao::is_FullHouse()
@@ -128,7 +144,7 @@ bool Mao::is_FullHouse()
 }
 
 //Método implementado, testado e funcionando
-bool Mao::is_Quatro()
+bool Mao::is_Quadra()
 {
     for (int i = 0; i < cartas.size(); i++)
     {
@@ -139,7 +155,7 @@ bool Mao::is_Quatro()
     }
     return false;
 }
-
+/*
 bool Mao::is_Straight()
 {
     // Parte flush
@@ -161,33 +177,15 @@ bool Mao::is_Straight()
     }
     return {cartas[0].get_Valor_Carta, true};
 
-}
+}*/
 
 bool Mao::is_RoyalFlush()
 {
-    if(cartas[0] != 10)
+    if (is_Straight() && is_Flush())
     {
-        return false;
-    }
-    // Parte flush
-    for (int i = 1; i < cartas.size(); i++)
-    {
-        if (cartas[0].get_Naipe().compare(cartas[i].get_Naipe()) != 0)
-        {
-            return false;
-        }
-    }
-    
-    //Parte Straight
-    for (int i = 1; i < cartas.size(); i++)
-    {
-        if(cartas[i].get_Valor_Carta() != cartas[i-1].get_Valor_Carta() + 1)
-        {
-            return false;
-        }
-    }
 
-    return true;
+    }
+    return false;
 }
 
 bool Mao::is_TrincaFlush()
@@ -206,17 +204,6 @@ bool Mao::is_Dobro()
     return true;    
 }
 
-bool Mao::is_Sequencia()
-{
-    for (int i = 0; i < cartas.size() - 2; i++) 
-    {
-        if (cartas[i].get_Valor_Carta() != cartas[i + 1].get_Valor_Carta() - 1 || cartas[i].get_Valor_Carta() != cartas[i + 2].get_Valor_Carta() - 2) 
-        {
-            return false;
-        }
-    }
-    return true;
-}
 
 int Mao::valorMao()
 {
