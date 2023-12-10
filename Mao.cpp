@@ -177,17 +177,18 @@ bool Mao::is_RoyalFlush()
     if (is_StraightFlush())
     {
         std::vector<Carta> copiaCartas = cartas;
-        std::sort(cartas.begin(), cartas.end(), compareNaipe);
-        for (int i = 0; i < cartas.size() - 5; i++)
+        std::sort(copiaCartas.begin(), copiaCartas.end(), compareNaipe);
+        for (int i = 0; i < copiaCartas.size() - 5; i++)
         {
-            for (int j = i; j < cartas.size() - 5; j++)
+            if (copiaCartas[i].get_Valor_Carta() == copiaCartas[i + 5 - 1].get_Valor_Carta() - 5 + 1)
+            
+            //  1 2 3 4 5
+            //  0 1 2 3 4 
+
             {
-                if (copiaCartas[i].get_Valor_Carta() == copiaCartas[j + 5 - 1].get_Valor_Carta() - 5 + 1)
+                if (copiaCartas[i].get_Valor_Carta() == 10)
                 {
-                    if (copiaCartas[i].get_Valor_Carta() == 10)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
         }
@@ -260,7 +261,5 @@ int main()
         if (entrada == 11)std::cout << mao.is_RoyalFlush() << "\n";
         if (entrada ==0) break;
     }
-    
-    
     return 0;
 }
