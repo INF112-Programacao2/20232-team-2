@@ -7,7 +7,7 @@ class Mao
 {
     private:
         std::vector<Carta> cartas; // Armazena as cartas da mão
-
+        static bool compare(Carta &a, Carta &b);
     public:
         // Construtor
         Mao();
@@ -15,6 +15,7 @@ class Mao
         // Destrutor
         ~Mao();
 
+        
         // Getters
         std::vector<Carta> getCartas();
 
@@ -59,6 +60,9 @@ class Mao
 
         // Retorna o valor da mão, em termos de pontuação
         int valorMao();
+
+        // Imprimir cartas
+        void printCartas();
 };
 
 #endif
