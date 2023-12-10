@@ -16,7 +16,10 @@ class Mao
         static bool compareNaipe(Carta &carta1, Carta &carta2);
 
         // Verifica se a mão é uma sequência (três ou mais cartas em sequência)
-        bool is_Sequencia(int n, std::string tipo);
+        bool is_Sequencia(int inicio, int n, std::string tipo);
+
+        // Variável que indica o valor da mão do jogador
+        int valor_Da_Mao;
     public:
         // Construtor
         Mao();
@@ -26,15 +29,10 @@ class Mao
 
         // Getters
         std::vector<Carta> getCartas();
+        int get_Valor_Mao();
 
         // Adiciona uma carta à mão
         void adicionarCarta(Carta carta);
-
-        // Verifica se a mão é uma carta menor (ace a 2)
-        bool is_CartaMenor(int index); 
-
-        //Menor pontuação, verifica qual a maior carta do jogador
-        int CartaAlta();
         
         // Verifica se a mão é um par (duas cartas iguais)
         bool is_Par();
@@ -65,12 +63,9 @@ class Mao
 
         // Verifica se a mão é um dobro (duas cartas iguais, em sequência)
         bool is_Dobro();
-           
-        // Verifica se a mão é um trinca flush (três cartas iguais no mesmo naipe)
-        bool is_TrincaFlush();
 
         // Retorna o valor da mão, em termos de pontuação
-        int valorMao();
+        void valorMao();
 
         // Imprimir cartas
         void printCartas();
