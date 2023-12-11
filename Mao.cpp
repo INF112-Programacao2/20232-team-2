@@ -236,7 +236,7 @@ bool Mao::is_FullHouse()
         if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()))
             dupla = true;
     }
-    return dupla && trinca;
+    return trinca && dupla;
 }
 
 // Identificamos se temos um Straight Flush começado por 10(Testado e funcionando)
@@ -294,7 +294,7 @@ int main()
 { 
     Mao mao;
     Carta carta1(12, "Ouros");
-    Carta carta2(13, "Espadas");
+    Carta carta2(12, "Espadas");
     Carta carta3(12, "Espadas");
     Carta carta4(15, "Ouros");
     Carta carta5(13, "Ouros");
