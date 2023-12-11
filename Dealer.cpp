@@ -315,3 +315,5 @@ int main()
     std::cout << dealer.get_Primeiro_Jogador()<< "\n\n";
     return 0;
 }
+
+//Observação: Nos testes a funlção designar Primeiro Jogador não está sendo executada
