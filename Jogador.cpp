@@ -9,7 +9,7 @@ Jogador::Jogador(std::string nick)
 {
    nickname = nick;
    ativo = true;
-   vez  = cobriu = ativo = small_Blind = big_Blind = all_in = false;
+   vez  = cobriu = small_Blind = big_Blind = all_in = false;
    //mao = new Mao(cartas);
    fichas.push_back({5, 10});// 10 de 5, 5 de 10, 5 de 20, 2 de 50, 2 de 100, 1 de 500
    fichas.push_back({10, 5});
