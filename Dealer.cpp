@@ -19,6 +19,31 @@ Dealer::Dealer()
 
 Dealer::~Dealer() {}
 
+void Dealer::passar_Vez()
+{
+    for (int i = 0; i < jogadores.size(); i++)
+    {
+        if(jogadores[i].isTrue_Vez() && jogadores[i].isTrue_Ativo())
+        {
+            while (true)
+            {
+                jogadores[i].set_Vez(false);
+
+                if(i == jogadores.size()-1 && jogadores[0].isTrue_Ativo())
+                {
+                    jogadores[0].set_Vez(true);
+                    return;
+                }
+                else if (jogadores[i+1].isTrue_Ativo())
+                {
+                    jogadores[i+1].set_Vez(true);
+                    return;
+                }
+            }
+        }
+    }
+}
+
 int Dealer::getValorMesa()
 {
     return valorMesa;
