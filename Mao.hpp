@@ -65,7 +65,7 @@ class Mao
         std::pair<int, bool> is_Dobro();
 
         // Retorna o valor da mão, em termos de pontuação
-        void valorMao();
+        int valorMao();
 
         // Imprimir cartas
         void printCartas();
