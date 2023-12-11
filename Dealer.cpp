@@ -335,9 +335,18 @@ bool Dealer::verificar_Check()
                 jogadores[i].apostar(valorMesa);
                 if(valorMesa == valorMesaAntigo) check++;
                 else check = 1;
+                passar_Vez();
             }
-            else if(escolha == 3) jogadores[i].desistir();
-            else if(escolha == 4) jogadores[i].abandonar();
+            else if(escolha == 3)
+            {
+                passar_Vez();
+                jogadores[i].desistir();
+            } 
+            else if(escolha == 4)
+            {
+                passar_Vez();
+                jogadores[i].abandonar();
+            } 
 
             int jogadoresAtivos = 0;
             for (int i = 0; i < jogadores.size(); i++)
@@ -347,6 +356,7 @@ bool Dealer::verificar_Check()
             }
             if(jogadoresAtivos == check)
                 return true;
+            
         }
         if( i == jogadores.size() - 1 )
             i = 0;
