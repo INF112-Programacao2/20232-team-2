@@ -293,17 +293,22 @@ bool Dealer::verificar_Check()
     {
         if(jogadores[i].isTrue_Vez())
         {
-            if(rodada == 2)
+            #include <iostream>
+
+            if (rodada == 2)
             {
-                std::cout << "As cartas da mesa são: \n" << mostrarCartas(3);
+                std::cout << "As cartas da mesa são: \n";
+                mostrarCartas(3);
             }
-            if(rodada == 3)
+            if (rodada == 3)
             {
-                std::cout << "As cartas da mesa são: \n" << mostrarCartas(4);
+                std::cout << "As cartas da mesa são: \n"; 
+                mostrarCartas(4);
             }
-            if(rodada == 4)
+            if (rodada == 4)
             {
-                std::cout << "As cartas da mesa são: \n" << mostrarCartas(5);
+                std::cout << "As cartas da mesa são: \n";
+                mostrarCartas(5);
             }
             std::cout << "Digite 1 para ver suas informações\nDigite 2 para apostar algum valor\nDigite 3 para desistir da partida\nDigite 4 para abandonar completamente o jogo\n\n";
             int escolha;
@@ -318,7 +323,7 @@ bool Dealer::verificar_Check()
             }
 
             int valorMesaAntigo = valorMesa;   
-            if(escolha == 1) jogadores[i].exibirInfo();
+            if(escolha == 1) jogadores[i].exibirInfo(valorMesa);
             else if(escolha == 2) jogadores[i].apostar(valorMesa);
             else if(escolha == 3) jogadores[i].desistir();
             else if(escolha == 4) jogadores[i].abandonar();
@@ -326,7 +331,7 @@ bool Dealer::verificar_Check()
             if(valorMesa == valorMesaAntigo) check++;
             else check = 1;
 
-            jogadores[i].set_vez(false);
+            jogadores[i].set_Vez(false);
             while (true)
             {
                 if(primeiro_Jogador == jogadores.size()-1)
