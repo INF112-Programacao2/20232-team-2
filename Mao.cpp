@@ -228,7 +228,7 @@ bool Mao::is_FullHouse()
             copiaCartas.erase(copiaCartas.begin() + 1+i);
             copiaCartas.erase(copiaCartas.begin() + 2+i);
             trinca = true;
-            //Testando mudança commit
+            //Testando mudança push
         }
     }
     for (int i = 0; i < copiaCartas.size()-1; i++)
