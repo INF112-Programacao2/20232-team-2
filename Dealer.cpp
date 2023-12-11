@@ -168,6 +168,13 @@ void Dealer::verificar_Rodadas()
     }
 }
 
+void Dealer::finalizar_Partida()
+{
+    if(jogadores.size() < 2)
+    {
+
+    }
+}
 
 void Dealer::criarMesa()
 {   
@@ -347,6 +354,11 @@ void Dealer::mostrarCartas(int quantidade_Cartas_Mostradas)
 void Dealer::set_Primeira_Aposta(int primeira_Aposta)
 {
     this->primeira_Aposta = primeira_Aposta;
+}
+
+void Dealer::set_Valor_Acumulado_Mesa(int valorAtualMesa)
+{
+    valor_Acumulado_mesa += valorAtualMesa;
 }
 
 void Dealer::set_Primeiro_Jogador(int id_Primeiro_Jogador)

@@ -23,6 +23,7 @@ private:
     int valorMesa;
     int primeiro_Jogador;
     int primeira_Aposta;
+    int valor_Acumulado_mesa;
 
 public:
     //Construtor
@@ -39,6 +40,8 @@ public:
 
     //set para atualizar o valor da aposta
     void setValorMesa(int valor);
+
+    void set_Valor_Acumulado_Mesa(int valorAtualMesa);
 
     //Criar a sala da partida
     void criarSala();
@@ -67,6 +70,9 @@ public:
     //Verificar se todos os jogadores já cobriram a aposta mais alta da mesa
     bool verificar_Check();
 
+    
+    void finalizar_Partida();
+    
     //
     void verificar_Rodadas();
 
