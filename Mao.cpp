@@ -68,12 +68,13 @@ bool Mao::is_Sequencia(int inicio,int n, std::string tipo)
     //Primeiro motivo: o método is_Sequencia dará um retorno de acordo com seu chamado(tipo), que pode ser sequência por "naipe", "valor" ou "paridade"
     if(tipo.compare("valor") == 0)
     {
+        std::sort(cartas.begin(), cartas.end(), compareNaipe);
         if(cartas.size() >= n)
-            for (int i = inicio; i < cartas.size() - n + 1; i++) 
+            for (int i = 0; i < cartas.size() - n + 1; i++) 
             {
                 //A lógica, nesse caso, é que o vetor está organizado segundo o valor das cartas. Então, se eu tenho um vetor de 5 caracteres e eles não formam um par nem um trinca entre si e 
                 //o valor da última carta será o mesmo que o da primeira adicionada ao tamanho da sequencia, 5 para o caso (dá para fazer para n, trocando '4' por n e '-5' pelo tamanho da sequência) 
-                if (cartas[0].get_Valor_Carta() == cartas[i + n-1].get_Valor_Carta() - n + 1) 
+                if (cartas[0].get_Valor_Carta() == cartas[i + n - 1].get_Valor_Carta() - n + 1) 
                 {
                     return true;
                 }
@@ -259,12 +260,12 @@ void Mao::printCartas()
 int main()
 { 
     Mao mao;
-    Carta carta1(10, "Ouros");
-    Carta carta2(11, "Ouros");
-    Carta carta3(12, "Espada");
-    Carta carta4(12, "Ouros");
+    Carta carta1(12, "Ouros");
+    Carta carta2(12, "Espada");
+    Carta carta3(10, "Espadas");
+    Carta carta4(11, "Ouros");
     Carta carta5(14, "Ouros");
-    Carta carta6(14, "Copas");
+    Carta carta6(14, "Ouros");
     mao.adicionarCarta(carta1);
     mao.adicionarCarta(carta2);
     mao.adicionarCarta(carta3);
