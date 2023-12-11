@@ -245,10 +245,51 @@ void Dealer::designarPrimeiroJogador()
     }
 }
 
+
+
 void Dealer::verificar_Check()
 {
-
-
+    //verificar se o valor da aposta de todos os jogadores são a mesma que a  atual da mão
+    for (int i = 0; i < jogadores.size(); i++)
+    {
+        if(jogadores[i].isTrue_Ativo())
+        {
+            if(jogadores[i].get_Aposta() < getValorMesa())
+            {
+                bool entrada;
+                std::cout << "O valor da sua aposta atual é menor que o valor da mesa. Digite 0 para desistir da partida ou 1 para fazer uma aposta:\n";
+                std::cin >> entrada;
+                if(entrada)
+                {
+                    int novaAposta;
+                    std::cout << "Muito bem, agora digite o quanto você quer complementar da sua aposta, Obs: ela deve ser maior que: " << valorMesa- jogadores[i].get_Aposta()<<"\n\n";
+                    std::cin >> novaAposta;
+                    if(entrada) 
+                    {
+                        jogadores[i].apostar(novaAposta);
+                        if(jogadores[i].get_Aposta() + novaAposta == valorMesa)
+                        {
+                            jogadores[i].set_Cobriu(true);
+                        }
+                        else if (jogadores[i].get_Aposta() + novaAposta > valorMesa)
+                        {
+                            
+                            for (int j = 0; j < jogadores.size() && j !=i; j++)
+                            {
+                                if(jogadores[j].isTrue_Ativo())
+                                {
+                                    jogadores[j].set_Cobriu(false);
+                                }
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                }
+            }
+        }
+    } 
 }
 
 void Dealer::set_Primeira_Aposta(int primeira_Aposta)
@@ -279,8 +320,7 @@ std::vector<Jogador> Dealer::get_jogadores()
 int main()
 {
     Dealer dealer;
-    int a =2;
-    dealer.set_Primeiro_Jogador(a);
+    dealer.set_Primeiro_Jogador(2);
     dealer.get_jogadores().at(2).set_Ativo(false);
     std::cout << dealer.get_jogadores().at(dealer.get_Primeiro_Jogador()).isTrue_Ativo() << "\n\n";
     
