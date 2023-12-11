@@ -35,6 +35,21 @@ void Dealer::criarSala()
         std::string nick;
         std::cout << "Apelido do jogador " << i << ": ";
         std::cin >> nick;
+        bool nick_repetido = false;
+        for (int j = 0; j < jogadores.size(); j++)
+        {
+            if(nick.compare(jogadores[j].get_Nick()) == 0)
+            {
+                std::cout << "Nick já utilizado por outro jogador, troque o apelido\n";
+                nick_repetido = true;
+                break;
+            }
+        }
+        if(nick_repetido)
+        {
+            i--;
+            continue;
+        }
         Jogador temporario(nick);
         jogadores.push_back(temporario);
     }
@@ -51,18 +66,19 @@ void Dealer::criarSala()
             jogadores[big+1].set_small_blind(true);
         }
     }
-    
-    
-    
 }
 
 void Dealer::criarBaralho()
 {
-    for (int i = 2; i <= 14; i++) {
-        for (int j = 0; j < 4; j++) {
+    for (int i = 2; i <= 14; i++) 
+    {
+        for (int j = 0; j < 4; j++) 
+        {
             baralho.push_back(Carta(i, Carta::naipes_possiveis[j]));
         }
     }
+    embaralharCartas();
+    embaralharCartas();
     embaralharCartas();
 }
 
@@ -82,12 +98,31 @@ void Dealer::darCartas()
             baralho.pop_back();
         }
     }
+    for (int i = 0; i < jogadores.size(); i++)
+    {
+        std::cout << "\nA seguir, irei mostrar as cartas do jogador " << jogadores[i].get_Nick() << "\n\n";
+        std::cout << "TODOS OS OUTROS JOGADORES NAO DEVEM OLHAR PARA A TELA NESSE INSTANTE\n";
+        std::string confirma = {};
+        while(!(confirma.compare("CONFIRMA") == 0))
+        {
+            std::cout << "\nDigite CONFIRMA para mostrar as cartas: ";
+            std::cin >> confirma;
+        }
+        std::cout << "Sua primeira carta: " << jogadores[i].get_Mao().getCartas()[0].get_Valor_Carta() << " de " << jogadores[i].get_Mao().getCartas()[0].get_Naipe() << "\n";
+        std::cout << "Sua segunda carta: " << jogadores[i].get_Mao().getCartas()[1].get_Valor_Carta() << " de " << jogadores[i].get_Mao().getCartas()[1].get_Naipe() << "\n";
+        confirma = {};
+        while(!(confirma.compare("CONFIRMA") == 0))
+        {
+            std::cout << "\nDigite CONFIRMA para apagar a tela: ";
+            std::cin >> confirma;
+        }
+        std::system("clear");
+    }
 }
 
 void Dealer::criarMesa()
 {   
-    embaralharCartas();
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 3; i++)
     {   
         mesa.push_back(baralho.back());
         baralho.pop_back();
@@ -96,6 +131,7 @@ void Dealer::criarMesa()
     {
         baralho.pop_back();
         mesa.push_back(baralho.back());
+        baralho.pop_back();
     }
 }
 
@@ -136,3 +172,13 @@ void Dealer::designarBigBlind()
         }
     }
 }
+
+std::vector<Carta> Dealer::get_baralho()
+{
+    return baralho;
+} 
+
+std::vector<Carta> Dealer::get_mesa()
+{
+    return mesa;
+} 

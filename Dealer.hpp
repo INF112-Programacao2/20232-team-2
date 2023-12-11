@@ -55,6 +55,10 @@ public:
 
     //Designar o big blind
     void designarBigBlind();
+
+    std::vector<Carta> get_baralho();
+
+    std::vector<Carta> get_mesa();
 };
 
 #endif
