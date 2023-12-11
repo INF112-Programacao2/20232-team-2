@@ -68,7 +68,6 @@ bool Mao::is_Sequencia(int inicio,int n, std::string tipo)
     //Primeiro motivo: o método is_Sequencia dará um retorno de acordo com seu chamado(tipo), que pode ser sequência por "naipe", "valor" ou "paridade"
     if(tipo.compare("valor") == 0)
     {
-        std::sort(cartas.begin(), cartas.end(), compareNaipe);
         if(cartas.size() >= n)
             for (int i = 0; i < cartas.size() - n + 1; i++) 
             {
@@ -157,6 +156,7 @@ bool Mao::is_Quadra()
 // Caso específico de sequência do tipo valor(Testado e funcionando)
 bool Mao::is_Straight()
 {
+    sort(cartas.begin(), cartas.end(), compareValorCartas);
     return is_Sequencia(0, 5, "valor");
 }
 
@@ -260,11 +260,11 @@ void Mao::printCartas()
 int main()
 { 
     Mao mao;
-    Carta carta1(12, "Ouros");
-    Carta carta2(12, "Espada");
-    Carta carta3(10, "Espadas");
-    Carta carta4(11, "Ouros");
-    Carta carta5(14, "Ouros");
+    Carta carta1(13, "Ouros");
+    Carta carta2(11, "Espada");
+    Carta carta3(14, "Paus");
+    Carta carta4(15, "Espada");
+    Carta carta5(12, "Ouros");
     Carta carta6(14, "Ouros");
     mao.adicionarCarta(carta1);
     mao.adicionarCarta(carta2);
