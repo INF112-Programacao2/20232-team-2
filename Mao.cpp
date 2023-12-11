@@ -215,27 +215,27 @@ bool Mao::is_StraightFlush()
 // Um par e uma trinca(Testado e funcionando)
 bool Mao::is_FullHouse()
 {
-    bool dupla = false, trinca = false;
-    if(cartas.size() >= 5) // Mínimo para termos um trinca e um dupla com valores diferentes
+    bool trinca = false;
+    bool dupla = false;
+    std::vector<Carta> copiaCartas = cartas;
+    std::sort(copiaCartas.begin(), copiaCartas.end(), compareValorCartas);
+    for (int i = 0; i < copiaCartas.size()-2; i++)
     {
-        for (int i = 0; i < cartas.size() - 5 + 1; i++)
+        if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()) && 
+        (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[2+i]).get_Valor_Carta()))
         {
-            // Primeiramente verificamos se temos uma trinca
-            if (is_Sequencia(i, 3, "paridade") && !trinca)     //Aqui não precisamos de !is_par() porque se tivermos outra trinca, obrigatoriamente teremos outra dupla também
-            {
-                trinca = true;
-                i += 2;
-            }
-            
-            // Depois verificamos se temos uma dupla
-            if (is_Sequencia(i, 2, "paridade") && !dupla)   //Temos que, se já encontramos uma dupla, não precisamos buscar outra
-            {
-                dupla = true;
-                i += 1;
-            }
+            copiaCartas.erase(copiaCartas.begin() + i);
+            copiaCartas.erase(copiaCartas.begin() + 1+i);
+            copiaCartas.erase(copiaCartas.begin() + 2+i);
+            trinca = true;
         }
     }
-    return trinca && dupla;
+    for (int i = 0; i < copiaCartas.size()-1; i++)
+    {
+        if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()))
+            dupla = true;
+    }
+    return dupla && trinca;
 }
 
 // Identificamos se temos um Straight Flush começado por 10(Testado e funcionando)
@@ -294,8 +294,8 @@ int main()
     Mao mao;
     Carta carta1(12, "Ouros");
     Carta carta2(12, "Espadas");
-    Carta carta3(10, "Espadas");
-    Carta carta4(11, "Ouros");
+    Carta carta3(12, "Espadas");
+    Carta carta4(15, "Ouros");
     Carta carta5(13, "Ouros");
     Carta carta6(7, "Espadas");
     Carta carta7(7, "Ouros");
