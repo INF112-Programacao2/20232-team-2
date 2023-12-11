@@ -14,6 +14,8 @@ bool Mao::compareValorCartas(Carta &carta1, Carta &carta2)
 
 bool Mao::compareNaipe(Carta &carta1, Carta &carta2)
 {
+    if(carta1.get_Naipe() == carta2.get_Naipe())
+        return carta1.get_Valor_Carta() < carta2.get_Valor_Carta();
     return carta1.get_Naipe() < carta2.get_Naipe();
 }
 
@@ -85,7 +87,7 @@ bool Mao::is_Sequencia(int inicio,int n, std::string tipo)
         //imprimir copiaCartas
         for (int i = 0; i < copiaCartas.size(); i++)
         {
-            std::cout << copiaCartas[i].get_Valor_Carta() << "              " << copiaCartas[i].get_Naipe() << std::endl;
+            //std::cout << copiaCartas[i].get_Valor_Carta() << "              " << copiaCartas[i].get_Naipe() << std::endl;
         }
         if(cartas.size() >= n)
             for (int i = inicio; i < copiaCartas.size() - n + 1; i++) 
@@ -148,44 +150,15 @@ bool Mao::is_Flush()
 // Interseção dos casos de Flush e Straight(Testado e funcionando)
 bool Mao::is_StraightFlush()
 {
-    if(is_Straight() && is_Flush())
+    std::sort(cartas.begin(), cartas.end(), compareNaipe);
+
+    for (int i = 0; i < cartas.size() - 4; i++)
     {
-        
-        std::vector<Carta> copiaCartas = cartas;
-        
-        std::sort(copiaCartas.begin(), copiaCartas.end(), compareNaipe);
-        std::cout << "entrei aqui\n";
-        
-        for (int i = 0; i < copiaCartas.size() - 5; i++)
-        {
-            if (copiaCartas[i].get_Valor_Carta() == copiaCartas[i + 5 - 1].get_Valor_Carta() - 5 + 1)
-            {
-                std::cout << copiaCartas[i].get_Valor_Carta() << "          " << copiaCartas[i].get_Naipe()<<std::endl;
-                //return true;
-            }
-        }
+        if((cartas[0+i].get_Valor_Carta()) == ((cartas[1+i]).get_Valor_Carta() - 1) && (cartas[0+i].get_Valor_Carta()) == ((cartas[2+i]).get_Valor_Carta() - 2) && (cartas[0+i].get_Valor_Carta()) == ((cartas[3+i]).get_Valor_Carta() - 3) && (cartas[0+i].get_Valor_Carta()) == ((cartas[4+i]).get_Valor_Carta() - 4))
+            if((cartas[0+i].get_Naipe()) == (cartas[1+i].get_Naipe()) && (cartas[0+i].get_Naipe()) == (cartas[2+i].get_Naipe()) && (cartas[0+i].get_Naipe()) == (cartas[3+i].get_Naipe()) && (cartas[0+i].get_Naipe()) == (cartas[4+i].get_Naipe()))
+                return true;
     }
     return false;
-
-    /*if(cartas.size() >= 5)
-            for (int i = 0; i < cartas.size() - 5 + 1; i++) 
-            {
-                //A lógica, nesse caso, é que o vetor está organizado segundo o valor das cartas. Então, se eu tenho um vetor de 5 caracteres e eles não formam um par nem um trinca entre si e 
-                //o valor da última carta será o mesmo que o da primeira adicionada ao tamanho da sequencia, 5 para o caso (dá para fazer para n, trocando '4' por n e '-5' pelo tamanho da sequência) 
-                if (cartas[0].get_Valor_Carta() == cartas[i + n-1].get_Valor_Carta() - n + 1) 
-                {
-                    if(cartas[0].get_Naipe() == cartas[i+n-1].get_Naipe()
-                    {
-                        return true;
-                    })
-                    else
-                    {
-
-                    }
-                }
-            }
-        return false;
-    */
 }
 
 // Um par e uma trinca(Testado e funcionando)
