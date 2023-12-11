@@ -28,7 +28,7 @@ Jogador::~Jogador()
 
 void Jogador::receberCarta(Carta carta)
 {
-   mao->adicionarCarta(carta);
+   mao.adicionarCarta(carta);
 }
 
 void Jogador::check(int &valorMesa)
@@ -208,7 +208,12 @@ void Jogador::exibirInfo(int ValorMesa)
 
 Mao Jogador::get_Mao()
 { 
-   return *mao;
+   return mao;
+}
+
+std::string Jogador::get_Nick()
+{
+   return nickname;
 }
 
 bool Jogador::isTrue_Vez()
@@ -383,15 +388,4 @@ void Jogador::converte_sobressalente(int aposta_em_fichas)
       aposta_em_fichas -= 5;
    }
 
-}
-
-int main()
-{
-   int a = 100;
-   Jogador C("Coshe");
-   C.exibirInfo(a);
-   C.apostar(a);
-   C.exibirInfo(a);
-
-   return 0;
 }
