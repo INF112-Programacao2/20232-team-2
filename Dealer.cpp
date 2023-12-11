@@ -257,7 +257,7 @@ bool Dealer::verificar_Check()
     {
         if(jogadores[i].isTrue_Vez())
         {
-            if(rodada == 1 && jogadores[i].isTrue_Big_Blind())
+            if(rodada == 1)
             {
                 std::cout << "Digite 1 para ver suas informações\nDigite 2 para apostar algum valor\nDigite 3 para desistir da partida\nDigite 4 para abandonar completamente o jogo\n\n";
                 int escolha;
@@ -274,7 +274,10 @@ bool Dealer::verificar_Check()
                 if(escolha == 2) jogadores[i].apostar(valorMesa);
                 if(escolha == 3) jogadores[i].desistir();
                 if(escolha == 4) jogadores[i].abandonar();
-
+            }
+            else
+            {
+                
             }
         }
     } 
