@@ -233,11 +233,11 @@ bool Mao::is_FullHouse()
             copiaCartas.erase(copiaCartas.begin() + 2+i);
             trinca = true;
         }
-        for (int i = 0; i < copiaCartas.size()-1; i++)
-        {
+    }
+    for (int i = 0; i < copiaCartas.size()-1; i++)
+    {
         if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()))
             dupla = true;
-        }
     }
     return dupla && trinca;
 }
