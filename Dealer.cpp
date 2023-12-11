@@ -291,7 +291,7 @@ void Dealer::designarPrimeiroJogador()
 bool Dealer::verificar_Check()
 {
     //verificar se o valor da aposta de todos os jogadores são a mesma que a  atual da mão
-    for (int i = 0; i < jogadores.size(); i++)
+    for (int i = 0;; i++)
     {
         if(jogadores[i].isTrue_Vez())
         {
@@ -312,6 +312,8 @@ bool Dealer::verificar_Check()
                 std::cout << "As cartas da mesa são: \n";
                 mostrarCartas(5);
             }
+
+            again:
             std::cout << "Digite 1 para ver suas informações\nDigite 2 para apostar algum valor\nDigite 3 para desistir da partida\nDigite 4 para abandonar completamente o jogo\n\n";
             int escolha;
             std::cout << "Digite o numero escolhido: ";
@@ -325,34 +327,29 @@ bool Dealer::verificar_Check()
             }
 
             int valorMesaAntigo = valorMesa;   
-            if(escolha == 1) jogadores[i].exibirInfo(valorMesa);
-            else if(escolha == 2) jogadores[i].apostar(valorMesa);
+            if(escolha == 1)
+            { 
+                jogadores[i].exibirInfo(valorMesa);
+                goto again;
+            }
+            else if(escolha == 2)
+            {
+                jogadores[i].apostar(valorMesa);
+                if(valorMesa == valorMesaAntigo) check++;
+                else check = 1;
+            }
             else if(escolha == 3) jogadores[i].desistir();
             else if(escolha == 4) jogadores[i].abandonar();
 
-            if(valorMesa == valorMesaAntigo) check++;
-            else check = 1;
-
-            jogadores[i].set_Vez(false);
-            while (true)
+            int jogadoresAtivos = 0;
+            for (int i = 0; i < jogadores.size(); i++)
             {
-                if(primeiro_Jogador == jogadores.size()-1)
-                {
-                    primeiro_Jogador = 0;
-                }
-
-                else
-                {
-                    primeiro_Jogador++;
-                }
-
-                if(jogadores[primeiro_Jogador].isTrue_Ativo())
-                {
-                    jogadores[primeiro_Jogador].set_Vez(true);
-                    break;
-                }
-            } 
-
+                if(jogadores[i].isTrue_Ativo())
+                    jogadoresAtivos++;
+            }
+            if(jogadoresAtivos == check)
+                return true;
+            
             if( i == jogadores.size() - 1 )
                 i = 0;
         }
