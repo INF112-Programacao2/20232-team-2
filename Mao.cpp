@@ -53,9 +53,8 @@ bool Mao::is_DoisPares()
             dois_Pares = true;
         }
     }
-    if(dois_Pares && um_Par)
-        return true;
-    return false;
+    return dois_Pares && um_Par;
+
     
 }
 
@@ -71,7 +70,7 @@ bool Mao::is_Dobro()
 }
 
 // Método testado e funcionando para valores de n acima de 3
-bool Mao::is_Sequencia(int inicio,int n, std::string tipo)
+/*bool Mao::is_Sequencia(int inicio,int n, std::string tipo)
 {
     //Temos aqui um uso do conceito de polimorfismo
     //Primeiro motivo: o método is_Sequencia dará um retorno de acordo com seu chamado(tipo), que pode ser sequência por "naipe", "valor" ou "paridade"
@@ -123,7 +122,7 @@ bool Mao::is_Sequencia(int inicio,int n, std::string tipo)
         return false;
     }
     else return false;
-}
+}*/
 
 // Método testado e funcionando
 bool Mao::is_Par()
@@ -193,8 +192,14 @@ bool Mao::is_Straight()
 // Caso específico de sequência do tipo naipe(Testado e funcionando)
 bool Mao::is_Flush()
 {   
-    return is_Sequencia(0 ,5, "naipe");
-    
+    std::vector<Carta> copiaCartas = cartas;
+    std::sort(copiaCartas.begin(), copiaCartas.end(), compareNaipe);
+    for (int i = 0; i < copiaCartas.size() - 4; i++)
+    {
+        if((copiaCartas[0+i].get_Naipe()) == (copiaCartas[1+i].get_Naipe()) && (copiaCartas[0+i].get_Naipe()) == (copiaCartas[2+i].get_Naipe()) && (copiaCartas[0+i].get_Naipe()) == (copiaCartas[3+i].get_Naipe()) && (copiaCartas[0+i].get_Naipe()) == (copiaCartas[4+i].get_Naipe()))
+            return true;
+    }
+    return false;
 }
 
 // Interseção dos casos de Flush e Straight(Testado e funcionando)
