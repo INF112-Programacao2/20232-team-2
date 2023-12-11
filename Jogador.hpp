@@ -12,7 +12,7 @@ class Jogador
       std::string nickname;
 
       //Mão composta por 2 cartas
-      Mao *mao; 
+      Mao mao; 
       
       //Vetor de pairs relativos ao valor da ficha bem como suas quantidades
       //Valores já pré estabelecidos {1, 5, 10, 20, 50, 100, 500} -> Limitaremos o valor em mil para evitar vícios
@@ -55,7 +55,7 @@ class Jogador
       //Métodos get e isTrue para acesso aos atributos de Jogador
 
       //Nome do jogador
-      const std::string get_Nome();
+      std::string get_Nick();
 
       //Receber cartas
       void receberCarta(Carta carta);
