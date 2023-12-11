@@ -196,6 +196,7 @@ void Dealer::designarBigBlind()
 
 void Dealer::designarPrimeiroJogador()
 {
+    std::cout << "Entrei aqui\n\n";
     //No começo da partida o Small Blind sempre será o primeiro
     if(primeiro_Jogador == -1)
     {    
@@ -212,11 +213,11 @@ void Dealer::designarPrimeiroJogador()
         }
     }    
     //Verifica se quem era para ser o maior jogador desta rodada ainda está ativo na partida
-    if (!jogadores[primeiro_Jogador].isTrue_Ativo())
+    
+    
+    /*else //if (!jogadores[primeiro_Jogador].isTrue_Ativo()) Verificar o problema desse condicional
     {
         std::cout << "entrei aqui\n\n";
-
-        //std::cout << "Entrei aqui\n\n";
         while (true)
         {
             //Se o atual primeiro jogador for o último do vetor, retornamos ao primeiro 
@@ -233,16 +234,13 @@ void Dealer::designarPrimeiroJogador()
             //Se o atual jogador avaliado estiver ativo na partida, então ele iniciará as apostas da rodada            
             if(jogadores[primeiro_Jogador].isTrue_Ativo())
             {
-                
                 jogadores[primeiro_Jogador].set_Vez(true);
                 break;
             }
         }       
-        
-    }
+    }*/
     else if (primeiro_Jogador >= jogadores.size())
     {
-        primeiro_Jogador = 0;
         while (!jogadores[primeiro_Jogador].isTrue_Ativo())
         {
             primeiro_Jogador++;
@@ -312,6 +310,10 @@ int main()
     jogadores[2].set_Ativo(false);
     std::cout << jogadores[2].isTrue_Ativo() << "\n\n";
     dealer.designarPrimeiroJogador();
+
+    //Entrada 3 jogadores e nome aleatórios
+    //Saída esperada: 0     problema: Quando declaramos o primeiro_Jogador manualmente, caso para teste, a função designar_Primeiro_Jogador não está sendo chamada
+    //De acordo com os testes que venho fazendo, parece que o bug está no condicional do primeiro "else if"
     std::cout << dealer.get_Primeiro_Jogador()<< "\n\n";
     return 0;
 }
