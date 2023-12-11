@@ -14,6 +14,8 @@ Dealer::Dealer()
     criarSala();
     darCartas();
     criarMesa();
+    for (int i = 0; i < jogadores.size(); i++) {jogadores[i].set_Ativo(true);}
+    
 }
 
 Dealer::~Dealer() {}
@@ -21,6 +23,11 @@ Dealer::~Dealer() {}
 int Dealer::getValorMesa()
 {
     return valorMesa;
+}
+
+int Dealer::get_Primeiro_Jogador()
+{
+    return primeiro_Jogador;
 }
 
 void Dealer::setValorMesa(int valorMesa)
@@ -97,6 +104,8 @@ void Dealer::embaralharCartas()
     std::random_shuffle(baralho.begin(), baralho.end());
 }
 
+
+//Coloquei o while como comentário para fazer os testes em outras funções
 void Dealer::darCartas()
 {
     for (int i = 0; i < quantidadeJogadores; i++)
@@ -112,7 +121,7 @@ void Dealer::darCartas()
         std::cout << "\nA seguir, irei mostrar as cartas do jogador " << jogadores[i].get_Nick() << "\n\n";
         std::cout << "TODOS OS OUTROS JOGADORES NAO DEVEM OLHAR PARA A TELA NESSE INSTANTE\n";
         std::string confirma = {};
-        while(!(confirma.compare("CONFIRMA") == 0))
+        /*while(!(confirma.compare("CONFIRMA") == 0))
         {
             std::cout << "\nDigite CONFIRMA para mostrar as cartas: ";
             std::cin >> confirma;
@@ -124,7 +133,7 @@ void Dealer::darCartas()
         {
             std::cout << "\nDigite CONFIRMA para apagar a tela: ";
             std::cin >> confirma;
-        }
+        }*/
         std::system("clear");
     }
 }
@@ -184,19 +193,65 @@ void Dealer::designarBigBlind()
     }
 }
 
+
 void Dealer::designarPrimeiroJogador()
 {
     //No começo da partida o Small Blind sempre será o primeiro
     if(primeiro_Jogador == -1)
+    {    
+        std::cout << "entrei aqui\n\n";
         for (int i = 0; i < jogadores.size(); i++)
         {
-        //encontra o Small Blind
-        if(jogadores[i].isTrue_Small_Blind())
-        {
-            if(jogadores[i].isTrue_Ativo()) 
+            //encontra o Small Blind
+            if(jogadores[i].isTrue_Small_Blind())
+            {
                 jogadores[i].set_Vez(true);
-            break;
+                primeiro_Jogador = i;
+                break;
+            }
         }
+    }    
+    //Verifica se quem era para ser o maior jogador desta rodada ainda está ativo na partida
+    if (!jogadores[primeiro_Jogador].isTrue_Ativo())
+    {
+        std::cout << "entrei aqui\n\n";
+
+        //std::cout << "Entrei aqui\n\n";
+        while (true)
+        {
+            //Se o atual primeiro jogador for o último do vetor, retornamos ao primeiro 
+            if(primeiro_Jogador == jogadores.size()-1)
+            {
+                primeiro_Jogador = 0;
+            }
+            //Se não veremos o próximo 
+            else
+            {
+                std::cout << "Entrei aqui agora\n\n";
+                primeiro_Jogador++;
+            }
+            //Se o atual jogador avaliado estiver ativo na partida, então ele iniciará as apostas da rodada            
+            if(jogadores[primeiro_Jogador].isTrue_Ativo())
+            {
+                
+                jogadores[primeiro_Jogador].set_Vez(true);
+                break;
+            }
+        }       
+        
+    }
+    else if (primeiro_Jogador >= jogadores.size())
+    {
+        primeiro_Jogador = 0;
+        while (!jogadores[primeiro_Jogador].isTrue_Ativo())
+        {
+            primeiro_Jogador++;
+            if (primeiro_Jogador >= jogadores.size())
+            {
+                primeiro_Jogador = 0;
+            }
+        }
+        jogadores[primeiro_Jogador].set_Vez(true);
     }
 }
 
@@ -229,4 +284,34 @@ std::vector<Carta> Dealer::get_mesa()
 std::vector<Jogador> Dealer::get_jogadores()
 {
     return jogadores;
+}
+
+int main()
+{
+    Dealer dealer;
+    std::vector<Carta> baralho = dealer.get_baralho();
+    std::vector<Carta> mesa = dealer.get_mesa();
+    std::vector<Jogador> jogadores = dealer.get_jogadores();
+    std::cout << "Baralho: \n";
+    for (int i = 0; i < baralho.size(); i++)
+    {
+        std::cout << baralho[i].get_Valor_Carta() << " de " << baralho[i].get_Naipe() << "\n";
+    }
+    std::cout << "\nMesa: \n";
+    for (int i = 0; i < mesa.size(); i++)
+    {
+        std::cout << mesa[i].get_Valor_Carta() << " de " << mesa[i].get_Naipe() << "\n";
+    }
+    std::cout << "\nJogadores: \n";
+    for (int i = 0; i < jogadores.size(); i++)
+    {
+        std::cout << "Jogador " << i+1 << ": " << jogadores[i].get_Nick() << "   " <<jogadores[i].isTrue_Ativo() << "\n";
+    }
+
+    dealer.set_Primeiro_Jogador(2);
+    jogadores[2].set_Ativo(false);
+    std::cout << jogadores[2].isTrue_Ativo() << "\n\n";
+    dealer.designarPrimeiroJogador();
+    std::cout << dealer.get_Primeiro_Jogador()<< "\n\n";
+    return 0;
 }
