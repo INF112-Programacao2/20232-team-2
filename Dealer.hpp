@@ -34,6 +34,9 @@ public:
     //get do valor atual da aposta
     int getValorMesa();
 
+    //get do primeiro jogador
+    int get_Primeiro_Jogador();
+
     //set para atualizar o valor da aposta
     void setValorMesa(int valor);
 
