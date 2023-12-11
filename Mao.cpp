@@ -296,7 +296,7 @@ void Mao::printCartas()
 
 //main para testar esse código
 
-int main()
+/*int main()
 { 
     Mao mao;
     Carta carta1(12, "Ouros");
@@ -335,4 +335,4 @@ int main()
         if (entrada ==0) break;
     }
     return 0;
-}
+}*/
