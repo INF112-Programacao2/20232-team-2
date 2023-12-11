@@ -227,9 +227,15 @@ bool Jogador::isTrue_Small_Blind()
    return small_Blind;
 }
 
-int Jogador::get_apostado()
+int Jogador::get_Apostado()
 {
    return apostado;
+}
+
+void Jogador::aumenta_Saldo(int _saldo)
+{
+   saldo += _saldo;
+   converte_sobressalente(_saldo);
 }
 
 void Jogador::set_small_blind(bool small)

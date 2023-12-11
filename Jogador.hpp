@@ -89,7 +89,7 @@ class Jogador
       //Exibe as informações do jogador
       void exibirInfo(int ValorMesa);
 
-      int get_apostado();
+      int get_Apostado();
 
       //settar o status do jogador na partida
       void set_Ativo(bool ativo);
@@ -102,6 +102,8 @@ class Jogador
 
       //Alterar a vez do jogador
       void set_Vez(bool vez);
+      
+      void aumenta_Saldo(int saldo);
 
       //Converte fichas de um tipo em fichas de outro tipo
       void converte();
