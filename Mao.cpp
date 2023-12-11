@@ -190,26 +190,22 @@ bool Mao::is_FullHouse()
 // Identificamos se temos um Straight Flush começado por 10(Testado e funcionando)
 bool Mao::is_RoyalFlush()
 {
-    if (is_StraightFlush())
+    std::sort(cartas.begin(), cartas.end(), compareNaipe);
+    for (int i = 0; i < cartas.size() - 4; i++)
     {
-        std::vector<Carta> copiaCartas = cartas;
-        std::sort(copiaCartas.begin(), copiaCartas.end(), compareNaipe);
-        for (int i = 0; i < copiaCartas.size() - 5; i++)
-        {
-            if (copiaCartas[i].get_Valor_Carta() == copiaCartas[i + 5 - 1].get_Valor_Carta() - 5 + 1)
-            
-            //  1 2 3 4 5
-            //  0 1 2 3 4 
-
-            {
-                if (copiaCartas[i].get_Valor_Carta() == 10)
-                {
+        if((cartas[0+i].get_Valor_Carta()) == ((cartas[1+i]).get_Valor_Carta() - 1) && 
+        (cartas[0+i].get_Valor_Carta()) == ((cartas[2+i]).get_Valor_Carta() - 2) && 
+        (cartas[0+i].get_Valor_Carta()) == ((cartas[3+i]).get_Valor_Carta() - 3) && 
+        (cartas[0+i].get_Valor_Carta()) == ((cartas[4+i]).get_Valor_Carta() - 4))
+            if((cartas[0+i].get_Naipe()) == (cartas[1+i].get_Naipe()) && 
+            (cartas[0+i].get_Naipe()) == (cartas[2+i].get_Naipe()) && 
+            (cartas[0+i].get_Naipe()) == (cartas[3+i].get_Naipe()) && 
+            (cartas[0+i].get_Naipe()) == (cartas[4+i].get_Naipe()))
+                if((cartas[0+i].get_Valor_Carta() == 10))
                     return true;
-                }
-            }
-        }
     }
     return false;
+    
 }
 
 void Mao::valorMao()
