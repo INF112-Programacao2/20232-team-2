@@ -33,6 +33,8 @@ public:
     //Destrutor
     ~Dealer();
 
+    void passar_Vez();
+
     //get do valor atual da aposta
     int getValorMesa();
 
