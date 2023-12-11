@@ -157,7 +157,26 @@ bool Mao::is_Quadra()
 // Caso específico de sequência do tipo valor(Testado e funcionando)
 bool Mao::is_Straight()
 {
-    return is_Sequencia(0, 5, "valor");
+    std::vector<Carta> copiaCartas = cartas;
+    std::sort(copiaCartas.begin(), copiaCartas.end(), compareValorCartas);
+
+    for (int i = 0; i < copiaCartas.size(); i++)
+    {
+        for (int j = i+1; j < copiaCartas.size(); j++)
+        {
+            if(copiaCartas[i].get_Valor_Carta() == copiaCartas[j].get_Valor_Carta())
+            {
+                copiaCartas.erase(copiaCartas.begin() + j);
+            }
+        }
+    }
+
+    for (int i = 0; i < cartas.size() - 4; i++)
+    {
+        if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta() - 1) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[2+i]).get_Valor_Carta() - 2) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[3+i]).get_Valor_Carta() - 3) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[4+i]).get_Valor_Carta() - 4))
+            return true;
+    }
+    return false;
 }
 
 // Caso específico de sequência do tipo naipe(Testado e funcionando)
@@ -261,10 +280,10 @@ int main()
 { 
     Mao mao;
     Carta carta1(12, "Ouros");
-    Carta carta2(12, "Espada");
+    Carta carta2(12, "Espadas");
     Carta carta3(10, "Espadas");
     Carta carta4(11, "Ouros");
-    Carta carta5(14, "Ouros");
+    Carta carta5(13, "Ouros");
     Carta carta6(14, "Ouros");
     mao.adicionarCarta(carta1);
     mao.adicionarCarta(carta2);
