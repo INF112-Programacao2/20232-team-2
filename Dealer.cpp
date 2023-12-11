@@ -320,8 +320,6 @@ bool Dealer::verificar_Check()
     {
         if(jogadores[i].isTrue_Vez())
         {
-            #include <iostream>
-
             if (rodada == 2)
             {
                 std::cout << "As cartas da mesa são: \n";
@@ -374,10 +372,9 @@ bool Dealer::verificar_Check()
             }
             if(jogadoresAtivos == check)
                 return true;
-            
-            if( i == jogadores.size() - 1 )
-                i = 0;
         }
+        if( i == jogadores.size() - 1 )
+            i = 0;
     } 
 }
 
