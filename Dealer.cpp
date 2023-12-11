@@ -29,8 +29,10 @@ void Dealer::passar_Vez()
             {
                 jogadores[i].set_Vez(false);
 
+
                 if(i == jogadores.size()-1 && jogadores[0].isTrue_Ativo())
                 {
+                    i=0;
                     jogadores[0].set_Vez(true);
                     return;
                 }
@@ -39,6 +41,7 @@ void Dealer::passar_Vez()
                     jogadores[i+1].set_Vez(true);
                     return;
                 }
+                if (i == jogadores.size() - 1) i=0;
             }
         }
     }
@@ -196,11 +199,31 @@ void Dealer::verificar_Rodadas()
 
 void Dealer::finalizar_Partida()
 {
-    if(jogadores.size() < 2)
-    {
 
+    int jogadoresAtivos = 0;
+    for (int i = 0; i < jogadores.size(); i++)
+    {
+        if(jogadores[i].isTrue_Ativo())
+        jogadoresAtivos++;
     }
+    
+    if(jogadoresAtivos == 1)
+    {
+        std::cout << "A partida acabou\n";
+        for (int i = 0; i < jogadores.size(); i++)
+        {
+            if(jogadores[i].isTrue_Ativo())
+            {
+                std::cout << "O jogador " << jogadores[i].get_Nick() << " ganhou a partida\n";
+                std::cout << "Obrigado por jogar\n";
+                exit(0);
+            }
+        }
+    }
+
+
 }
+
 
 void Dealer::criarMesa()
 {   
