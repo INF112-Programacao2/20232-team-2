@@ -92,6 +92,9 @@ class Jogador
       //Exibe as informações do jogador
       void exibirInfo(int ValorMesa);
 
+      //settar o status do jogador na partida
+      void set_Ativo(bool ativo);
+
       //Alterar a posição do Small Blind
       void set_small_blind(bool);
 
