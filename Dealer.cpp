@@ -130,11 +130,13 @@ void Dealer::darCartas()
 
 void Dealer::criarMesa()
 {   
+    baralho.pop_back();
     for (int i = 0; i < 3; i++)
     {   
         mesa.push_back(baralho.back());
         baralho.pop_back();
     }
+
     for (int i = 0; i < 2; i++)
     {
         baralho.pop_back();
@@ -156,7 +158,7 @@ void Dealer::designarSmallBlind()
             }
             else
             {
-                jogadores[i].set_small_blind(true);
+                jogadores[i+1].set_small_blind(true);
             }
         }
     }
@@ -175,10 +177,35 @@ void Dealer::designarBigBlind()
             }
             else
             {
-                jogadores[i].set_big_blind(true);
+                jogadores[i+1].set_big_blind(true);
             }
         }
     }
+}
+
+void Dealer::designarPrimeiroJogador()
+{
+    for (int i = 0; i < jogadores.size(); i++)
+    {
+        if(jogadores[i].isTrue_Ativo())
+        {
+            jogadores[i].set_Vez(false);
+            if(i == jogadores.size()-1)
+            {
+                jogadores[0].set_Vez(true);
+            }
+            else
+            {
+                jogadores[i+1].set_Vez(true);
+            }
+        }
+    }
+}
+
+void Dealer::verificar_Check()
+{
+
+
 }
 
 std::vector<Carta> Dealer::get_baralho()

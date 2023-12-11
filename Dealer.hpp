@@ -56,6 +56,12 @@ public:
     //Designar o big blind
     void designarBigBlind();
 
+    //Designar primeiro jogador
+    void designarPrimeiroJogador();
+
+    //Verificar se a aposta atual de todos os jogadores é a mesma da mesa
+    void verificar_Check();
+
     //Retorna o baralho
     std::vector<Carta> get_baralho();
 
