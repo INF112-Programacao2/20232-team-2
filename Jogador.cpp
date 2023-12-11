@@ -209,6 +209,12 @@ bool Jogador::isTrue_Small_Blind()
    return small_Blind;
 }
 
+
+void Jogador::set_Vez(bool)
+{
+   vez = true;
+}
+
 void Jogador::set_small_blind(bool small)
 {
    small_Blind = small;
