@@ -23,6 +23,7 @@ private:
     int valorMesa;
     int primeiro_Jogador;
     int primeira_Aposta;
+    int check;
 
 public:
     //Construtor
