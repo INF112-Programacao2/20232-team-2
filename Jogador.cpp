@@ -184,6 +184,11 @@ Mao Jogador::get_Mao()
    return mao;
 }
 
+std::string Jogador::get_Nick()
+{  
+   return nickname;
+}
+
 bool Jogador::isTrue_Vez()
 {
    return vez;
@@ -209,6 +214,10 @@ bool Jogador::isTrue_Small_Blind()
    return small_Blind;
 }
 
+void Jogador::set_Ativo(bool ativo)
+{
+   this->ativo = ativo;
+}
 
 void Jogador::set_Vez(bool)
 {
