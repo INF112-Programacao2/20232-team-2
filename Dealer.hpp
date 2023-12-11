@@ -18,7 +18,7 @@ private:
     std::vector<Carta> baralho; 
     std::vector<Carta> mesa;
     std::vector<Jogador> jogadores;
-    int posicao;
+    int rodada;
     int quantidadeJogadores;
     int valorMesa;
 
@@ -56,9 +56,14 @@ public:
     //Designar o big blind
     void designarBigBlind();
 
+    //Retorna o baralho
     std::vector<Carta> get_baralho();
 
+    //Retorna a mesa
     std::vector<Carta> get_mesa();
+
+    //Retorna os jogadores
+    std::vector<Jogador> get_jogadores();
 };
 
 #endif

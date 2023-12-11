@@ -8,6 +8,7 @@
 
 Dealer::Dealer() 
 {
+    rodada = 1;
     criarBaralho();
     criarSala();
     darCartas();
@@ -30,6 +31,13 @@ void Dealer::criarSala()
 {
     std::cout << "Digite a quantidade de jogadores da partida: " << std::endl;
     std::cin >> quantidadeJogadores;
+    while (quantidadeJogadores < 2)
+    {
+        std::cout << "Deve haver no mínimo 2 jogadores para jogar Poker\n";
+        std::cout << "\nDigite a quantidade de jogadores da partida: " << std::endl;
+        std::cin >> quantidadeJogadores;
+    }
+    
     for (int i = 1; i <= quantidadeJogadores; i++)
     {
         std::string nick;
@@ -182,3 +190,8 @@ std::vector<Carta> Dealer::get_mesa()
 {
     return mesa;
 } 
+
+std::vector<Jogador> Dealer::get_jogadores()
+{
+    return jogadores;
+}
