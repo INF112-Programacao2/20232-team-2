@@ -67,6 +67,9 @@ public:
     //Verificar se todos os jogadores já cobriram a aposta mais alta da mesa
     void verificar_Check();
 
+    //
+    void verificar_Rodadas();
+
     //Alterar o id do primeiro jogador
     void set_Primeiro_Jogador(int id_Jogador);
 

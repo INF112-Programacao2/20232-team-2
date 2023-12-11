@@ -102,7 +102,6 @@ void Dealer::embaralharCartas()
     std::random_shuffle(baralho.begin(), baralho.end());
 }
 
-
 //Coloquei o while como comentário para fazer os testes em outras funções
 void Dealer::darCartas()
 {
@@ -134,6 +133,11 @@ void Dealer::darCartas()
         }*/
         std::system("clear");
     }
+}
+
+void Dealer::verificar_Rodadas()
+{
+    
 }
 
 void Dealer::criarMesa()
@@ -245,8 +249,6 @@ void Dealer::designarPrimeiroJogador()
     }
 }
 
-
-
 void Dealer::verificar_Check()
 {
     //verificar se o valor da aposta de todos os jogadores são a mesma que a  atual da mão
@@ -273,7 +275,6 @@ void Dealer::verificar_Check()
                         }
                         else if (jogadores[i].get_Aposta() + novaAposta > valorMesa)
                         {
-                            
                             for (int j = 0; j < jogadores.size() && j !=i; j++)
                             {
                                 if(jogadores[j].isTrue_Ativo())
