@@ -131,7 +131,14 @@ bool Mao::is_Trinca()
 // Quatro quartas de mesmo valor(Testado e funcionando)
 bool Mao::is_Quadra()
 {
-    return is_Sequencia(0, 4, "paridade");
+    std::sort(cartas.begin(), cartas.end(), compareValorCartas);
+    for (int i = 0; i < cartas.size()-3; i++)
+    {
+        if((cartas[0+i].get_Valor_Carta()) == ((cartas[1+i]).get_Valor_Carta()) && (cartas[0+i].get_Valor_Carta()) == ((cartas[2+i]).get_Valor_Carta()) && (cartas[0+i].get_Valor_Carta()) == ((cartas[3+i]).get_Valor_Carta()))
+            return true;
+    }
+    return false;
+    
 }
 
 // Caso específico de sequência do tipo valor(Testado e funcionando)
@@ -244,8 +251,8 @@ int main()
     Carta carta2(11, "Ouros");
     Carta carta3(12, "Espada");
     Carta carta4(12, "Ouros");
-    Carta carta5(13, "Ouros");
-    Carta carta6(14, "Ouros");
+    Carta carta5(14, "Ouros");
+    Carta carta6(14, "Copas");
     mao.adicionarCarta(carta1);
     mao.adicionarCarta(carta2);
     mao.adicionarCarta(carta3);
