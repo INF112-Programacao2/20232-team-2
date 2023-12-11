@@ -21,9 +21,6 @@ class Jogador
       //Saldo total em fichas
       int saldo;
 
-      //Comprar fichas
-      void comprarFichas(){}
-
       //Verifica se está na vez do jogador x
       bool vez; 
 
@@ -62,6 +59,8 @@ class Jogador
       
       //Só poderá ser chamado pelo Dealer na última rodada
       Mao get_Mao();
+
+      int get_Valor_Mao();
 
       //Verifica se é a vez do jogador
       bool isTrue_Vez();

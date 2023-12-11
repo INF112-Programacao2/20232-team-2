@@ -188,7 +188,7 @@ void Dealer::verificar_Rodadas()
             mostrarCartas(4);
         }
 
-        else if(rodada == 5)
+        else if(rodada == 4)
         {
             std::cout << "Agora iremos para a próxima rodada\n";
             std::cout << "Agora iremos para a próxima rodada\n";
@@ -219,6 +219,24 @@ void Dealer::finalizar_Partida()
                 exit(0);
             }
         }
+    }
+
+    if(rodada == 4 && verificar_Check())
+    {
+        std::pair<int,int> maior_Valor;
+        maior_Valor.first = 0;  //maior valor da mão (second é a posição do jogador)
+        for (int i = 0; i < jogadores.size(); i++)
+        {
+            if(jogadores[i].get_Valor_Mao() > maior_Valor.first)
+                maior_Valor.first = jogadores[i].get_Valor_Mao();
+                maior_Valor.second = i;
+        }
+        std::cout << "O jogador " << jogadores[maior_Valor.second].get_Nick() 
+        <<" ganhou a partida com uma pontuação de: " << maior_Valor.first << std::endl;
+        std::cout << "A partida acabou\n";
+        std::cout << "Obrigado por jogar\n";
+        
+        exit(0);
     }
 
 
@@ -415,7 +433,7 @@ void Dealer::mostrarCartas(int quantidade_Cartas_Mostradas)
 {
     for (int i = 0; i < quantidade_Cartas_Mostradas; i++)
     {
-        if(mesa[i].get_Valor_Carta())
+        if(mesa[i].get_Valor_Carta() <= 10)
         {
             std::cout << mesa[i].get_Valor_Carta() << "   " << mesa[i].get_Naipe() << std::endl;
         }

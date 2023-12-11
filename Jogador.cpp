@@ -197,6 +197,11 @@ Mao Jogador::get_Mao()
    return mao;
 }
 
+int Jogador::get_Valor_Mao()
+{
+   return mao.valorMao();
+}
+
 std::string Jogador::get_Nick()
 {
    return nickname;

@@ -266,19 +266,19 @@ std::pair<int, bool> Mao::is_RoyalFlush()
     
 }
 
-void Mao::valorMao()
+int Mao::valorMao()
 {
     // Atribuir o valor à mão
-    if(is_RoyalFlush().second)           valor_Da_Mao= 100;
-    else if(is_StraightFlush().second)   valor_Da_Mao= 90;
-    else if (is_Quadra().second)         valor_Da_Mao= 80;
-    else if (is_FullHouse().second)      valor_Da_Mao= 70;
-    else if (is_Flush())          valor_Da_Mao= 60;
-    else if (is_Straight().second)       valor_Da_Mao= 50;
-    else if (is_Trinca().second)         valor_Da_Mao= 40;        
-    else if (is_DoisPares().second)      valor_Da_Mao= 30;
-    else if (is_Par().second)            valor_Da_Mao= 20;
-    else                          valor_Da_Mao= cartas.back().get_Valor_Carta(); 
+    if(is_RoyalFlush().second)           return valor_Da_Mao= 100;
+    else if(is_StraightFlush().second)   return valor_Da_Mao= 90;
+    else if (is_Quadra().second)         return valor_Da_Mao= 80;
+    else if (is_FullHouse().second)      return valor_Da_Mao= 70;
+    else if (is_Flush())                 return valor_Da_Mao= 60;
+    else if (is_Straight().second)       return valor_Da_Mao= 50;
+    else if (is_Trinca().second)         return valor_Da_Mao= 40;        
+    else if (is_DoisPares().second)      return valor_Da_Mao= 30;
+    else if (is_Par().second)            return valor_Da_Mao= 20;
+    else                                 return valor_Da_Mao= cartas.back().get_Valor_Carta(); 
 }
 
 void Mao::printCartas()
