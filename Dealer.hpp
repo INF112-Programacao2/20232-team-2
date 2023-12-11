@@ -21,6 +21,8 @@ private:
     int rodada;
     int quantidadeJogadores;
     int valorMesa;
+    int primeiro_Jogador;
+    int primeira_Aposta;
 
 public:
     //Construtor
@@ -59,8 +61,14 @@ public:
     //Designar primeiro jogador
     void designarPrimeiroJogador();
 
-    //Verificar se a aposta atual de todos os jogadores é a mesma da mesa
+    //Verificar se todos os jogadores já cobriram a aposta mais alta da mesa
     void verificar_Check();
+
+    //Alterar o id do primeiro jogador
+    void set_Primeiro_Jogador(int id_Jogador);
+
+    //Alterar o valor da primeira aposta(Small Blind) -> Será útil mais a frente para aumentar o valor mínimo da aposta após cada partida
+    void set_Primeira_Aposta(int primeira_Aposta);
 
     //Retorna o baralho
     std::vector<Carta> get_baralho();

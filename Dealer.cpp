@@ -9,6 +9,7 @@
 Dealer::Dealer() 
 {
     rodada = 1;
+    primeiro_Jogador = -1;
     criarBaralho();
     criarSala();
     darCartas();
@@ -185,19 +186,16 @@ void Dealer::designarBigBlind()
 
 void Dealer::designarPrimeiroJogador()
 {
-    for (int i = 0; i < jogadores.size(); i++)
-    {
-        if(jogadores[i].isTrue_Ativo())
+    //No começo da partida o Small Blind sempre será o primeiro
+    if(primeiro_Jogador == -1)
+        for (int i = 0; i < jogadores.size(); i++)
         {
-            jogadores[i].set_Vez(false);
-            if(i == jogadores.size()-1)
-            {
-                jogadores[0].set_Vez(true);
-            }
-            else
-            {
-                jogadores[i+1].set_Vez(true);
-            }
+        //encontra o Small Blind
+        if(jogadores[i].isTrue_Small_Blind())
+        {
+            if(jogadores[i].isTrue_Ativo()) 
+                jogadores[i].set_Vez(true);
+            break;
         }
     }
 }
@@ -206,6 +204,16 @@ void Dealer::verificar_Check()
 {
 
 
+}
+
+void Dealer::set_Primeira_Aposta(int primeira_Aposta)
+{
+    this->primeira_Aposta = primeira_Aposta;
+}
+
+void Dealer::set_Primeiro_Jogador(int id_Primeiro_Jogador)
+{
+    primeiro_Jogador = id_Primeiro_Jogador;
 }
 
 std::vector<Carta> Dealer::get_baralho()
