@@ -12,6 +12,22 @@ int main()
 
    std::system("clear");
 
+   
+
+
+
+   //mostrar big bling e small blind
+   /*
+   for (int i = 0; i < ricardo.get_jogadores().size(); i++)
+   {
+      if(ricardo.get_jogadores()[i].isTrue_Big_Blind())
+         std::cout << ricardo.get_jogadores()[i].get_Nick() << "\n";
+   }
+   for (int i = 0; i < ricardo.get_jogadores().size(); i++)
+   {
+      if(ricardo.get_jogadores()[i].isTrue_Small_Blind())
+         std::cout << ricardo.get_jogadores()[i].get_Nick() << "\n";
+   }*/
 
    //teste dealer
 
