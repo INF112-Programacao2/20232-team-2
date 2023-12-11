@@ -224,17 +224,18 @@ bool Mao::is_FullHouse()
         if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()) && 
         (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[2+i]).get_Valor_Carta()))
         {
-            copiaCartas.erase(copiaCartas.begin() + i);
-            copiaCartas.erase(copiaCartas.begin() + 1+i);
             copiaCartas.erase(copiaCartas.begin() + 2+i);
+            copiaCartas.erase(copiaCartas.begin() + 1+i);
+            copiaCartas.erase(copiaCartas.begin() + i);
             trinca = true;
-            //Testando mudança push
+            break;
         }
     }
     for (int i = 0; i < copiaCartas.size()-1; i++)
     {
         if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()))
             dupla = true;
+            break;
     }
     return trinca && dupla;
 }
