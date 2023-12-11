@@ -35,34 +35,34 @@ class Mao
         void adicionarCarta(Carta carta);
         
         // Verifica se a mão é um par (duas cartas iguais)
-        bool is_Par();
+        std::pair<int, bool> is_Par();
 
         // Verifica se a mão é um dois pares (dois pares de cartas iguais)
-        bool is_DoisPares();
+        std::pair<std::pair<int, int>, bool> is_DoisPares();
 
         // Verifica se a mão é um trinca (três cartas iguais)
-        bool is_Trinca();
+        std::pair<int, bool> is_Trinca();
 
         // Verifica se a mão é um straigth (sequência de cinco cartas)
-        bool is_Straight();
+        std::pair<int, bool> is_Straight();
 
         // Verifica se a mão é um flush (cinco cartas no mesmo naipe)
         bool is_Flush();
 
         // Verifica se a mão é um full house (três cartas iguais e um par)
-        bool is_FullHouse();
+        std::pair<std::pair<int, int>, bool> is_FullHouse();
 
         // Verifica se a mão é uma quadra (quatro cartas iguais)
-        bool is_Quadra();
+        std::pair<int, bool> is_Quadra();
 
         // Verifica se a mão é uma straight flush (sequência de cinco cartas no mesmo naipe)
-        bool is_StraightFlush();
+        std::pair<int, bool> is_StraightFlush();
 
         // Verifica se a mao é um royal flush (Sequência de 10 a Ás do mesmo naipe)
-        bool is_RoyalFlush();
+        std::pair<int, bool> is_RoyalFlush();
 
         // Verifica se a mão é um dobro (duas cartas iguais, em sequência)
-        bool is_Dobro();
+        std::pair<int, bool> is_Dobro();
 
         // Retorna o valor da mão, em termos de pontuação
         void valorMao();

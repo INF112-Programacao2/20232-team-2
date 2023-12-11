@@ -29,17 +29,42 @@ void Mao::adicionarCarta(Carta carta)
     cartas.push_back(carta);
 }
 
+std::pair<int, bool> Mao::is_Dobro()
+{
+    //Método para verificar se as duas primeiras cartas adicionadas é um dobro
+    if (cartas[0].get_Valor_Carta() == cartas[1].get_Valor_Carta())
+    {
+        return {cartas[0].get_Valor_Carta(), true};
+    }
+    return {0, false};
+}
+
+
+std::pair<int,bool> Mao::is_Par()
+{
+    std::vector<Carta> copiaCartas = cartas;
+    std::sort(copiaCartas.begin(), copiaCartas.end(), compareValorCartas);
+    for (int i = 0; i < copiaCartas.size()-1; i++)
+    {
+        if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()))
+            return {(copiaCartas[0+i].get_Valor_Carta()), true};
+    }
+    return {0, false};
+}
+
 // Método testado e funcionando
-bool Mao::is_DoisPares()
+std::pair<std::pair<int, int>, bool> Mao::is_DoisPares()
 {
     std::vector<Carta> copiaCartas = cartas;
     std::sort(copiaCartas.begin(), copiaCartas.end(), compareValorCartas);
     bool um_Par = false, dois_Pares = false;
+    int valor_par_um, valor_par_dois;
     for (int i = 0; i < copiaCartas.size()-1; i++)
     {
         if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()))
         {
             um_Par = true;
+            valor_par_um = (copiaCartas[0+i].get_Valor_Carta());
             copiaCartas.erase(copiaCartas.begin() +1+i);
             copiaCartas.erase(copiaCartas.begin() +0+i);
             break;
@@ -51,25 +76,14 @@ bool Mao::is_DoisPares()
         if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()))
         {
             dois_Pares = true;
+            valor_par_dois = (copiaCartas[0+i].get_Valor_Carta());
         }
     }
-    return dois_Pares && um_Par;
-
-    
+    if(dois_Pares && um_Par)
+        return {{valor_par_um, valor_par_dois}, true};
+    return {{0,0}, false};
 }
 
-// Ainda incompleto(por conta da ordenação)
-bool Mao::is_Dobro()
-{
-    //Método para verificar se as duas primeiras cartas adicionadas é um dobro
-    if (cartas[0].get_Valor_Carta() == cartas[1].get_Valor_Carta())
-    {
-        return true;
-    }
-    return false;
-}
-
-// Método testado e funcionando para valores de n acima de 3
 /*bool Mao::is_Sequencia(int inicio,int n, std::string tipo)
 {
     //Temos aqui um uso do conceito de polimorfismo
@@ -122,50 +136,21 @@ bool Mao::is_Dobro()
         return false;
     }
     else return false;
-}*/
+}*/ 
 
-// Método testado e funcionando
-bool Mao::is_Par()
-{
-    std::vector<Carta> copiaCartas = cartas;
-    std::sort(copiaCartas.begin(), copiaCartas.end(), compareValorCartas);
-    for (int i = 0; i < copiaCartas.size()-1; i++)
-    {
-        if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()))
-            return true;
-    }
-    return false;
-} 
-
-// Método testado e funcionando
-bool Mao::is_Trinca()
+std::pair<int, bool> Mao::is_Trinca()
 {
     std::vector<Carta> copiaCartas = cartas;
     std::sort(copiaCartas.begin(), copiaCartas.end(), compareValorCartas);
     for (int i = 0; i < copiaCartas.size()-2; i++)
     {
         if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[2+i]).get_Valor_Carta()))
-            return true;
+            return {(copiaCartas[0+i].get_Valor_Carta()), true};
     }
-    return false;
+    return {0, false};
 }
 
-// Quatro quartas de mesmo valor(Testado e funcionando)
-bool Mao::is_Quadra()
-{
-    std::vector<Carta> copiaCartas = cartas;
-    std::sort(copiaCartas.begin(), copiaCartas.end(), compareValorCartas);
-    for (int i = 0; i < copiaCartas.size()-3; i++)
-    {
-        if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[2+i]).get_Valor_Carta()) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[3+i]).get_Valor_Carta()))
-            return true;
-    }
-    return false;
-    
-}
-
-// Caso específico de sequência do tipo valor(Testado e funcionando)
-bool Mao::is_Straight()
+std::pair<int, bool> Mao::is_Straight()
 {
     std::vector<Carta> copiaCartas = cartas;
     std::sort(copiaCartas.begin(), copiaCartas.end(), compareValorCartas);
@@ -184,12 +169,11 @@ bool Mao::is_Straight()
     for (int i = 0; i < copiaCartas.size() - 4; i++)
     {
         if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta() - 1) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[2+i]).get_Valor_Carta() - 2) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[3+i]).get_Valor_Carta() - 3) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[4+i]).get_Valor_Carta() - 4))
-            return true;
+            return {(copiaCartas[0+i].get_Valor_Carta()), true};
     }
-    return false;
+    return {0, false};
 }
 
-// Caso específico de sequência do tipo naipe(Testado e funcionando)
 bool Mao::is_Flush()
 {   
     std::vector<Carta> copiaCartas = cartas;
@@ -202,26 +186,10 @@ bool Mao::is_Flush()
     return false;
 }
 
-// Interseção dos casos de Flush e Straight(Testado e funcionando)
-bool Mao::is_StraightFlush()
+std::pair<std::pair<int, int>, bool> Mao::is_FullHouse()
 {
-    std::vector<Carta> copiaCartas = cartas;
-    std::sort(copiaCartas.begin(), copiaCartas.end(), compareNaipe);
-
-    for (int i = 0; i < copiaCartas.size() - 4; i++)
-    {
-        if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta() - 1) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[2+i]).get_Valor_Carta() - 2) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[3+i]).get_Valor_Carta() - 3) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[4+i]).get_Valor_Carta() - 4))
-            if((copiaCartas[0+i].get_Naipe()) == (copiaCartas[1+i].get_Naipe()) && (copiaCartas[0+i].get_Naipe()) == (copiaCartas[2+i].get_Naipe()) && (copiaCartas[0+i].get_Naipe()) == (copiaCartas[3+i].get_Naipe()) && (copiaCartas[0+i].get_Naipe()) == (copiaCartas[4+i].get_Naipe()))
-                return true;
-    }
-    return false;
-}
-
-// Um par e uma trinca(Testado e funcionando)
-bool Mao::is_FullHouse()
-{
-    bool trinca = false;
-    bool dupla = false;
+    bool trinca = false, dupla = false;
+    int valor_trinca, valor_dupla;
     std::vector<Carta> copiaCartas = cartas;
     std::sort(copiaCartas.begin(), copiaCartas.end(), compareValorCartas);
     for (int i = 0; i < copiaCartas.size()-2; i++)
@@ -229,6 +197,7 @@ bool Mao::is_FullHouse()
         if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()) && 
         (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[2+i]).get_Valor_Carta()))
         {
+            valor_trinca = (copiaCartas[0+i].get_Valor_Carta());
             copiaCartas.erase(copiaCartas.begin() + 2+i);
             copiaCartas.erase(copiaCartas.begin() + 1+i);
             copiaCartas.erase(copiaCartas.begin() + i);
@@ -239,14 +208,44 @@ bool Mao::is_FullHouse()
     for (int i = 0; i < copiaCartas.size()-1; i++)
     {
         if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()))
+        {
+            valor_dupla = (copiaCartas[0+i].get_Valor_Carta());
             dupla = true;
             break;
+        }
     }
-    return trinca && dupla;
+    if(trinca && dupla)
+        return {{valor_trinca, valor_dupla}, true};
+    return {{0,0}, false};
 }
 
-// Identificamos se temos um Straight Flush começado por 10(Testado e funcionando)
-bool Mao::is_RoyalFlush()
+std::pair<int, bool> Mao::is_Quadra()
+{
+    std::vector<Carta> copiaCartas = cartas;
+    std::sort(copiaCartas.begin(), copiaCartas.end(), compareValorCartas);
+    for (int i = 0; i < copiaCartas.size()-3; i++)
+    {
+        if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[2+i]).get_Valor_Carta()) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[3+i]).get_Valor_Carta()))
+            return {(copiaCartas[0+i].get_Valor_Carta()), true};
+    }
+    return {0, false};
+}
+
+std::pair<int, bool> Mao::is_StraightFlush()
+{
+    std::vector<Carta> copiaCartas = cartas;
+    std::sort(copiaCartas.begin(), copiaCartas.end(), compareNaipe);
+
+    for (int i = 0; i < copiaCartas.size() - 4; i++)
+    {
+        if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta() - 1) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[2+i]).get_Valor_Carta() - 2) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[3+i]).get_Valor_Carta() - 3) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[4+i]).get_Valor_Carta() - 4))
+            if((copiaCartas[0+i].get_Naipe()) == (copiaCartas[1+i].get_Naipe()) && (copiaCartas[0+i].get_Naipe()) == (copiaCartas[2+i].get_Naipe()) && (copiaCartas[0+i].get_Naipe()) == (copiaCartas[3+i].get_Naipe()) && (copiaCartas[0+i].get_Naipe()) == (copiaCartas[4+i].get_Naipe()))
+                return {(copiaCartas[0+i].get_Valor_Carta()), true};
+    }
+    return {0, false};
+}
+
+std::pair<int, bool> Mao::is_RoyalFlush()
 {   
     std::vector<Carta> copiaCartas = cartas;
     std::sort(copiaCartas.begin(), copiaCartas.end(), compareNaipe);
@@ -261,24 +260,24 @@ bool Mao::is_RoyalFlush()
             (copiaCartas[0+i].get_Naipe()) == (copiaCartas[3+i].get_Naipe()) && 
             (copiaCartas[0+i].get_Naipe()) == (copiaCartas[4+i].get_Naipe()))
                 if((copiaCartas[0+i].get_Valor_Carta() == 10))
-                    return true;
+                    return {(copiaCartas[0+i].get_Valor_Carta()), true};
     }
-    return false;
+    return {0, false};
     
 }
 
 void Mao::valorMao()
 {
     // Atribuir o valor à mão
-    if(is_RoyalFlush())           valor_Da_Mao= 100;
-    else if(is_StraightFlush())   valor_Da_Mao= 90;
-    else if (is_Quadra())         valor_Da_Mao= 80;
-    else if (is_FullHouse())      valor_Da_Mao= 70;
+    if(is_RoyalFlush().second)           valor_Da_Mao= 100;
+    else if(is_StraightFlush().second)   valor_Da_Mao= 90;
+    else if (is_Quadra().second)         valor_Da_Mao= 80;
+    else if (is_FullHouse().second)      valor_Da_Mao= 70;
     else if (is_Flush())          valor_Da_Mao= 60;
-    else if (is_Straight())       valor_Da_Mao= 50;
-    else if (is_Trinca())         valor_Da_Mao= 40;        
-    else if (is_DoisPares())      valor_Da_Mao= 30;
-    else if (is_Par())            valor_Da_Mao= 20;
+    else if (is_Straight().second)       valor_Da_Mao= 50;
+    else if (is_Trinca().second)         valor_Da_Mao= 40;        
+    else if (is_DoisPares().second)      valor_Da_Mao= 30;
+    else if (is_Par().second)            valor_Da_Mao= 20;
     else                          valor_Da_Mao= cartas.back().get_Valor_Carta(); 
 }
 
