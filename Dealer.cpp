@@ -234,16 +234,9 @@ void Dealer::designarBigBlind()
 
 void Dealer::designarPrimeiroJogador()
 {
-    set_Primeiro_Jogador(2);
-    jogadores[primeiro_Jogador].set_Ativo(false);
-    jogadores[0].set_Ativo(false);
-    //std::cout << jogadores[primeiro_Jogador].isTrue_Ativo()<< primeiro_Jogador <<"\n\n";
-    for (int i = 0; i < jogadores.size(); i++) {std::cout << jogadores[i].isTrue_Ativo() << "       ";}
-    std::cout << "\n\n";
     //No começo da partida o Small Blind sempre será o primeiro
     if(primeiro_Jogador == -1)
     {    
-        std::cout << "entrei aqui\n\n";
         for (int i = 0; i < jogadores.size(); i++)
         {
             //encontra o Small Blind
@@ -251,17 +244,20 @@ void Dealer::designarPrimeiroJogador()
             {
                 jogadores[i].set_Vez(true);
                 primeiro_Jogador = i;
+                for (int  j = 0; j < jogadores.size(); j++)
+                {
+                    if(j != i)
+                    {
+                        jogadores[j].set_Vez(false);
+                    }
+                }
                 break;
             }
         }
     }    
     //Verifica se quem era para ser o maior jogador desta rodada ainda está ativo na partida
-    
-    
-    
     else if (!jogadores[primeiro_Jogador].isTrue_Ativo()) //Verificar o problema desse condicional
     {
-        std::cout << "entrei aqui\n\n";
         while (true)
         {
 
@@ -270,16 +266,22 @@ void Dealer::designarPrimeiroJogador()
             {
                 primeiro_Jogador = 0;
             }
-            //Se não veremos o próximo 
+            //Se não, veremos o próximo 
             else
             {
-                std::cout << "Entrei aqui agora\n\n";
                 primeiro_Jogador++;
             }
             //Se o atual jogador avaliado estiver ativo na partida, então ele iniciará as apostas da rodada            
             if(jogadores[primeiro_Jogador].isTrue_Ativo())
             {
                 jogadores[primeiro_Jogador].set_Vez(true);
+                for (int j = 0; j < jogadores.size(); j++)
+                {
+                    if(j != primeiro_Jogador)
+                    {
+                        jogadores[j].set_Vez(false);
+                    }
+                }
                 break;
             }
         }       
