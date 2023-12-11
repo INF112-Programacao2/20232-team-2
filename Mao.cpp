@@ -68,7 +68,6 @@ bool Mao::is_Sequencia(int inicio,int n, std::string tipo)
     //Primeiro motivo: o método is_Sequencia dará um retorno de acordo com seu chamado(tipo), que pode ser sequência por "naipe", "valor" ou "paridade"
     if(tipo.compare("valor") == 0)
     {
-        std::sort(cartas.begin(), cartas.end(), compareNaipe);
         if(cartas.size() >= n)
             for (int i = 0; i < cartas.size() - n + 1; i++) 
             {
