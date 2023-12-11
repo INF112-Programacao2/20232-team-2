@@ -119,13 +119,25 @@ bool Mao::is_Sequencia(int inicio,int n, std::string tipo)
 // Método testado e funcionando
 bool Mao::is_Par()
 {
-    return is_Sequencia(0, 2, "paridade");
+    std::sort(cartas.begin(), cartas.end(), compareValorCartas);
+    for (int i = 0; i < cartas.size()-1; i++)
+    {
+        if((cartas[0+i].get_Valor_Carta()) == ((cartas[1+i]).get_Valor_Carta()))
+            return true;
+    }
+    return false;
 } 
 
 // Método testado e funcionando
 bool Mao::is_Trinca()
 {
-    return is_Sequencia(0, 3, "paridade");
+    std::sort(cartas.begin(), cartas.end(), compareValorCartas);
+    for (int i = 0; i < cartas.size()-2; i++)
+    {
+        if((cartas[0+i].get_Valor_Carta()) == ((cartas[1+i]).get_Valor_Carta()) && (cartas[0+i].get_Valor_Carta()) == ((cartas[2+i]).get_Valor_Carta()))
+            return true;
+    }
+    return false;
 }
 
 // Quatro quartas de mesmo valor(Testado e funcionando)
