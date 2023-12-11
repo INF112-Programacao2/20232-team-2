@@ -349,7 +349,32 @@ void Dealer::mostrarCartas(int quantidade_Cartas_Mostradas)
 {
     for (int i = 0; i < quantidade_Cartas_Mostradas; i++)
     {
-        std::cout << mesa[i].get_Valor_Carta() << "   " << mesa[i].get_Naipe() << std::endl;
+        if(mesa[i].get_Valor_Carta())
+        {
+            std::cout << mesa[i].get_Valor_Carta() << "   " << mesa[i].get_Naipe() << std::endl;
+        }
+        else
+        {
+            if (mesa[i].get_Valor_Carta() == 11)
+            {
+                std::cout << 'J' << "   " << mesa[i].get_Naipe() << std::endl;
+            }
+                
+            if (mesa[i].get_Valor_Carta() == 12)
+            {
+                std::cout << 'Q' << "   " << mesa[i].get_Naipe() << std::endl;
+            }
+
+            if (mesa[i].get_Valor_Carta() == 13)
+            {
+                std::cout << 'K' << "   " << mesa[i].get_Naipe() << std::endl;
+            }
+                
+            if (mesa[i].get_Valor_Carta() == 14)
+            {
+                std::cout << 'A' << "   " << mesa[i].get_Naipe() << std::endl;
+            }
+        }
     }
 }
 
