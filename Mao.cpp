@@ -32,19 +32,27 @@ void Mao::adicionarCarta(Carta carta)
 // Método testado e funcionando
 bool Mao::is_DoisPares()
 {
-    for (int i = 0; i < cartas.size() - 1; i++)
+    std::vector<Carta> copiaCartas = cartas;
+    std::sort(copiaCartas.begin(), copiaCartas.end(), compareValorCartas);
+    bool um_Par = false, dois_Pares = false;
+    for (int i = 0; i < copiaCartas.size()-1; i++)
     {
-        if (cartas[i].get_Valor_Carta() == cartas[i + 1].get_Valor_Carta())
+        if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()))
         {
-            for (int j = i + 2; j < cartas.size() - 1; j++)
-            {
-                if (cartas[j].get_Valor_Carta() == cartas[j + 1].get_Valor_Carta())
-                {
-                    return true;
-                }
-            }
+            um_Par = true;
+            copiaCartas.erase(copiaCartas.begin() +0+i);
+            copiaCartas.erase(copiaCartas.begin() +1+i);
         }
     }
+    for (int i = 0; i < copiaCartas.size()-1; i++)
+    {
+        if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()))
+        {
+            dois_Pares = true;
+        }
+    }
+    if(dois_Pares && um_Par)
+        return true;
     return false;
     
 }
