@@ -44,6 +44,7 @@ bool Mao::is_DoisPares()
             }
         }
     }
+    return false;
     
 }
 
@@ -105,7 +106,7 @@ bool Mao::is_Sequencia(int inicio,int n, std::string tipo)
             }
         return false;
     }
-
+    else return false;
 }
 
 // Método testado e funcionando
