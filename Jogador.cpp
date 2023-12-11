@@ -10,6 +10,7 @@ Jogador::Jogador(std::string nick)
    nickname = nick;
    ativo = true;
    vez  = cobriu = ativo = small_Blind = big_Blind = all_in = false;
+   //mao = new Mao(cartas);
    fichas.push_back({5, 10});// 10 de 5, 5 de 10, 5 de 20, 2 de 50, 2 de 100, 1 de 500
    fichas.push_back({10, 5});
    fichas.push_back({20, 5});
@@ -17,7 +18,6 @@ Jogador::Jogador(std::string nick)
    fichas.push_back({100, 2});
    fichas.push_back({500, 1});
    saldo  = 1000;
-   apostado = 0;
 }
 
 Jogador::~Jogador()
@@ -46,114 +46,90 @@ void Jogador::check(int &valorMesa)
 void Jogador::apostar(int &valorMesa)
 {
    //Falta implementar tratamento de exceçoes
-   if(saldo + apostado <= valorMesa)
-   {
-      std::cout << "Você nao possui saldo suficiente para cobrir o valor da mesa, com essa aposta voce entrará em modo all in. Deseja prosseguir? digite SIM para confirmar\n";
-      std::string confirmacao;
-      std::cin >> confirmacao;
-      if(confirmacao.compare("SIM") == 0)
-      {
-         all_in = true;
-         apostado += saldo;
-         saldo  = 0;
-         for (int i = 0; i < fichas.size(); i++)
-         {
-            fichas[i].second = 0;
-         }
-      }
-      return;
-   }
    while(true)
    {
-      std::cout << "\nSeu saldo é: " << saldo  << "\nO valor da mesa é: " << valorMesa << "\nVocê já apostou essa rodada: " << apostado; 
-      std::cout << "\nDigite o valor que deseja apostar (aposte tudo para entrar em all in):";
+      std::cout << "\nSeu saldo é: " << saldo  << "\nO valor da mesa é: " << valorMesa << "\nDigite o valor em fichas que deseja apostar (aposte tudo para entrar em all in):";
       int aposta;
       std::cin >> aposta;
-      if((aposta + apostado) >= valorMesa)
+      if(aposta > saldo)
       {
-         if(aposta < saldo)
+         std::cout << "Suas fichas atuais sao:\n\n";
+         for (int i = 0; i < 5; i++)
          {
-            std::cout << "Suas fichas atuais sao:\n\n";
-            for (int i = 0; i < fichas.size(); i++)
-            {
-               std::cout << "Fichas de " << fichas[i].first << " : " << fichas[i].second << "\n";
-            }
-            std::cout << "\n";
+            std::cout << "Fichas de " << fichas[i].first << " : " << fichas[i].second << "\n";
+         }
+         std::cout << "\n";
 
-            int aposta_em_fichas = 0, ficha, quantidadeFicha;
-            while(true)
+         int aposta_em_fichas = 0, ficha, quantidadeFicha;
+         while(true)
+         {
+            std::cout << "OBSERVAÇÂO : quantidades sobressalentes serão convertidas em outras fichas e guardadas novamente em sua carteira\n";
+            std::cout << "Insira o tipo de ficha que quer apostar, e a quantidade de fichas desse tipo que deseja apostar (ex: '3 10', equivalem a 3 fichas de 10): ";
+            std::cin >> ficha >> quantidadeFicha;
+            if(ficha != 5 && ficha != 10 && ficha != 20 && ficha != 50 && ficha != 100 && ficha != 500)
             {
-               std::cout << "OBSERVAÇÂO : quantidades sobressalentes serão convertidas em outras fichas e guardadas novamente em sua carteira\n";
-               std::cout << "Insira o tipo de ficha que quer apostar, e a quantidade de fichas desse tipo que deseja apostar (ex: '3 10', equivalem a 3 fichas de 10): ";
-               std::cin >> quantidadeFicha >> ficha;
-               if(ficha != 5 && ficha != 10 && ficha != 20 && ficha != 50 && ficha != 100 && ficha != 500)
+               std::cout << "Insira uma ficha de valor valido para apostar (5, 10, 20, 50, 100 ou 500)\n";
+            }
+            else
+            {
+               for (int i = 0; i < fichas.size(); i++)
                {
-                  std::cout << "Insira uma ficha de valor valido para apostar (5, 10, 20, 50, 100 ou 500)\n";
-               }
-               else
-               {
-                  for (int i = 0; i < fichas.size(); i++)
+                  if (fichas[i].first == ficha)
                   {
-                     if (fichas[i].first == ficha)
+                     if(fichas[i].second >= quantidadeFicha)
                      {
-                        if(fichas[i].second >= quantidadeFicha)
+                        aposta_em_fichas *= ficha * quantidadeFicha;
+                        fichas[i].second -= quantidadeFicha;
+                        std::cout << "Você apostou " << quantidadeFicha << " fichas de " << ficha << "\n";
+                        if(aposta_em_fichas >= aposta)
                         {
-                           aposta_em_fichas += ficha * quantidadeFicha;
-                           fichas[i].second -= quantidadeFicha;
-                           std::cout << "\nVocê apostou " << quantidadeFicha << " fichas de " << ficha << "\n";
-                           if(aposta_em_fichas >= aposta)
-                           {
-                              aposta_em_fichas -= aposta;
-                              goto endloop;
-                           }
-                           else
-                           {
-                              std::cout << "É necessário apostar mais " << aposta - aposta_em_fichas << " para atingir a aposta proposta\n\n";
-                           }
+                           aposta_em_fichas -= aposta;
+                           break;
                         }
                         else
                         {
-                           std::cout << "\nVoce nao possui fichas do tipo " << ficha << " suficientes\n\n";
+                           std::cout << "É necessário apostar mais " << aposta - aposta_em_fichas << " para atingir a aposta proposta\n";
                         }
                      }
-                  }               
-               }
+                     else
+                     {
+                        std::cout << "Voce nao possui fichas do tipo " << ficha << " suficientes\n\n";
+                     }
+                  }
+               }               
             }
-            endloop:
-            converte_sobressalente(aposta_em_fichas);
-            std::cout << "Foram convertidas " << aposta_em_fichas << " fichas para a sua carteira\n\n";
-            cobriu = true;
-            apostado += aposta;
-            saldo -= aposta;
-            valorMesa = apostado;
-            break;
          }
-         else if(aposta == saldo)
+         converte_sobressalente(aposta_em_fichas);
+         apostado += aposta;
+         saldo -= aposta;
+      }
+      else if(aposta == saldo)
+      {
+         std::cout << "Seu saldo se esgotou, com essa aposta voce entrará em modo all in. Deseja prosseguir? digite SIM para confirmar\n";
+         std::string confirmacao;
+         std::cin >> confirmacao;
+         if(confirmacao.compare("SIM") == 0)
          {
-            std::cout << "Seu saldo se esgotou, com essa aposta voce entrará em modo all in. Deseja prosseguir? digite SIM para confirmar\n";
-            std::string confirmacao;
-            std::cin >> confirmacao;
-            if(confirmacao.compare("SIM") == 0)
+            all_in = true;
+            saldo  = 0;
+            for (int i = 0; i < fichas.size(); i++)
             {
-               all_in = cobriu = true;
-               saldo  = 0;
-               apostado += aposta;
-               valorMesa = apostado;
-               for (int i = 0; i < fichas.size(); i++)
-               {
-                  fichas[i].second = 0;
-               }
-               break;
+               fichas[i].second = 0;
             }
-         }
-         else
-         {
-            std::cout << "Saldo insuficiente, aposte um valor mais baixo\n";
          }
       }
       else
       {
-         std::cout << "Valor da mesa não atingido, aposte um valor maior\n\n";
+         std::cout << "Saldo insuficiente, aposte um valor mais baixo\n";
+      }
+
+      if (apostado < valorMesa && !all_in)
+      {
+         std::cout << "Aposta insuficiente, por favor, aumente ela\n"; //throw std::invalid_argument("Aposta insuficiente, por favor, aumente ela");
+      }
+      else
+      {
+           break;
       }
    }
 
@@ -179,11 +155,10 @@ void Jogador::desistir()
 void Jogador::exibirInfo(int ValorMesa)
 {
    std::cout << "\nNickname: " << nickname << "\n";
-   for (int i = 0; i < fichas.size(); i++)
+   for (int i = 0; i < 5; i++)
    {
       std::cout << "Fichas de " << fichas[i].first << " : " << fichas[i].second << "\n";
    }
-   std::cout << "Saldo total: " << saldo << "\n";
    std::cout << "\n";
    if(cobriu)
    {
@@ -192,7 +167,7 @@ void Jogador::exibirInfo(int ValorMesa)
    else
    {
       std::cout << "Você ainda não cobriu o valor da aposta (" << ValorMesa << ") mais alta da mesa\n";
-      std::cout << "Voce já apostou " << apostado << " nessa rodada\n";
+      std::cout << "Voce já apostou " << apostado << "nessa rodada\n";
    }
    if(small_Blind)
    {
@@ -202,17 +177,11 @@ void Jogador::exibirInfo(int ValorMesa)
    {
       std::cout << "Você é o big blind nessa rodada\n";
    }
-   std::cout << "\n";
 }
 
 Mao Jogador::get_Mao()
 { 
    return mao;
-}
-
-std::string Jogador::get_Nick()
-{
-   return nickname;
 }
 
 bool Jogador::isTrue_Vez()
@@ -267,11 +236,10 @@ void Jogador::set_big_blind(bool big)
 void Jogador::converte()
 {
    std::cout << "Suas fichas atuais sao:\n\n";
-   for (int i = 0; i < fichas.size(); i++)
+   for (int i = 0; i < 5; i++)
    {
       std::cout << "Fichas de " << fichas[i].first << " : " << fichas[i].second << "\n";
    }
-   std::cout << "\n";
 
    int a_converter, convertido;
    int quantidade_a_converter, quantidade_convertida;
@@ -320,7 +288,6 @@ void Jogador::converte()
          break;
       }
    }
-
    for (int i = 0; i < fichas.size(); i++)
    {
       if(fichas[i].first == convertido)
@@ -356,35 +323,10 @@ void Jogador::converte()
 
 void Jogador::converte_sobressalente(int aposta_em_fichas)
 {
-   while (aposta_em_fichas >= 500)
-   {
-      fichas[5].second++;
-      aposta_em_fichas -= 500;
-   }
-   while (aposta_em_fichas >= 100)
-   {
-      fichas[4].second++;
-      aposta_em_fichas -= 100;
-   }
-   while (aposta_em_fichas >= 50)
-   {
-      fichas[3].second++;
-      aposta_em_fichas -= 50;
-   }
-   while (aposta_em_fichas >= 20)
-   {
-      fichas[2].second++;
-      aposta_em_fichas -= 20;
-   }
-   while (aposta_em_fichas >= 10)
-   {
-      fichas[1].second++;
-      aposta_em_fichas -= 10;
-   }
-   while (aposta_em_fichas >= 5)
-   {
-      fichas[0].second++;
-      aposta_em_fichas -= 5;
-   }
-
+   while (aposta_em_fichas >= 500) fichas[5].second++;
+   while (aposta_em_fichas >= 100) fichas[4].second++;
+   while (aposta_em_fichas >= 50) fichas[3].second++;
+   while (aposta_em_fichas >= 20) fichas[2].second++;
+   while (aposta_em_fichas >= 10) fichas[1].second++;
+   while (aposta_em_fichas >= 5) fichas[0].second++;
 }
