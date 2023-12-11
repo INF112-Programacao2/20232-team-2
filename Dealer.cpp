@@ -14,8 +14,6 @@ Dealer::Dealer()
     criarSala();
     darCartas();
     criarMesa();
-    for (int i = 0; i < jogadores.size(); i++) {jogadores[i].set_Ativo(true);}
-    
 }
 
 Dealer::~Dealer() {}
@@ -193,10 +191,14 @@ void Dealer::designarBigBlind()
     }
 }
 
-
 void Dealer::designarPrimeiroJogador()
 {
-    std::cout << "Entrei aqui\n\n";
+    set_Primeiro_Jogador(2);
+    jogadores[primeiro_Jogador].set_Ativo(false);
+    jogadores[0].set_Ativo(false);
+    //std::cout << jogadores[primeiro_Jogador].isTrue_Ativo()<< primeiro_Jogador <<"\n\n";
+    for (int i = 0; i < jogadores.size(); i++) {std::cout << jogadores[i].isTrue_Ativo() << "       ";}
+    std::cout << "\n\n";
     //No começo da partida o Small Blind sempre será o primeiro
     if(primeiro_Jogador == -1)
     {    
@@ -215,11 +217,13 @@ void Dealer::designarPrimeiroJogador()
     //Verifica se quem era para ser o maior jogador desta rodada ainda está ativo na partida
     
     
-    /*else //if (!jogadores[primeiro_Jogador].isTrue_Ativo()) Verificar o problema desse condicional
+    
+    else if (!jogadores[primeiro_Jogador].isTrue_Ativo()) //Verificar o problema desse condicional
     {
         std::cout << "entrei aqui\n\n";
         while (true)
         {
+
             //Se o atual primeiro jogador for o último do vetor, retornamos ao primeiro 
             if(primeiro_Jogador == jogadores.size()-1)
             {
@@ -238,18 +242,6 @@ void Dealer::designarPrimeiroJogador()
                 break;
             }
         }       
-    }*/
-    else if (primeiro_Jogador >= jogadores.size())
-    {
-        while (!jogadores[primeiro_Jogador].isTrue_Ativo())
-        {
-            primeiro_Jogador++;
-            if (primeiro_Jogador >= jogadores.size())
-            {
-                primeiro_Jogador = 0;
-            }
-        }
-        jogadores[primeiro_Jogador].set_Vez(true);
     }
 }
 
@@ -287,30 +279,13 @@ std::vector<Jogador> Dealer::get_jogadores()
 int main()
 {
     Dealer dealer;
-    std::vector<Carta> baralho = dealer.get_baralho();
-    std::vector<Carta> mesa = dealer.get_mesa();
-    std::vector<Jogador> jogadores = dealer.get_jogadores();
-    std::cout << "Baralho: \n";
-    for (int i = 0; i < baralho.size(); i++)
-    {
-        std::cout << baralho[i].get_Valor_Carta() << " de " << baralho[i].get_Naipe() << "\n";
-    }
-    std::cout << "\nMesa: \n";
-    for (int i = 0; i < mesa.size(); i++)
-    {
-        std::cout << mesa[i].get_Valor_Carta() << " de " << mesa[i].get_Naipe() << "\n";
-    }
-    std::cout << "\nJogadores: \n";
-    for (int i = 0; i < jogadores.size(); i++)
-    {
-        std::cout << "Jogador " << i+1 << ": " << jogadores[i].get_Nick() << "   " <<jogadores[i].isTrue_Ativo() << "\n";
-    }
-
-    dealer.set_Primeiro_Jogador(2);
-    jogadores[2].set_Ativo(false);
-    std::cout << jogadores[2].isTrue_Ativo() << "\n\n";
-    dealer.designarPrimeiroJogador();
-
+    int a =2;
+    dealer.set_Primeiro_Jogador(a);
+    dealer.get_jogadores().at(2).set_Ativo(false);
+    std::cout << dealer.get_jogadores().at(dealer.get_Primeiro_Jogador()).isTrue_Ativo() << "\n\n";
+    
+    dealer.designarPrimeiroJogador(); // Call the function to assign the first player
+    
     //Entrada 3 jogadores e nome aleatórios
     //Saída esperada: 0     problema: Quando declaramos o primeiro_Jogador manualmente, caso para teste, a função designar_Primeiro_Jogador não está sendo chamada
     //De acordo com os testes que venho fazendo, parece que o bug está no condicional do primeiro "else if"
@@ -318,4 +293,4 @@ int main()
     return 0;
 }
 
-//Observação: Nos testes a funlção designar Primeiro Jogador não está sendo executada
+//Observação: Nos testes a função designar Primeiro Jogador não está sendo executada
