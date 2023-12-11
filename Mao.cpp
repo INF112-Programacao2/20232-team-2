@@ -40,10 +40,12 @@ bool Mao::is_DoisPares()
         if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()))
         {
             um_Par = true;
-            copiaCartas.erase(copiaCartas.begin() +0+i);
             copiaCartas.erase(copiaCartas.begin() +1+i);
+            copiaCartas.erase(copiaCartas.begin() +0+i);
+            break;
         }
     }
+    
     for (int i = 0; i < copiaCartas.size()-1; i++)
     {
         if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta()))
@@ -180,12 +182,6 @@ bool Mao::is_Straight()
         }
     }
 
-    std::cout << "\n";
-    for (int i = 0; i < copiaCartas.size(); i++)
-    {
-        std::cout << copiaCartas[i].get_Valor_Carta() << " " << copiaCartas[i].get_Naipe() << "\n";
-    }
-
     for (int i = 0; i < copiaCartas.size() - 4; i++)
     {
         if((copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[1+i]).get_Valor_Carta() - 1) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[2+i]).get_Valor_Carta() - 2) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[3+i]).get_Valor_Carta() - 3) && (copiaCartas[0+i].get_Valor_Carta()) == ((copiaCartas[4+i]).get_Valor_Carta() - 4))
@@ -301,13 +297,15 @@ int main()
     Carta carta3(10, "Espadas");
     Carta carta4(11, "Ouros");
     Carta carta5(13, "Ouros");
-    Carta carta6(14, "Ouros");
+    Carta carta6(7, "Espadas");
+    Carta carta7(7, "Ouros");
     mao.adicionarCarta(carta1);
     mao.adicionarCarta(carta2);
     mao.adicionarCarta(carta3);
     mao.adicionarCarta(carta4);
     mao.adicionarCarta(carta5);
     mao.adicionarCarta(carta6);
+    mao.adicionarCarta(carta7);
 
     //mao.valor_Mao;
     std::cout << mao.getCartas().size() << std::endl;
