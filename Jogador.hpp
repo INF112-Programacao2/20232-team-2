@@ -98,6 +98,9 @@ class Jogador
       //Alterar a posição do Big Blind
       void set_big_blind(bool);
 
+      //Alterar a vez do jogador
+      void set_Vez(bool);
+
       //Converte fichas de um tipo em fichas de outro tipo
       void converte();
 
