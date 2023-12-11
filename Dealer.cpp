@@ -137,8 +137,36 @@ void Dealer::darCartas()
 
 void Dealer::verificar_Rodadas()
 {
-    
+    if(verificar_Check())
+    {
+        std::cout << "Todos os jogadores cobriram a aposta mais alta da mesa\n";
+        std::cout << "Agora iremos para a próxima rodada\n";
+        rodada++;
+
+        if(rodada == 2)
+        {
+            std::cout << "Agora iremos para a próxima rodada\n";
+            std::cout << "Agora iremos para a próxima rodada\n";
+            std::cout << "Agora iremos para a próxima\n";
+            mostrarCartas(3);
+        }
+
+        else if(rodada == 3)
+        {
+            std::cout << "Agora iremos para a próxima rodada\n";
+            std::cout << "Agora iremos para a próxima rodada\n";
+            mostrarCartas(4);
+        }
+
+        else if(rodada == 5)
+        {
+            std::cout << "Agora iremos para a próxima rodada\n";
+            std::cout << "Agora iremos para a próxima rodada\n";
+            mostrarCartas(5);
+        }
+    }
 }
+
 
 void Dealer::criarMesa()
 {   
@@ -249,7 +277,7 @@ void Dealer::designarPrimeiroJogador()
     }
 }
 
-void Dealer::verificar_Check()
+bool Dealer::verificar_Check()
 {
     //verificar se o valor da aposta de todos os jogadores são a mesma que a  atual da mão
     for (int i = 0; i < jogadores.size(); i++)
@@ -291,6 +319,14 @@ void Dealer::verificar_Check()
             }
         }
     } 
+}
+
+void Dealer::mostrarCartas(int quantidade_Cartas_Mostradas)
+{
+    for (int i = 0; i < quantidade_Cartas_Mostradas; i++)
+    {
+        std::cout << mesa[i].get_Valor_Carta() << "   " << mesa[i].get_Naipe() << std::endl;
+    }
 }
 
 void Dealer::set_Primeira_Aposta(int primeira_Aposta)

@@ -68,7 +68,10 @@ public:
     void verificar_Check();
 
     //
-    void verificar_Rodadas();
+    bool verificar_Rodadas();
+
+    //Mostrar cartas de acordo com a rodada
+    void mostrarCartas(int quantidade_Cartas_Mostradas);
 
     //Alterar o id do primeiro jogador
     void set_Primeiro_Jogador(int id_Jogador);
