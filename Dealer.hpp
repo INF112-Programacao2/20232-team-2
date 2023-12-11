@@ -68,7 +68,7 @@ public:
     bool verificar_Check();
 
     //
-    bool verificar_Rodadas();
+    void verificar_Rodadas();
 
     //Mostrar cartas de acordo com a rodada
     void mostrarCartas(int quantidade_Cartas_Mostradas);
