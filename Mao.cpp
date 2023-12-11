@@ -228,6 +228,7 @@ bool Mao::is_FullHouse()
             copiaCartas.erase(copiaCartas.begin() + 1+i);
             copiaCartas.erase(copiaCartas.begin() + 2+i);
             trinca = true;
+            //Testando mudança commit
         }
     }
     for (int i = 0; i < copiaCartas.size()-1; i++)
@@ -293,7 +294,7 @@ int main()
 { 
     Mao mao;
     Carta carta1(12, "Ouros");
-    Carta carta2(12, "Espadas");
+    Carta carta2(13, "Espadas");
     Carta carta3(12, "Espadas");
     Carta carta4(15, "Ouros");
     Carta carta5(13, "Ouros");
