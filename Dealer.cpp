@@ -9,6 +9,7 @@
 Dealer::Dealer() 
 {
     rodada = 1;
+    check = 1;
     primeiro_Jogador = -1;
     criarBaralho();
     criarSala();
@@ -292,28 +293,61 @@ bool Dealer::verificar_Check()
     {
         if(jogadores[i].isTrue_Vez())
         {
-            if(rodada == 1)
+            if(rodada == 2)
             {
+                std::cout << "As cartas da mesa são: \n" << mostrarCartas(3);
+            }
+            if(rodada == 3)
+            {
+                std::cout << "As cartas da mesa são: \n" << mostrarCartas(4);
+            }
+            if(rodada == 4)
+            {
+                std::cout << "As cartas da mesa são: \n" << mostrarCartas(5);
+            }
+            std::cout << "Digite 1 para ver suas informações\nDigite 2 para apostar algum valor\nDigite 3 para desistir da partida\nDigite 4 para abandonar completamente o jogo\n\n";
+            int escolha;
+            std::cout << "Digite o numero escolhido: ";
+            std::cin >> escolha;
+            while(escolha < 1 || escolha > 4)
+            {
+                std::cout << "Por favor, escolha um numero entre 1 e 4\n\n";
                 std::cout << "Digite 1 para ver suas informações\nDigite 2 para apostar algum valor\nDigite 3 para desistir da partida\nDigite 4 para abandonar completamente o jogo\n\n";
-                int escolha;
                 std::cout << "Digite o numero escolhido: ";
                 std::cin >> escolha;
-                while(escolha < 1 || escolha > 4)
-                {
-                    std::cout << "Por favor, escolha um numero entre 1 e 4\n\n";
-                    std::cout << "Digite 1 para ver suas informações\nDigite 2 para apostar algum valor\nDigite 3 para desistir da partida\nDigite 4 para abandonar completamente o jogo\n\n";
-                    std::cout << "Digite o numero escolhido: ";
-                    std::cin >> escolha;
-                }
-                if(escolha == 1) jogadores[i].exibirInfo();
-                if(escolha == 2) jogadores[i].apostar(valorMesa);
-                if(escolha == 3) jogadores[i].desistir();
-                if(escolha == 4) jogadores[i].abandonar();
             }
-            else
+
+            int valorMesaAntigo = valorMesa;   
+            if(escolha == 1) jogadores[i].exibirInfo();
+            else if(escolha == 2) jogadores[i].apostar(valorMesa);
+            else if(escolha == 3) jogadores[i].desistir();
+            else if(escolha == 4) jogadores[i].abandonar();
+
+            if(valorMesa == valorMesaAntigo) check++;
+            else check = 1;
+
+            jogadores[i].set_vez(false);
+            while (true)
             {
-                
-            }
+                if(primeiro_Jogador == jogadores.size()-1)
+                {
+                    primeiro_Jogador = 0;
+                }
+
+                else
+                {
+                    primeiro_Jogador++;
+                }
+
+                if(jogadores[primeiro_Jogador].isTrue_Ativo())
+                {
+                    jogadores[primeiro_Jogador].set_Vez(true);
+                    break;
+                }
+            } 
+
+            if( i == jogadores.size() - 1 )
+                i = 0;
         }
     } 
 }
