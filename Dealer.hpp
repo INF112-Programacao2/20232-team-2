@@ -65,7 +65,7 @@ public:
     void designarPrimeiroJogador();
 
     //Verificar se todos os jogadores já cobriram a aposta mais alta da mesa
-    void verificar_Check();
+    bool verificar_Check();
 
     //
     void verificar_Rodadas();

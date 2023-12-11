@@ -69,6 +69,7 @@ void Dealer::criarSala()
     }
     int big = rand()%jogadores.size();
     jogadores[big].set_big_blind(true);
+    jogadores[big].set_Vez(true);
     for (int i = 0; i < jogadores.size(); i++)
     {
         if(big == jogadores.size()-1)
@@ -249,45 +250,31 @@ void Dealer::designarPrimeiroJogador()
     }
 }
 
-void Dealer::verificar_Check()
+bool Dealer::verificar_Check()
 {
     //verificar se o valor da aposta de todos os jogadores são a mesma que a  atual da mão
     for (int i = 0; i < jogadores.size(); i++)
     {
-        if(jogadores[i].isTrue_Ativo())
+        if(jogadores[i].isTrue_Vez())
         {
-            if(jogadores[i].get_Aposta() < getValorMesa())
+            if(rodada == 1 && jogadores[i].isTrue_Big_Blind())
             {
-                bool entrada;
-                std::cout << "O valor da sua aposta atual é menor que o valor da mesa. Digite 0 para desistir da partida ou 1 para fazer uma aposta:\n";
-                std::cin >> entrada;
-                if(entrada)
+                std::cout << "Digite 1 para ver suas informações\nDigite 2 para apostar algum valor\nDigite 3 para desistir da partida\nDigite 4 para abandonar completamente o jogo\n\n";
+                int escolha;
+                std::cout << "Digite o numero escolhido: ";
+                std::cin >> escolha;
+                while(escolha < 1 || escolha > 4)
                 {
-                    int novaAposta;
-                    std::cout << "Muito bem, agora digite o quanto você quer complementar da sua aposta, Obs: ela deve ser maior que: " << valorMesa- jogadores[i].get_Aposta()<<"\n\n";
-                    std::cin >> novaAposta;
-                    if(entrada) 
-                    {
-                        jogadores[i].apostar(novaAposta);
-                        if(jogadores[i].get_Aposta() + novaAposta == valorMesa)
-                        {
-                            jogadores[i].set_Cobriu(true);
-                        }
-                        else if (jogadores[i].get_Aposta() + novaAposta > valorMesa)
-                        {
-                            for (int j = 0; j < jogadores.size() && j !=i; j++)
-                            {
-                                if(jogadores[j].isTrue_Ativo())
-                                {
-                                    jogadores[j].set_Cobriu(false);
-                                }
-                            }
-                            
-                        }
-                        
-                    }
-                    
+                    std::cout << "Por favor, escolha um numero entre 1 e 4\n\n";
+                    std::cout << "Digite 1 para ver suas informações\nDigite 2 para apostar algum valor\nDigite 3 para desistir da partida\nDigite 4 para abandonar completamente o jogo\n\n";
+                    std::cout << "Digite o numero escolhido: ";
+                    std::cin >> escolha;
                 }
+                if(escolha == 1) jogadores[i].exibirInfo();
+                if(escolha == 2) jogadores[i].apostar(valorMesa);
+                if(escolha == 3) jogadores[i].desistir();
+                if(escolha == 4) jogadores[i].abandonar();
+
             }
         }
     } 
