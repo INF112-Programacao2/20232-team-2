@@ -30,19 +30,6 @@ void Jogador::receberCarta(Carta carta)
    mao.adicionarCarta(carta);
 }
 
-void Jogador::check(int &valorMesa)
-{
-   if (valorMesa <= apostado)
-   {
-      cobriu = true;
-   }
-
-   else 
-   {
-      std::cout << "Você não pode selecionar essa opção até que o valor da sua aposta seja maior ou igual ao atual valor da mesa\n";
-   }
-}
-
 void Jogador::apostar(int &valorMesa)
 {
    //Falta implementar tratamento de exceçoes
@@ -240,6 +227,11 @@ bool Jogador::isTrue_Small_Blind()
    return small_Blind;
 }
 
+int Jogador::get_apostado()
+{
+   return apostado;
+}
+
 void Jogador::set_small_blind(bool small)
 {
    small_Blind = small;
@@ -250,19 +242,15 @@ void Jogador::set_big_blind(bool big)
    big_Blind = big;
 }
 
-/*void Jogador::comprarFichas()
+void Jogador::set_Ativo(bool _ativo)
 {
-   std::cout << "\nConversão Real-Fichas: 1 Real -> 250  fichas\n";
-   std::cout << "Quantos reais (numero inteiro) deseja inserir?: ";
-   unsigned int adicionar;
-   std::cin >> adicionar;
-   Injetar *= 250;
-   while (Injetar >= 5000) Fichas[4].second ++;
-   while (Injetar >= 1000) Fichas[3].second ++;
-   while (Injetar >= 500) Fichas[2].second ++;
-   while (Injetar >= 100) Fichas[1].second ++;
-   while (Injetar >= 25) Fichas[0].second ++;
-}*/
+   ativo = _ativo;
+}
+
+void Jogador::set_Vez(bool _vez)
+{
+   vez = _vez;
+}
 
 void Jogador::converte()
 {

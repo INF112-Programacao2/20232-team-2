@@ -80,9 +80,6 @@ class Jogador
 
       //Métodos de controle da classe
       
-      //Verificar se o jogador concorda em aceitar o atual valor da aposta
-      void check(int &valorMesa);
-      
       //Verificar se o jogador desiste da rodada
       void desistir();
       
@@ -91,6 +88,8 @@ class Jogador
 
       //Exibe as informações do jogador
       void exibirInfo(int ValorMesa);
+
+      int get_apostado();
 
       //settar o status do jogador na partida
       void set_Ativo(bool ativo);
@@ -102,7 +101,7 @@ class Jogador
       void set_big_blind(bool);
 
       //Alterar a vez do jogador
-      void set_Vez(bool);
+      void set_Vez(bool vez);
 
       //Converte fichas de um tipo em fichas de outro tipo
       void converte();
