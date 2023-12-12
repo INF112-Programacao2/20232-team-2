@@ -21,6 +21,9 @@ class Jogador
       //Saldo total em fichas
       int saldo;
 
+      //Valor que o jogador já tem apostado
+      int apostado;
+
       //Verifica se está na vez do jogador x
       bool vez; 
 
@@ -39,9 +42,6 @@ class Jogador
       //Indica se o jogador está no modo All in
       bool all_in;
 
-      //Valor que o jogador já tem apostado
-      int apostado;
-
    public:
       //Construtor
       Jogador(std::string nick);
@@ -53,14 +53,18 @@ class Jogador
 
       //Nome do jogador
       std::string get_Nick();
-
-      //Receber cartas
-      void receberCarta(Carta carta);
       
       //Só poderá ser chamado pelo Dealer na última rodada
       Mao get_Mao();
 
+      //Retorna a mao do jogador
       int get_Valor_Mao();
+
+      //Retorna o valor apostado em cada rodada do jogador
+      int get_Apostado();
+
+      //Retorna o saldo do jogador
+      int get_saldo();
 
       //Verifica se é a vez do jogador
       bool isTrue_Vez();
@@ -77,20 +81,11 @@ class Jogador
       //Definir se esse jogador será ou não um small blind
       bool isTrue_Small_Blind();
 
+      //Retornar true caso o jogador esteja no modo all_in
       bool isTrue_All_In();
 
-      //Métodos de controle da classe
-      
-      //Verificar se o jogador desiste da rodada
-      void desistir();
-      
-      //Verificar se o jogador quer apostar
-      bool apostar(int &valorMesa);
 
-      //Exibe as informações do jogador
-      void exibirInfo(int ValorMesa);
-
-      int get_Apostado();
+      //Métodos set
 
       //settar o status do jogador na partida
       void set_Ativo(bool ativo);
@@ -106,6 +101,21 @@ class Jogador
 
       //Alterar a vez do jogador
       void set_Vez(bool vez);
+
+
+      //Métodos de controle da classe
+
+      //Receber cartas
+      void receberCarta(Carta carta);
+      
+      //Verificar se o jogador desiste da rodada
+      void desistir();
+      
+      //Verificar se o jogador quer apostar
+      bool apostar(int &valorMesa);
+
+      //Exibe as informações do jogador
+      void exibirInfo(int ValorMesa);
       
       void aumenta_Saldo(int saldo);
 

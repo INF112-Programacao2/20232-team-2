@@ -25,9 +25,97 @@ Jogador::~Jogador()
 
 }
 
+std::string Jogador::get_Nick()
+{
+   return nickname;
+}
+
+Mao Jogador::get_Mao()
+{ 
+   return mao;
+}
+
+int Jogador::get_Valor_Mao()
+{
+   return mao.valorMao();
+}
+
+int Jogador::get_Apostado()
+{
+   return apostado;
+}
+
+int Jogador::get_saldo()
+{
+   return saldo;
+}
+
+bool Jogador::isTrue_Vez()
+{
+   return vez;
+}
+      
+bool Jogador::isTrue_Ativo()
+{
+   return ativo;
+}
+     
+bool Jogador::isTrue_Cobriu()
+{
+   return cobriu;
+}
+
+bool Jogador::isTrue_Big_Blind()
+{
+   return big_Blind;
+}
+
+bool Jogador::isTrue_Small_Blind()
+{
+   return small_Blind;
+}
+
+bool Jogador::isTrue_All_In()
+{
+   return all_in;
+}
+
+void Jogador::set_Ativo(bool _ativo)
+{
+   ativo = _ativo;
+}
+
+void Jogador::set_Apostado(int valor)
+{
+   apostado = valor;
+}
+
+void Jogador::set_small_blind(bool small)
+{
+   small_Blind = small;
+}
+
+void Jogador::set_big_blind(bool big)
+{
+   big_Blind = big;
+}
+
+void Jogador::set_Vez(bool _vez)
+{
+   vez = _vez;
+}
+
 void Jogador::receberCarta(Carta carta)
 {
    mao.adicionarCarta(carta);
+}
+
+void Jogador::desistir()
+{
+   std::cout << "Realmente deseja desistir? digite SIM para confirmar\n";
+   std::string confirmacao;
+   std::cin >> confirmacao;
+   if(confirmacao.compare("SIM") == 0) ativo = false;
 }
 
 bool Jogador::apostar(int &valorMesa)
@@ -157,14 +245,6 @@ bool Jogador::apostar(int &valorMesa)
    }*/
 }
 
-void Jogador::desistir()
-{
-   std::cout << "Realmente deseja desistir? digite SIM para confirmar\n";
-   std::string confirmacao;
-   std::cin >> confirmacao;
-   if(confirmacao.compare("SIM") == 0) ativo = false;
-}
-
 void Jogador::exibirInfo(int ValorMesa)
 {
    std::cout << "\nNickname: " << nickname << "\n";
@@ -194,85 +274,10 @@ void Jogador::exibirInfo(int ValorMesa)
    std::cout << "\n";
 }
 
-Mao Jogador::get_Mao()
-{ 
-   return mao;
-}
-
-int Jogador::get_Valor_Mao()
-{
-   return mao.valorMao();
-}
-
-std::string Jogador::get_Nick()
-{
-   return nickname;
-}
-
-bool Jogador::isTrue_Vez()
-{
-   return vez;
-}
-      
-bool Jogador::isTrue_Ativo()
-{
-   return ativo;
-}
-     
-bool Jogador::isTrue_Cobriu()
-{
-   return cobriu;
-}
-
-bool Jogador::isTrue_Big_Blind()
-{
-   return big_Blind;
-}
-
-bool Jogador::isTrue_Small_Blind()
-{
-   return small_Blind;
-}
-
-int Jogador::get_Apostado()
-{
-   return apostado;
-}
-
-bool Jogador::isTrue_All_In()
-{
-   return all_in;
-}
-
 void Jogador::aumenta_Saldo(int _saldo)
 {
    saldo += _saldo;
    converte_sobressalente(_saldo);
-}
-
-void Jogador::set_small_blind(bool small)
-{
-   small_Blind = small;
-}
-
-void Jogador::set_Apostado(int valor)
-{
-   apostado = valor;
-}
-
-void Jogador::set_big_blind(bool big)
-{
-   big_Blind = big;
-}
-
-void Jogador::set_Ativo(bool _ativo)
-{
-   ativo = _ativo;
-}
-
-void Jogador::set_Vez(bool _vez)
-{
-   vez = _vez;
 }
 
 void Jogador::converte()
