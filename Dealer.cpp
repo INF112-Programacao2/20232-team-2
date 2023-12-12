@@ -308,19 +308,19 @@ void Dealer::dar_Cartas()
         std::cout << "\nA seguir, irei mostrar as cartas do jogador " << jogadores[i].get_Nick() << "\n\n";
         std::cout << "TODOS OS OUTROS JOGADORES NAO DEVEM OLHAR PARA A TELA NESSE INSTANTE\n";
         std::string confirma = {};
-        /*while(!(confirma.compare("CONFIRMA") == 0))
+        while(!(confirma.compare("CONFIRMA") == 0))
         {
             std::cout << "\nDigite CONFIRMA para mostrar as cartas: ";
             std::cin >> confirma;
         }
-        std::cout << "Sua primeira carta: " << jogadores[i].get_Mao().getCartas()[0].get_Valor_Carta() << " de " << jogadores[i].get_Mao().getCartas()[0].get_Naipe() << "\n";
-        std::cout << "Sua segunda carta: " << jogadores[i].get_Mao().getCartas()[1].get_Valor_Carta() << " de " << jogadores[i].get_Mao().getCartas()[1].get_Naipe() << "\n";
+        std::cout << "Sua primeira carta: " << jogadores[i].get_Mao().get_Cartas()[0].get_Valor_Carta() << " de " << jogadores[i].get_Mao().get_Cartas()[0].get_Naipe() << "\n";
+        std::cout << "Sua segunda carta: " << jogadores[i].get_Mao().get_Cartas()[1].get_Valor_Carta() << " de " << jogadores[i].get_Mao().get_Cartas()[1].get_Naipe() << "\n";
         confirma = {};
         while(!(confirma.compare("CONFIRMA") == 0))
         {
             std::cout << "\nDigite CONFIRMA para apagar a tela: ";
             std::cin >> confirma;
-        }*/
+        }
         std::system("clear");
     }
 }

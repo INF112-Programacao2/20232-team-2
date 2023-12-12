@@ -1,9 +1,9 @@
 #include <iostream>
 #include <vector>
-#include "Dealer.hpp"
-#include "Jogador.hpp"
 #include "Carta.hpp"
 #include "Mao.hpp"
+#include "Jogador.hpp"
+#include "Dealer.hpp"
 
 
 int main()
