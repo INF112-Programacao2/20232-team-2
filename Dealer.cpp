@@ -413,9 +413,13 @@ bool Dealer::verificar_Check()
                 {
                     if(valorMesa == valorMesaAntigo) check++;
                     else check = 1;
+                    passar_Vez();
+                }
+                else
+                {
+                    goto again;
                 }
                 
-                passar_Vez();
             }
             else if(escolha == 3)
             {
