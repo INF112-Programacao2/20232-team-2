@@ -335,7 +335,7 @@ void Dealer::dar_Cartas()
             std::cout << "\nDigite CONFIRMA para mostrar as cartas: ";
             std::cin >> confirma;
         }
-        std::cout << "Suas cartas sao: ";
+        std::cout << "Suas cartas sao: \n";
         mostrar_Cartas(2,jogadores[i].get_Mao().get_Cartas());
         confirma = {};
         while(!(confirma.compare("CONFIRMA") == 0))
