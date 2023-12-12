@@ -94,10 +94,10 @@ class Jogador
       void set_Apostado(int valor);
 
       //Alterar a posição do Small Blind
-      void set_small_blind(bool);
+      void set_Small_Blind(bool);
 
       //Alterar a posição do Big Blind
-      void set_big_blind(bool);
+      void set_Big_Blind(bool);
 
       //Alterar a vez do jogador
       void set_Vez(bool vez);
@@ -106,7 +106,7 @@ class Jogador
       //Métodos de controle da classe
 
       //Receber cartas
-      void receberCarta(Carta carta);
+      void receber_Carta(Carta carta);
       
       //Verificar se o jogador desiste da rodada
       void desistir();
@@ -115,7 +115,7 @@ class Jogador
       bool apostar(int &valorMesa);
 
       //Exibe as informações do jogador
-      void exibirInfo(int ValorMesa);
+      void exibir_Info(int ValorMesa);
       
       void aumenta_Saldo(int saldo);
 
@@ -123,7 +123,7 @@ class Jogador
       void converte();
 
       //Converte valor extra da aposta em outras fichas menores
-      void converte_sobressalente(int valor_sobressalente);
+      void converte_Sobressalente(int valor_sobressalente);
 };
 
 #endif

@@ -90,12 +90,12 @@ void Jogador::set_Apostado(int valor)
    apostado = valor;
 }
 
-void Jogador::set_small_blind(bool small)
+void Jogador::set_Small_Blind(bool small)
 {
    small_Blind = small;
 }
 
-void Jogador::set_big_blind(bool big)
+void Jogador::set_Big_Blind(bool big)
 {
    big_Blind = big;
 }
@@ -105,7 +105,7 @@ void Jogador::set_Vez(bool _vez)
    vez = _vez;
 }
 
-void Jogador::receberCarta(Carta carta)
+void Jogador::receber_Carta(Carta carta)
 {
    mao.adicionarCarta(carta);
 }
@@ -245,7 +245,7 @@ bool Jogador::apostar(int &valorMesa)
    }*/
 }
 
-void Jogador::exibirInfo(int ValorMesa)
+void Jogador::exibir_Info(int ValorMesa)
 {
    std::cout << "\nNickname: " << nickname << "\n";
    for (int i = 0; i < fichas.size(); i++)
@@ -370,7 +370,7 @@ void Jogador::converte()
    }
 }
 
-void Jogador::converte_sobressalente(int aposta_em_fichas)
+void Jogador::converte_Sobressalente(int aposta_em_fichas)
 {
    while (aposta_em_fichas >= 500)
    {
