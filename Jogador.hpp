@@ -93,6 +93,9 @@ class Jogador
       //settar o status do jogador na partida
       void set_Ativo(bool ativo);
 
+      //settar o valor apostado
+      void set_Apostado(int valor);
+
       //Alterar a posição do Small Blind
       void set_small_blind(bool);
 

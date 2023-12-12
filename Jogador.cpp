@@ -248,6 +248,11 @@ void Jogador::set_small_blind(bool small)
    small_Blind = small;
 }
 
+void Jogador::set_Apostado(int valor)
+{
+   apostado = valor;
+}
+
 void Jogador::set_big_blind(bool big)
 {
    big_Blind = big;
