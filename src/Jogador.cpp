@@ -1,9 +1,10 @@
-#include "Jogador.hpp"
 #include <iostream>
 #include <vector>
 #include <stdexcept>
+#include <limits>
 #include "Carta.hpp"
 #include "Mao.hpp"
+#include "Jogador.hpp"
 
 Jogador::Jogador(std::string nick)
 {
@@ -126,38 +127,90 @@ void Jogador::desistir()
 {
    std::cout << "Realmente deseja desistir? digite SIM para confirmar\n";
    std::string confirmacao;
-   std::cin >> confirmacao;
-   if(confirmacao.compare("SIM") == 0) ativo = false;
+   try
+   {
+      std::cin >> confirmacao;
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+      if (confirmacao == "SIM")
+      {
+         ativo = false;
+         std::cout << "Desistência confirmada\n";
+      }
+      else
+      {
+         throw std::invalid_argument("Entrada inválida, digite 'SIM' para confirmar\n");
+      }
+   }
+   catch (std::invalid_argument const& e)
+   {
+      std::cerr << e.what() << '\n';
+   }
 }
 
 bool Jogador::apostar(int &valorMesa)
 {
    //Caso o jogador nao tenha o valor necessário para aposta, ele entra "automaticamente" no modo all in
-   if(saldo <= valorMesa)
+   if (saldo <= valorMesa)
    {
-      std::cout << "Você nao possui saldo suficiente para cobrir o valor da mesa, com essa aposta voce entrará em modo all in. Deseja prosseguir? digite SIM para confirmar\n";
+      std::cout << "Você não possui saldo suficiente para cobrir o valor da mesa. Com essa aposta, você entrará em modo all in. Deseja prosseguir? Digite SIM para confirmar\n";
       std::string confirmacao;
-      std::cin >> confirmacao;
-      if(confirmacao.compare("SIM") == 0)
+      
+      //Garante que confirmação seja string, e caso nao seja, limpa a entrada cin para nao prejudicar as proximas entradas
+      try
       {
-         all_in = true;
-         apostado += saldo;
-         saldo  = 0;
-         for (size_t i = 0; i < fichas.size(); i++)
+         std::cin >> confirmacao;
+         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+         if (confirmacao == "SIM")
          {
-            fichas[i].second = 0;
+            all_in = true;
+            apostado += saldo;
+            saldo = 0;
+            for (size_t i = 0; i < fichas.size(); i++)
+            {
+               fichas[i].second = 0;
+            }
+            return true;
          }
-         return true;
+         return false;
       }
-      return false;
+      catch (std::invalid_argument const &e)
+      {
+         std::cerr << e.what() << "\n";
+      }
    }
    //Enquanto o jogador nao fizer uma aposta válida, tenta apostar novamente
    while(true)
    {
-      std::cout << "\nSeu saldo é: " << saldo  << "\nO valor da mesa é: " << valorMesa << "\nVocê já apostou essa rodada: " << apostado; 
-      std::cout << "\nDigite o valor que deseja apostar (aposte tudo para entrar em all in):";
+      
       int aposta;
-      std::cin >> aposta;
+
+      //Garantia de que aposta será um inteiro maior que 0
+      while (true)
+      {
+         std::cout << "\nSeu saldo é: " << saldo  << "\nO valor da mesa é: " << valorMesa << "\nVocê já apostou essa rodada: " << apostado; 
+         std::cout << "\nDigite o valor que deseja apostar (aposte tudo para entrar em all in):";
+         try
+         {
+            std::cin >> aposta;
+            if (std::cin.fail())
+            {
+               std::cin.clear();
+               std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+               throw std::invalid_argument("Entrada inválida, insira um número inteiro\n");
+            }
+            if (aposta < 0)
+            {
+               throw std::invalid_argument("Entrada inválida, a aposta deve ser maior ou igual a 0\n");
+            }
+            break;
+         }
+         catch (const std::invalid_argument &e)
+         {
+            std::cerr << e.what() << "\n";
+         }
+      }
 
       //Se o valor já apostado mais o valor que ira apostar suprir o valor da mesa, ele aposta de fato
       if(aposta + apostado >= valorMesa)
@@ -179,9 +232,32 @@ bool Jogador::apostar(int &valorMesa)
             int aposta_em_fichas = 0, ficha, quantidadeFicha;
             while(true)
             {
-               std::cout << "OBSERVAÇÂO : quantidades sobressalentes serão convertidas em outras fichas e guardadas novamente em sua carteira\n";
-               std::cout << "Insira o tipo de ficha que quer apostar, e a quantidade de fichas desse tipo que deseja apostar (ex: '3 10', equivalem a 3 fichas de 10): ";
-               std::cin >> quantidadeFicha >> ficha;
+               //Garantia de que ficha e quantidadeFicha serão inteiros maior que 0
+               while (true)
+               {
+                  std::cout << "OBSERVAÇÂO : quantidades sobressalentes serão convertidas em outras fichas e guardadas novamente em sua carteira\n";
+                  std::cout << "Insira o tipo de ficha que quer apostar, e a quantidade de fichas desse tipo que deseja apostar (ex: '3 10', equivalem a 3 fichas de 10): ";
+                  try
+                  {
+                     std::cin >> quantidadeFicha >> ficha;
+                     if (std::cin.fail())
+                     {
+                        std::cin.clear();
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                        throw std::invalid_argument("Entrada inválida, insira dois numeros inteiros separados por espaço\n");
+                     }
+                     if (quantidadeFicha < 0 || ficha < 0)
+                     {
+                        throw std::invalid_argument("Entrada inválida, as quantias devem ser maior ou iguais a 0\n");
+                     }
+                     break;
+                  }
+                  catch (const std::invalid_argument &e)
+                  {
+                     std::cerr << e.what() << "\n";
+                  }
+               }
+               
                if(ficha != 5 && ficha != 10 && ficha != 20 && ficha != 50 && ficha != 100 && ficha != 500) // verifica em loop se a ficha que deseja apostar é uma ficha válida
                {
                   std::cout << "Insira uma ficha de valor valido para apostar (5, 10, 20, 50, 100 ou 500)\n";
@@ -240,20 +316,31 @@ bool Jogador::apostar(int &valorMesa)
          {
             std::cout << "Seu saldo se esgotou, com essa aposta voce entrará em modo all in. Deseja prosseguir? digite SIM para confirmar\n";
             std::string confirmacao;
-            std::cin >> confirmacao;
-            if(confirmacao.compare("SIM") == 0)
+
+            //Garante que confirmação seja string, e caso nao seja, limpa a entrada cin para nao prejudicar as proximas entradas
+            try
             {
-               all_in = cobriu = true;
-               saldo  = 0;
-               apostado += aposta;
-               valorMesa = apostado;
-               for (size_t i = 0; i < fichas.size(); i++)
+               std::cin >> confirmacao;
+               std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+               if (confirmacao == "SIM")
                {
-                  fichas[i].second = 0;
+                  all_in = cobriu = true;
+                  saldo  = 0;
+                  apostado += aposta;
+                  valorMesa = apostado;
+                  for (size_t i = 0; i < fichas.size(); i++)
+                  {
+                     fichas[i].second = 0;
+                  }
+                  return true;
                }
-               return true;
+                return false;
             }
-            return false;
+            catch (std::invalid_argument const &e)
+            {
+               std::cerr << e.what() << "\n";
+            }
          }
 
          // se a aposta for maior que o saldo, o jogador nao possui saldo para apostar o valor desejado
@@ -319,22 +406,50 @@ void Jogador::converte()
    int quantidade_a_converter, quantidade_convertida;
 
    // Precisa converter um tipo de ficha válido
-   while (true)
+   while (true) 
    {
-      std::cout << "Deseja converter fichas de qual valor?: ";
-      std::cin >> a_converter;
-      if(a_converter != 5 && a_converter != 10 && a_converter != 20 && a_converter != 50 && a_converter != 100 && a_converter != 500)
+      try 
       {
-         std::cout << "Insira uma ficha de valor valido para converter (5, 10, 20, 50, 100 ou 500)\n";
-      }
-      else
-      {
+         std::cout << "Deseja converter fichas de qual valor?: ";
+         std::cin >> a_converter;
+
+         if (std::cin.fail() || (a_converter != 5 && a_converter != 10 && a_converter != 20 && a_converter != 50 && a_converter != 100 && a_converter != 500)) 
+         {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            throw std::invalid_argument("Insira uma ficha de valor válido para converter (5, 10, 20, 50, 100 ou 500)\n");
+         }
          break;
       }
+      catch (const std::invalid_argument &e) 
+      {
+         std::cerr << e.what() << "\n";
+      }
    }
-
-   std::cout << "Quantas fichas do tipo "<< a_converter << " serão convertidas?: ";
-   std::cin >> quantidade_a_converter;
+   
+   while (true)
+   {
+      std::cout << "Quantas fichas do tipo "<< a_converter << " serão convertidas?: ";
+      try
+      {
+         std::cin >> quantidade_a_converter;
+         if (std::cin.fail())
+         {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            throw std::invalid_argument("Entrada inválida. Por favor, insira um número inteiro.");
+         }
+         if (quantidade_a_converter < 0)
+         {
+            throw std::invalid_argument("Entrada inválida. A quantia deve ser um número inteiro maior ou igual a 0.");
+         }
+         break;
+      }
+      catch (const std::invalid_argument &e)
+      {
+         std::cerr << e.what() << "\n";
+      }
+   }
 
    //Verifica se ele possui fichas suficientes do tipo que deseja converter, caso nao possua, finaliza o método sem converter
    for (size_t i = 0; i < fichas.size(); i++)
@@ -350,21 +465,30 @@ void Jogador::converte()
    }
    
    //Verifica em qual tipo de ficha ele deseja converter, deve ser uma ficha válida
-   while (true)
+   while (true) 
    {
-      std::cout << "\nEssas fichas do tipo " << a_converter << " serao convertidas em fichas de qual valor?: ";
-      std::cin >> convertido;
-      if(convertido == a_converter)
+      try 
       {
-         std::cout << "O tipo de ficha a converter deve ser diferente do tipo de ficha resultante!\n";
-      }
-      else if(convertido != 5 && convertido != 10 && convertido != 20 && convertido != 50 && convertido != 100 && convertido != 500)
-      {
-         std::cout << "Insira uma ficha de valor valido para converter (5, 10, 20, 50, 100 ou 500)\n";
-      }
-      else
-      {
+         std::cout << "\nEssas fichas do tipo " << a_converter << " serão convertidas em fichas de qual valor?: ";
+         if (!(std::cin >> convertido)) 
+         {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            throw std::invalid_argument("Entrada inválida. Insira um número inteiro.\n");
+         }
+         if (convertido == a_converter) 
+         {
+            throw std::invalid_argument("O tipo de ficha a converter deve ser diferente do tipo de ficha resultante!\n");
+         }
+         if (convertido != 5 && convertido != 10 && convertido != 20 && convertido != 50 && convertido != 100 && convertido != 500) 
+         {
+            throw std::invalid_argument("Insira uma ficha de valor válido para converter (5, 10, 20, 50, 100 ou 500)\n");
+         }
          break;
+      }
+      catch (const std::invalid_argument &e) 
+      {
+         std::cerr << e.what() << "\n";
       }
    }
 
