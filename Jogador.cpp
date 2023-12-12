@@ -30,10 +30,10 @@ void Jogador::receberCarta(Carta carta)
    mao.adicionarCarta(carta);
 }
 
-void Jogador::apostar(int &valorMesa)
+bool Jogador::apostar(int &valorMesa)
 {
    //Falta implementar tratamento de exceçoes
-   if(saldo + apostado <= valorMesa)
+   if(saldo <= valorMesa)
    {
       std::cout << "Você nao possui saldo suficiente para cobrir o valor da mesa, com essa aposta voce entrará em modo all in. Deseja prosseguir? digite SIM para confirmar\n";
       std::string confirmacao;
@@ -47,8 +47,9 @@ void Jogador::apostar(int &valorMesa)
          {
             fichas[i].second = 0;
          }
+         return true;
       }
-      return;
+      return false;
    }
    while(true)
    {
@@ -56,7 +57,7 @@ void Jogador::apostar(int &valorMesa)
       std::cout << "\nDigite o valor que deseja apostar (aposte tudo para entrar em all in):";
       int aposta;
       std::cin >> aposta;
-      if((aposta + apostado) >= valorMesa)
+      if(aposta + apostado >= valorMesa)
       {
          if(aposta < saldo)
          {
@@ -113,7 +114,7 @@ void Jogador::apostar(int &valorMesa)
             apostado += aposta;
             saldo -= aposta;
             valorMesa = apostado;
-            break;
+            return true;
          }
          else if(aposta == saldo)
          {
@@ -130,8 +131,9 @@ void Jogador::apostar(int &valorMesa)
                {
                   fichas[i].second = 0;
                }
-               break;
+               return true;
             }
+            return false;
          }
          else
          {
@@ -235,6 +237,11 @@ bool Jogador::isTrue_Small_Blind()
 int Jogador::get_Apostado()
 {
    return apostado;
+}
+
+bool Jogador::isTrue_All_In()
+{
+   return all_in;
 }
 
 void Jogador::aumenta_Saldo(int _saldo)
