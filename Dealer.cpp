@@ -174,12 +174,15 @@ void Dealer::iniciar_Partida()
             designar_Small_Blind();
             designar_Big_Blind();
         }
-        
+        std::cout << "iniciei partida\n";
         criar_Baralho();
         dar_Cartas();
         criar_Mesa();
         designar_Primeiro_Jogador();
-        verificar_Rodadas();
+        for (int i = 0; i < 4; i++)
+        {
+            verificar_Rodadas();
+        }
         finalizar_Partida();
 
         //verificar se há apenas um jogador com dinheiro, em caso positivo o jogo será finalizado
@@ -240,6 +243,7 @@ void Dealer::criar_Sala()
         Jogador temporario(nick);
         jogadores.push_back(temporario);
     }
+    srand(time(NULL));
     int big = rand()%jogadores.size();
     jogadores[big].set_Big_Blind(true);
     jogadores[big].set_Vez(true);
@@ -432,16 +436,10 @@ bool Dealer::verificar_Check()
                 if(jogadores[i].is_True_Ativo())
                     jogadoresAtivos++;
             }
-            if(jogadoresAtivos == check)
+            if(jogadoresAtivos + 1 == check)
                 return true;
             
-            for (int i = 0; i < jogadores.size(); i++)
-            {
-                if(jogadores[i].is_True_Vez())
-                    std::cout << "true ";
-                else
-                    std::cout << "false ";
-            }
+            std::cout << "check = " << check << "\n\n\n\n"; 
         }
         if(jogadores[i].is_True_All_In())
         {
