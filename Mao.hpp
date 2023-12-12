@@ -10,10 +10,10 @@ class Mao
         std::vector<Carta> cartas; 
         
         // Função compare para organizar o vetor de acordo com os valores
-        static bool compareValorCartas(Carta &a, Carta &b);
+        static bool compare_Valor_Cartas(Carta &a, Carta &b);
         
         // Função compare para organizar o vetor de acordo com os naipes
-        static bool compareNaipe(Carta &carta1, Carta &carta2);
+        static bool compare_Naipe(Carta &carta1, Carta &carta2);
 
         // Verifica se a mão é uma sequência (três ou mais cartas em sequência)
         bool is_Sequencia(int inicio, int n, std::string tipo);
@@ -28,17 +28,18 @@ class Mao
         ~Mao();
 
         // Getters
-        std::vector<Carta> getCartas();
+
+        // Retornar as cartas da mão
+        std::vector<Carta> get_Cartas();
+
+        // Retornar o valor da mão
         int get_Valor_Mao();
 
-        // Adiciona uma carta à mão
-        void adicionarCarta(Carta carta);
-        
         // Verifica se a mão é um par (duas cartas iguais)
         std::pair<int, bool> is_Par();
 
         // Verifica se a mão é um dois pares (dois pares de cartas iguais)
-        std::pair<std::pair<int, int>, bool> is_DoisPares();
+        std::pair<std::pair<int, int>, bool> is_Dois_Pares();
 
         // Verifica se a mão é um trinca (três cartas iguais)
         std::pair<int, bool> is_Trinca();
@@ -50,25 +51,19 @@ class Mao
         bool is_Flush();
 
         // Verifica se a mão é um full house (três cartas iguais e um par)
-        std::pair<std::pair<int, int>, bool> is_FullHouse();
+        std::pair<std::pair<int, int>, bool> is_Full_House();
 
         // Verifica se a mão é uma quadra (quatro cartas iguais)
         std::pair<int, bool> is_Quadra();
 
         // Verifica se a mão é uma straight flush (sequência de cinco cartas no mesmo naipe)
-        std::pair<int, bool> is_StraightFlush();
+        std::pair<int, bool> is_Straight_Flush();
 
         // Verifica se a mao é um royal flush (Sequência de 10 a Ás do mesmo naipe)
-        std::pair<int, bool> is_RoyalFlush();
+        std::pair<int, bool> is_Royal_Flush();
 
-        // Verifica se a mão é um dobro (duas cartas iguais, em sequência)
-        std::pair<int, bool> is_Dobro();
-
-        // Retorna o valor da mão, em termos de pontuação
-        int valorMao();
-
-        // Imprimir cartas
-        void printCartas();
+        // Adiciona uma carta à mão
+        void adicionar_Carta(Carta carta);   
 };
 
 #endif

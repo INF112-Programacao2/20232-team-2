@@ -22,13 +22,3 @@ std::string Carta::get_Naipe()
 {
    return naipe;
 }
-
-
-//main para testar esse código
-/*int main()
-{
-   Carta carta(11, "Ouros");
-   std::cout << carta.get_Valor_Carta() << "\n";
-   std::cout << carta.get_Naipe() << "\n";
-   return 0;
-} */ 

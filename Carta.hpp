@@ -15,6 +15,8 @@ class Carta
 
       //Retornar o valor das cartas
       int get_Valor_Carta();
+
+      //Retornar o naipe das cartas
       std::string get_Naipe();
 };
 
