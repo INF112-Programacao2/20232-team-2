@@ -25,7 +25,7 @@ private:
     int primeira_Aposta;
     int valor_Acumulado_mesa;
     int check;
-
+    bool partidaFinalizada;
 public:
     //Construtor
     Dealer();
@@ -43,6 +43,9 @@ public:
 
     //set para atualizar o valor da aposta
     void setValorMesa(int valor);
+
+    //Iniciar partida
+    void iniciar_Partida();
 
     void set_Valor_Acumulado_Mesa(int valorAtualMesa);
 
