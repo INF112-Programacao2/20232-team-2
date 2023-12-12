@@ -8,16 +8,14 @@
 
 Dealer::Dealer() 
 {
+    partidaFinalizada = false;
     rodada = 1;
     check = 1;
     primeiro_Jogador = -1;
     valor_Acumulado_mesa = 0;
-    valorMesa = 0;
     primeira_Aposta = 10;
-    criarBaralho();
-    criarSala();
-    darCartas();
-    criarMesa();
+    valorMesa = primeira_Aposta;
+    
 }
 
 Dealer::~Dealer() {}
@@ -200,6 +198,8 @@ void Dealer::verificar_Rodadas()
             std::cout << "Agora iremos para a próxima rodada\n";
             std::cout << "Agora iremos para a próxima rodada\n";
             mostrarCartas(5);
+            verificar_Check();
+            partidaFinalizada = true;
         }
     }
 }
@@ -247,12 +247,74 @@ void Dealer::finalizar_Partida()
         std::cout << "A partida acabou\n";
         std::cout << "Obrigado por jogar\n";
         jogadores[maior_Valor.second].aumenta_Saldo(valor_Acumulado_mesa);
+        valor_Acumulado_mesa = 0;
+        rodada = 1;
+        check = 1;
+        primeiro_Jogador = -1;
+        primeira_Aposta += 10;
+        valorMesa = primeira_Aposta;
+        for (int i = 0; i < jogadores.size(); i++)
+        {
+            jogadores[i].set_Vez(false);
+            jogadores[i].set_Ativo(true);
+            jogadores[i].set_All_In(false);
+            jogadores[i].set_Apostado(0);
+            jogadores[i].set_Mao(Mao());
+           for (int i = 0; i < baralho.size(); i++)
+           {
+                baralho.pop_back();
+           }
+           
+        }
         return;
     }
 
 
 }
 
+void Dealer::iniciar_Partida()
+{
+    int partidas = 1;
+    criarSala();
+    while (true)
+    {
+        if(partidas > 1)
+        {
+            //Na primeira partida o small blind será sorteado
+            designarSmallBlind();
+            designarBigBlind();
+        }
+        
+        criarBaralho();
+        darCartas();
+        criarMesa();
+        designarPrimeiroJogador();
+        verificar_Rodadas();
+        finalizar_Partida();
+
+        //verificar se há apenas um jogador com dinheiro, em caso positivo o jogo será finalizado
+        int jogadoresComDinheiro = 0;
+        for (int i = 0; i < jogadores.size(); i++)
+        {
+            if(jogadores[i].get_Saldo() > 0)
+                jogadoresComDinheiro++;
+        }
+        if(jogadoresComDinheiro == 1)
+        {
+            std::cout << "A partida acabou\n";
+            for (int i = 0; i < jogadores.size(); i++)
+            {
+                if(jogadores[i].get_Saldo() > 0)
+                {
+                    std::cout << "O jogador " << jogadores[i].get_Nick() << " ganhou o jogo\n";
+                    std::cout << "Seu saldo é de " << jogadores[i].get_Saldo() << std::endl; 
+                    std::cout << "Obrigado por jogar\n";
+                    return;
+                }
+            }
+        }
+    }
+}
 
 void Dealer::criarMesa()
 {   
