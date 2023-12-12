@@ -9,10 +9,30 @@
 int main()
 {
    Dealer ricardo;
+   ricardo.iniciar_Partida();
 
-   std::system("clear");
 
-   
+
+
+//main Dealer
+/*
+int main()
+{
+    Dealer dealer;
+    dealer.set_Primeiro_Jogador(2);
+    dealer.get_jogadores().at(2).set_Ativo(false);
+    std::cout << dealer.get_jogadores().at(dealer.get_Primeiro_Jogador()).is_True_Ativo() << "\n\n";
+    
+    dealer.designar_Primeiro_Jogador(); // Call the function to assign the first player
+    
+    //Entrada 3 jogadores e nome aleatórios
+    //Saída esperada: 0     problema: Quando declaramos o primeiro_Jogador manualmente, caso para teste, a função designar_Primeiro_Jogador não está sendo chamada
+    //De acordo com os testes que venho fazendo, parece que o bug está no condicional do primeiro "else if"
+    std::cout << dealer.get_Primeiro_Jogador()<< "\n\n";
+    return 0;
+}
+*/
+//Observação: Nos testes a função designar Primeiro Jogador não está sendo executada
 
 
 

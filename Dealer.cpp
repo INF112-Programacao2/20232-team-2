@@ -434,6 +434,12 @@ bool Dealer::verificar_Check()
             if(jogadoresAtivos == check)
                 return true;
             
+            for (int i = 0; i < jogadores.size(); i++)
+            {
+                std::cout << jogadores[i].is_True_Vez();
+            }
+            
+
         }
         if(jogadores[i].is_True_All_In())
         {
@@ -442,6 +448,7 @@ bool Dealer::verificar_Check()
         }
         if( i == jogadores.size() - 1 )
             i = 0;
+            
     } 
 }
 
@@ -584,20 +591,3 @@ void Dealer::finalizar_Partida()
 
 }
 
-int main()
-{
-    Dealer dealer;
-    dealer.set_Primeiro_Jogador(2);
-    dealer.get_jogadores().at(2).set_Ativo(false);
-    std::cout << dealer.get_jogadores().at(dealer.get_Primeiro_Jogador()).is_True_Ativo() << "\n\n";
-    
-    dealer.designar_Primeiro_Jogador(); // Call the function to assign the first player
-    
-    //Entrada 3 jogadores e nome aleatórios
-    //Saída esperada: 0     problema: Quando declaramos o primeiro_Jogador manualmente, caso para teste, a função designar_Primeiro_Jogador não está sendo chamada
-    //De acordo com os testes que venho fazendo, parece que o bug está no condicional do primeiro "else if"
-    std::cout << dealer.get_Primeiro_Jogador()<< "\n\n";
-    return 0;
-}
-
-//Observação: Nos testes a função designar Primeiro Jogador não está sendo executada
