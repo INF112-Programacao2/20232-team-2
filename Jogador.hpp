@@ -106,7 +106,7 @@ class Jogador
       void set_All_In(bool);
 
       //Reseta a mao do jogador
-      void set_Mao(Mao);
+      void reset_Mao();
 
 
       //Métodos de controle da classe

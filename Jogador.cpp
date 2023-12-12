@@ -105,6 +105,17 @@ void Jogador::set_Vez(bool _vez)
    vez = _vez;
 }
 
+void Jogador::set_All_In(bool _all_in)
+{
+   all_in = _all_in;
+}
+
+void Jogador::reset_Mao()
+{
+   Mao _mao;
+   mao = _mao;
+}
+
 void Jogador::receber_Carta(Carta carta)
 {
    mao.adicionar_Carta(carta);

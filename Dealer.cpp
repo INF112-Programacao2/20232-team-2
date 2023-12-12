@@ -571,7 +571,7 @@ void Dealer::finalizar_Partida()
             jogadores[i].set_Ativo(true);
             jogadores[i].set_All_In(false);
             jogadores[i].set_Apostado(0);
-            jogadores[i].set_Mao(Mao());
+            jogadores[i].reset_Mao();
            for (int i = 0; i < baralho.size(); i++)
            {
                 baralho.pop_back();
