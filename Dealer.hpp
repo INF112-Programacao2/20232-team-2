@@ -98,7 +98,7 @@ public:
     void verificar_Rodadas();
 
     //Mostrar cartas de acordo com a rodada
-    void mostrar_Cartas(int quantidade_Cartas_Mostradas);
+    void mostrar_Cartas(int quantidade_Cartas_Mostradas, std::vector<Carta> vetor);
 
     //Finaliza a partida atual e reseta alguns dados
     void finalizar_Partida();

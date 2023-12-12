@@ -335,8 +335,8 @@ void Dealer::dar_Cartas()
             std::cout << "\nDigite CONFIRMA para mostrar as cartas: ";
             std::cin >> confirma;
         }
-        std::cout << "Sua primeira carta: " << jogadores[i].get_Mao().get_Cartas()[0].get_Valor_Carta() << " de " << jogadores[i].get_Mao().get_Cartas()[0].get_Naipe() << "\n";
-        std::cout << "Sua segunda carta: " << jogadores[i].get_Mao().get_Cartas()[1].get_Valor_Carta() << " de " << jogadores[i].get_Mao().get_Cartas()[1].get_Naipe() << "\n";
+        std::cout << "Suas cartas sao: ";
+        mostrar_Cartas(2,jogadores[i].get_Mao().get_Cartas());
         confirma = {};
         while(!(confirma.compare("CONFIRMA") == 0))
         {
@@ -396,17 +396,17 @@ bool Dealer::verificar_Check()
             if (rodada == 2)
             {
                 std::cout << "As cartas da mesa são: \n";
-                mostrar_Cartas(3);
+                mostrar_Cartas(3, mesa);
             }
             if (rodada == 3)
             {
                 std::cout << "As cartas da mesa são: \n"; 
-                mostrar_Cartas(4);
+                mostrar_Cartas(4, mesa);
             }
             if (rodada == 4)
             {
                 std::cout << "As cartas da mesa são: \n";
-                mostrar_Cartas(5);
+                mostrar_Cartas(5, mesa);
             }
 
             again:
@@ -499,58 +499,41 @@ void Dealer::verificar_Rodadas()
         std::cout << "Agora iremos para a próxima rodada\n";
         rodada++;
 
-        if(rodada == 2)
+        if(rodada == 4)
         {
-            std::cout << "Todos os jogadores cobriram a aposta mais alta da mesa\n";
-            std::cout << "Agora iremos para a próxima rodada\n";
-            mostrar_Cartas(3);
-        }
-
-        else if(rodada == 3)
-        {
-            std::cout << "Todos os jogadores cobriram a aposta mais alta da mesa\n";
-            std::cout << "Agora iremos para a próxima rodada\n";
-            mostrar_Cartas(4);
-        }
-
-        else if(rodada == 4)
-        {
-            std::cout << "Agora iremos para a próxima rodada\n";
-            std::cout << "Agora iremos para a próxima rodada\n";
-            mostrar_Cartas(5);
             partidaFinalizada = true;
         }
     }
 }
 
-void Dealer::mostrar_Cartas(int quantidade_Cartas_Mostradas)
+void Dealer::mostrar_Cartas(int quantidade_Cartas_Mostradas, std::vector<Carta> vetor)
 {
     for (int i = 0; i < quantidade_Cartas_Mostradas; i++)
     {
-        if(mesa[i].get_Valor_Carta() <= 10)
+        if(vetor[i].get_Valor_Carta() <= 10)
         {
-            std::cout << mesa[i].get_Valor_Carta() << "   " << mesa[i].get_Naipe() << std::endl;
+            std::cout << vetor[i].get_Valor_Carta() << "   " << vetor[i].get_Naipe() << std::endl;
         }
         else
         {
-            if (mesa[i].get_Valor_Carta() == 11)
+            if (vetor[i].get_Valor_Carta() == 11)
             {
-                std::cout << 'J' << "   " << mesa[i].get_Naipe() << std::endl;
+                std::cout << 'J' << "   " << vetor[i].get_Naipe() << std::endl;
             }
                 
-            if (mesa[i].get_Valor_Carta() == 12)
+            if (vetor[i].get_Valor_Carta() == 12)
             {
-                std::cout << 'Q' << "   " << mesa[i].get_Naipe() << std::endl;
+                std::cout << 'Q' << "   " << vetor[i].get_Naipe() << std::endl;
             }
 
-            if (mesa[i].get_Valor_Carta() == 13)
+            if (vetor[i].get_Valor_Carta() == 13)
             {
-                std::cout << 'K' << "   " << mesa[i].get_Naipe() << std::endl;
+                std::cout << 'K' << "   " << vetor[i].get_Naipe() << std::endl;
             }
                 
-            if (mesa[i].get_Valor_Carta() == 14)
+            if (vetor[i].get_Valor_Carta() == 14)
             {
-                std::cout << 'A' << "   " << mesa[i].get_Naipe() << std::endl;
+                std::cout << 'A' << "   " << vetor[i].get_Naipe() << std::endl;
             }
         }
     }
