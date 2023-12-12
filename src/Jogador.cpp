@@ -142,9 +142,9 @@ void Jogador::desistir()
          throw std::invalid_argument("Entrada inválida, digite 'SIM' para confirmar\n");
       }
    }
-   catch (std::invalid_argument const& e)
+   catch (std::invalid_argument &e)
    {
-      std::cerr << e.what() << '\n';
+      std::cerr << e.what() << "\n";
    }
 }
 
@@ -175,7 +175,7 @@ bool Jogador::apostar(int &valorMesa)
          }
          return false;
       }
-      catch (std::invalid_argument const &e)
+      catch (std::invalid_argument &e)
       {
          std::cerr << e.what() << "\n";
       }
@@ -206,7 +206,7 @@ bool Jogador::apostar(int &valorMesa)
             }
             break;
          }
-         catch (const std::invalid_argument &e)
+         catch (std::invalid_argument &e)
          {
             std::cerr << e.what() << "\n";
          }
@@ -252,7 +252,7 @@ bool Jogador::apostar(int &valorMesa)
                      }
                      break;
                   }
-                  catch (const std::invalid_argument &e)
+                  catch (std::invalid_argument &e)
                   {
                      std::cerr << e.what() << "\n";
                   }
@@ -337,7 +337,7 @@ bool Jogador::apostar(int &valorMesa)
                }
                 return false;
             }
-            catch (std::invalid_argument const &e)
+            catch (std::invalid_argument &e)
             {
                std::cerr << e.what() << "\n";
             }
@@ -421,7 +421,7 @@ void Jogador::converte()
          }
          break;
       }
-      catch (const std::invalid_argument &e) 
+      catch (std::invalid_argument &e) 
       {
          std::cerr << e.what() << "\n";
       }
@@ -437,15 +437,15 @@ void Jogador::converte()
          {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            throw std::invalid_argument("Entrada inválida. Por favor, insira um número inteiro.");
+            throw std::invalid_argument("Entrada inválida, insira um número inteiro");
          }
          if (quantidade_a_converter < 0)
          {
-            throw std::invalid_argument("Entrada inválida. A quantia deve ser um número inteiro maior ou igual a 0.");
+            throw std::invalid_argument("Entrada inválida, a quantia deve ser maior ou igual a 0");
          }
          break;
       }
-      catch (const std::invalid_argument &e)
+      catch (std::invalid_argument &e)
       {
          std::cerr << e.what() << "\n";
       }
@@ -474,7 +474,7 @@ void Jogador::converte()
          {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            throw std::invalid_argument("Entrada inválida. Insira um número inteiro.\n");
+            throw std::invalid_argument("Entrada inválida, insira um número inteiro\n");
          }
          if (convertido == a_converter) 
          {
@@ -486,7 +486,7 @@ void Jogador::converte()
          }
          break;
       }
-      catch (const std::invalid_argument &e) 
+      catch (std::invalid_argument &e) 
       {
          std::cerr << e.what() << "\n";
       }

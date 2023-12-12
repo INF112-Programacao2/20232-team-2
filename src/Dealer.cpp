@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <ctime>
+#include <limits>
 #include "Dealer.hpp"
 #include "Jogador.hpp"
 #include "Carta.hpp"
@@ -215,22 +216,52 @@ void Dealer::iniciar_Partida()
 
 void Dealer::criar_Sala()
 {
-    std::cout << "Digite a quantidade de jogadores da partida: " << std::endl;
-    std::cin >> quantidadeJogadores;
-    //Verifica a quantidade mínima de jogadores para iniciar a partida
-    while (quantidadeJogadores < 2)
+    while (true) 
     {
-        std::cout << "Deve haver no mínimo 2 jogadores para jogar Poker\n";
-        std::cout << "\nDigite a quantidade de jogadores da partida: " << std::endl;
-        std::cin >> quantidadeJogadores;
+        try 
+        {
+            std::cout << "Digite a quantidade de jogadores da partida: " << std::endl;
+            if (!(std::cin >> quantidadeJogadores)) 
+            {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                throw std::invalid_argument("Entrada inválida, insira um número inteiro\n");
+            }
+            if (quantidadeJogadores < 2 || quantidadeJogadores > 8) 
+            {
+                throw std::invalid_argument("Deve haver entre 2 e 8 jogadores para jogar Poker\n");
+            }
+            break;
+        }
+        catch (std::invalid_argument &e) 
+        {
+            std::cerr << e.what() << "\n";
+        }
     }
     
     //Identificar os jogadores por nick, além de verificar se há repetição deles
     for (int i = 1; i <= quantidadeJogadores; i++)
     {
         std::string nick;
-        std::cout << "Apelido do jogador " << i << ": ";
-        std::cin >> nick;
+        while (true) 
+        {
+            try 
+            {
+                std::cout << "Apelido do jogador " << i << ": ";
+                std::getline(std::cin, nick);
+                if (nick.empty()) 
+                {
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    throw std::invalid_argument("O apelido não pode estar vazio\n");
+                }
+                break;
+            }
+            catch (std::invalid_argument &e) 
+            {
+                std::cerr << e.what() << "\n";
+            }
+        }
         bool nick_repetido = false;
         for (size_t j = 0; j < jogadores.size(); j++)
         {
@@ -344,6 +375,51 @@ void Dealer::dar_Cartas()
             std::cin >> confirma;
         }
         std::system("clear");
+
+        while (true) 
+        {
+            std::cout << "\nDigite CONFIRMA para mostrar as cartas: ";
+            try 
+            {
+                std::getline(std::cin, confirma);
+                if (confirma != "CONFIRMA") 
+                {
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    throw std::invalid_argument("digite 'CONFIRMA'\n");
+                }
+                break;
+            }
+            catch (std::invalid_argument &e) 
+            {
+                std::cerr << e.what() << "\n";
+            }
+        }
+
+        std::cout << "Suas cartas são:\n";
+        mostrar_Cartas(2,jogadores[i].get_Mao().get_Cartas());
+        confirma = {};
+        while (true) 
+        {
+            std::cout << "\nDigite CONFIRMA para apagar a tela: ";
+            try 
+            {
+                std::getline(std::cin, confirma);
+                if (confirma != "CONFIRMA") 
+                {
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    throw std::invalid_argument("digite 'CONFIRMA'\n");
+                }
+                break;
+            }
+            catch (std::invalid_argument &e) 
+            {
+                std::cerr << e.what() << "\n";
+            }
+        }
+
+    std::system("clear");
     }
 }
 
@@ -411,18 +487,31 @@ bool Dealer::verificar_Check()
 
             again:
             std::cout << "Está na vez do jogador " << jogadores[i].get_Nick() << "\n\n";
-            std::cout << "Digite 1 para ver suas informações\nDigite 2 para apostar algum valor\nDigite 3 para desistir da partida\n";
             int escolha;
-            std::cout << "Digite o numero escolhido: ";
-            std::cin >> escolha;
-            while(escolha < 1 || escolha > 3)
+            while (true) 
             {
-                std::cout << "Por favor, escolha um numero entre 1 e 3\n\n";
-                std::cout << "Digite 1 para ver suas informações\nDigite 2 para apostar algum valor\nDigite 3 para desistir da partida\n\n";
-                std::cout << "Digite o numero escolhido: ";
-                std::cin >> escolha;
+                try 
+                {
+                    std::cout << "Digite 1 para ver suas informações\nDigite 2 para apostar algum valor\nDigite 3 para desistir da partida\n";
+                    std::cout << "Digite o numero escolhido: ";
+                    if (!(std::cin >> escolha)) 
+                    {
+                        std::cin.clear();
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                        throw std::invalid_argument("Entrada inválida, entre com um número inteiro\n");
+                    }
+                    if (escolha < 1 || escolha > 3) 
+                    {
+                        throw std::invalid_argument("Escolha um numero entre 1 e 3\n\n");
+                    }
+                    break;
+                }
+                catch (std::invalid_argument &e) 
+                {
+                    std::cerr << e.what() << "\n";
+                }
             }
-
+            
             int valorMesaAntigo = valorMesa;   
             if(escolha == 1)
             { 
