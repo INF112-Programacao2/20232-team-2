@@ -6,18 +6,17 @@
 #include "Jogador.hpp"
 #include "Carta.hpp"
 
-
+//Método construtor, iniciazlizando as variáveis necessárias para dar início ao programa
 Dealer::Dealer() 
 {
-    partidaFinalizada = false;
     rodada = 1;
     check = 0;
     primeiro_Jogador = -1;
     valor_Acumulado_mesa = 0;
     primeira_Aposta = 10;
-    valorMesa = primeira_Aposta;
     small_blind_apostou = 0;
-    
+    valorMesa = primeira_Aposta;
+    partidaFinalizada = false;
 }
 
 Dealer::~Dealer() 
@@ -132,7 +131,7 @@ void Dealer::designar_Primeiro_Jogador()
         }
     }    
     //Verifica se quem era para ser o maior jogador desta rodada ainda está ativo na partida
-    else if (!jogadores[primeiro_Jogador].is_True_Ativo()) //Verificar o problema desse condicional
+    else if (!jogadores[primeiro_Jogador].is_True_Ativo())
     {
         while (true)
         {
@@ -164,6 +163,7 @@ void Dealer::designar_Primeiro_Jogador()
     }
 }
 
+//Função que de fato inicia e "roda" o jogo
 void Dealer::iniciar_Partida()
 {
     int partidas = 1;
@@ -217,6 +217,7 @@ void Dealer::criar_Sala()
 {
     std::cout << "Digite a quantidade de jogadores da partida: " << std::endl;
     std::cin >> quantidadeJogadores;
+    //Verifica a quantidade mínima de jogadores para iniciar a partida
     while (quantidadeJogadores < 2)
     {
         std::cout << "Deve haver no mínimo 2 jogadores para jogar Poker\n";
@@ -224,6 +225,7 @@ void Dealer::criar_Sala()
         std::cin >> quantidadeJogadores;
     }
     
+    //Identificar os jogadores por nick, além de verificar se há repetição deles
     for (int i = 1; i <= quantidadeJogadores; i++)
     {
         std::string nick;
@@ -248,9 +250,13 @@ void Dealer::criar_Sala()
         jogadores.push_back(temporario);
     }
     srand(time(NULL));
+
+    //Sortear quem será o Big Blind na primeira partida de cada jogo e dar a vez a ele
     int big = rand()%jogadores.size();
     jogadores[big].set_Big_Blind(true);
     jogadores[big].set_Vez(true);
+
+    //Identificar o Small Blind a partir do Big Blind 
     for (int i = 0; i < jogadores.size(); i++)
     {
         if(big == jogadores.size()-1)
@@ -278,6 +284,7 @@ void Dealer::criar_Baralho()
     embaralhar_Cartas();
 }
 
+//Distribuir todas as cartas da mesa, queimando uma antes das três primeiras a serem viradas, uma na quarta e uma na quinta e última
 void Dealer::criar_Mesa()
 {   
     baralho.pop_back();
@@ -344,16 +351,20 @@ void Dealer::passar_Vez()
 {
     for (int i = 0; i < jogadores.size(); i++)
     {
+        //Identifica qual jogador está jogando agora
         if(jogadores[i].is_True_Vez() && jogadores[i].is_True_Ativo())
         {
             while (true)
             {
+                //Tirar ele da vez
                 jogadores[i].set_Vez(false);
                 if(i == jogadores.size()-1 && jogadores[0].is_True_Ativo())
                 {
+                    //Se o ultimo jogador estiver ativo, passa a vez pro primeiro jogador
                     jogadores[0].set_Vez(true);
                     return;
                 }
+                    //Se não, verificaremos o próximo jogador do vetor
                 else if (jogadores[i+1].is_True_Ativo())
                 {
                     jogadores[i+1].set_Vez(true);
@@ -363,11 +374,6 @@ void Dealer::passar_Vez()
             }
         }
     }
-}
-
-void Dealer::abandonar(int indice)
-{
-    jogadores.erase(jogadores.begin() + indice);
 }
 
 bool Dealer::verificar_Check()
@@ -405,14 +411,14 @@ bool Dealer::verificar_Check()
 
             again:
             std::cout << "Está na vez do jogador " << jogadores[i].get_Nick() << "\n\n";
-            std::cout << "Digite 1 para ver suas informações\nDigite 2 para apostar algum valor\nDigite 3 para desistir da partida\nDigite 4 para abandonar completamente o jogo\n\n";
+            std::cout << "Digite 1 para ver suas informações\nDigite 2 para apostar algum valor\nDigite 3 para desistir da partida\n";
             int escolha;
             std::cout << "Digite o numero escolhido: ";
             std::cin >> escolha;
-            while(escolha < 1 || escolha > 4)
+            while(escolha < 1 || escolha > 3)
             {
-                std::cout << "Por favor, escolha um numero entre 1 e 4\n\n";
-                std::cout << "Digite 1 para ver suas informações\nDigite 2 para apostar algum valor\nDigite 3 para desistir da partida\nDigite 4 para abandonar completamente o jogo\n\n";
+                std::cout << "Por favor, escolha um numero entre 1 e 3\n\n";
+                std::cout << "Digite 1 para ver suas informações\nDigite 2 para apostar algum valor\nDigite 3 para desistir da partida\n\n";
                 std::cout << "Digite o numero escolhido: ";
                 std::cin >> escolha;
             }
@@ -444,12 +450,6 @@ bool Dealer::verificar_Check()
             {
                 passar_Vez();
                 jogadores[i].desistir();
-            } 
-            else if(escolha == 4)
-            {
-                valor_Acumulado_mesa += jogadores[i].get_Apostado();
-                passar_Vez();
-                abandonar(i);
             } 
 
             int jogadoresAtivos = 0;

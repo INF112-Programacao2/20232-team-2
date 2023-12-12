@@ -91,9 +91,6 @@ public:
     //Passa a vez para o proximo jogador ativo
     void passar_Vez();
 
-    //Dealer exclui jogador da partida
-    void abandonar(int);
-
     //Verificar se todos os jogadores já cobriram a aposta mais alta da mesa
     bool verificar_Check();
     
