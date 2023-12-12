@@ -26,17 +26,18 @@ std::vector<Carta> Mao::get_Cartas()
 
 int Mao::get_Valor_Mao()
 {
+    
     // Atribuir o valor à mão
-    if(is_Royal_Flush().second)           return valor_Da_Mao= 100;
-    else if(is_Straight_Flush().second)   return valor_Da_Mao= 90;
-    else if (is_Quadra().second)         return valor_Da_Mao= 80;
-    else if (is_Full_House().second)      return valor_Da_Mao= 70;
-    else if (is_Flush())                 return valor_Da_Mao= 60;
-    else if (is_Straight().second)       return valor_Da_Mao= 50;
-    else if (is_Trinca().second)         return valor_Da_Mao= 40;        
-    else if (is_Dois_Pares().second)      return valor_Da_Mao= 30;
-    else if (is_Par().second)            return valor_Da_Mao= 20;
-    else                                 return valor_Da_Mao= cartas.back().get_Valor_Carta(); 
+    if(is_Royal_Flush().second)  {      return 100;}
+    else if(is_Straight_Flush().second) return 90;
+    else if (is_Quadra().second)        return 80;
+    else if (is_Full_House().second)    return 70;
+    else if (is_Flush())                return 60;
+    else if (is_Straight().second)      return 50;
+    else if (is_Trinca().second)        return 40;      
+    else if (is_Dois_Pares().second)    return 30;
+    else if (is_Par().second)           return 20;
+    else                               std::sort(cartas.begin(), cartas.end(), compare_Valor_Cartas); return cartas.back().get_Valor_Carta();
 }
 
 std::pair<int,bool> Mao::is_Par()
@@ -82,60 +83,6 @@ std::pair<std::pair<int, int>, bool> Mao::is_Dois_Pares()
         return {{valor_par_um, valor_par_dois}, true};
     return {{0,0}, false};
 }
-
-/*bool Mao::is_Sequencia(int inicio,int n, std::string tipo)
-{
-    //Temos aqui um uso do conceito de polimorfismo
-    //Primeiro motivo: o método is_Sequencia dará um retorno de acordo com seu chamado(tipo), que pode ser sequência por "naipe", "valor" ou "paridade"
-    if(tipo.compare("valor") == 0)
-    {
-        if(cartas.size() >= n)
-            for (int i = 0; i < cartas.size() - n + 1; i++) 
-            {
-                //A lógica, nesse caso, é que o vetor está organizado segundo o valor das cartas. Então, se eu tenho um vetor de 5 caracteres e eles não formam um par nem um trinca entre si e 
-                //o valor da última carta será o mesmo que o da primeira adicionada ao tamanho da sequencia, 5 para o caso (dá para fazer para n, trocando '4' por n e '-5' pelo tamanho da sequência) 
-                if (cartas[0].get_Valor_Carta() == cartas[i + n - 1].get_Valor_Carta() - n + 1) 
-                {
-                    return true;
-                }
-            }
-        return false;
-    }
-    else if (tipo.compare("naipe") == 0)
-    {
-        std::vector<Carta> copiaCartas = cartas;
-        sort(copiaCartas.begin(), copiaCartas.end(), compareNaipe);
-        //imprimir copiaCartas
-        for (int i = 0; i < copiaCartas.size(); i++)
-        {
-            //std::cout << copiaCartas[i].get_Valor_Carta() << "              " << copiaCartas[i].get_Naipe() << std::endl;
-        }
-        if(cartas.size() >= n)
-            for (int i = inicio; i < copiaCartas.size() - n + 1; i++) 
-            {
-                //A lógica, nesse caso, é que o vetor está organizado segundo o naipe, portanto teremos primeiramente todas as cartas do naipe de copas, depois todas de espadas... Portanto, se em alguma parte do vetor tivermos que se a carta[i] for igual à carta [i+n-1], então n é a quantidade de cartas que temos daquele naipe
-                //Dado isso, aqui estamos perguntando se a sequência de cartas(tamanho n) ordenadas pelo naipe existe ou não
-                if (copiaCartas[i].get_Naipe() == copiaCartas[i + n-1].get_Naipe() ) 
-                {
-                    return true;
-                }
-            }
-        return false;
-    }
-    else if (tipo.compare("paridade") == 0) // não achei esse nome tão interessante, mas foi o melhor que encontrei por hora rs
-    {
-        if(cartas.size() >= n)
-        for (int i = inicio; i < cartas.size() - n + 1; i++) 
-            {
-                //A lógica, nesse caso, é que o vetor está organizado segundo o valor das cartas 
-                //Portanto, para verificar se temos n cartas com o mesmo valor, basta que o elemento
-                //cartas[i] == cartas[i+n-1], primeiro e último termos avaliados, respectivamente.
-                if (cartas[i].get_Valor_Carta() == cartas[i + n-1].get_Valor_Carta()) return true;
-            }
-        return false;
-    }
-    else return false;
-}*/ 
 
 std::pair<int, bool> Mao::is_Trinca()
 {
@@ -246,6 +193,7 @@ std::pair<int, bool> Mao::is_Straight_Flush()
 
 std::pair<int, bool> Mao::is_Royal_Flush()
 {   
+
     std::vector<Carta> copiaCartas = cartas;
     std::sort(copiaCartas.begin(), copiaCartas.end(), compare_Naipe);
     for (int i = 0; i < copiaCartas.size() - 4; i++)
@@ -259,7 +207,9 @@ std::pair<int, bool> Mao::is_Royal_Flush()
             (copiaCartas[0+i].get_Naipe()) == (copiaCartas[3+i].get_Naipe()) && 
             (copiaCartas[0+i].get_Naipe()) == (copiaCartas[4+i].get_Naipe()))
                 if((copiaCartas[0+i].get_Valor_Carta() == 10))
+                {
                     return {(copiaCartas[0+i].get_Valor_Carta()), true};
+                }
     }
     return {0, false};
     
