@@ -97,9 +97,30 @@ Tipo de Retorno: Inteiro.
 #### get_Saldo()
 Descrição: Retorna o saldo do jogador (saldo).
 Tipo de Retorno: Inteiro.
-### Métodos de Verificação (is_True_Ativo(), is_True_Small_Blind(), is_True_Big_Blind(), ...)
-Descrição: Retorna o estado de várias variáveis booleanas relacionadas ao jogador.
-Tipo de Retorno: Booleano.
+### Métodos de Verificação 
+#### is_Ativo()
+Retorna verdadeiro se o jogador estiver ativo, falso caso contrário.
+
+#### is_Small_Blind()
+Retorna verdadeiro se o jogador for o small blind, falso caso contrário.
+
+#### is_Big_Blind()
+Retorna verdadeiro se o jogador for o big blind, falso caso contrário.
+
+#### is_All_In()
+Retorna verdadeiro se o jogador estiver em estado all-in, falso caso contrário.
+
+#### is_Vez()
+Retorna verdadeiro se for a vez do jogador agir, falso caso contrário.
+
+#### is_Check()
+Retorna verdadeiro se o jogador deu check, falso caso contrário.
+
+#### is_Primera_Rodada()
+Retorna verdadeiro se for a primeira rodada de apostas, falso caso contrário.
+
+#### is_Partida_Finalizada()
+Retorna verdadeiro se a partida estiver finalizada, falso caso contrário.
 
 ### Métodos de Modificação (Setter)
 #### set_Ativo(bool _ativo)
@@ -110,10 +131,18 @@ Parâmetro: _ativo - Booleano.
 Descrição: Define a quantia apostada pelo jogador.
 Parâmetro: valor - Inteiro.
 
-#### Métodos para Definir Status (set_Small_Blind(bool small), set_Big_Blind(bool big), set_Vez(bool _vez), set_All_In(bool _all_in))
-Descrição: Define o status de várias variáveis booleanas relacionadas ao jogador.
-Parâmetro: Booleano.
-Estes métodos de acesso (getter) e modificação (setter) fornecem uma maneira de acessar e modificar os dados do jogador, sendo essenciais para implementar as regras e a mecânica de um jogo de poker.
+#### Métodos para Definir Status 
+#### set_Small_Blind(bool small)
+Define o status do jogador como small blind. Parâmetro: Booleano.
+
+#### set_Big_Blind(bool big) 
+Define o status do jogador como big blind. Parâmetro: Booleano.
+
+#### set_Vez(bool _vez)
+Define se é a vez do jogador agir. Parâmetro: Booleano.
+
+#### set_All_In(bool _all_in)
+Define se o jogador está em estado all-in. Parâmetro: Booleano..
 
 ## Métodos
 #### Jogador(std::string nick)
