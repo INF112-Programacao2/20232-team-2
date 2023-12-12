@@ -583,7 +583,7 @@ void Dealer::finalizar_Partida()
             std::cout << "Cartas do jogador " << jogadores[i].get_Nick() << "\n\n";
             for (int j = 0; j < jogadores[i].get_Mao().get_Cartas().size(); j++)
             {
-                std::cout << jogadores[i].get_Mao().get_Cartas()[j].get_Valor_Carta() << "  " << jogadores[i].get_Mao().get_Cartas()[j].get_Naipe() << "\n";
+                mostrar_Cartas(7, jogadores[i].get_Mao().get_Cartas());
             } 
         }
         
