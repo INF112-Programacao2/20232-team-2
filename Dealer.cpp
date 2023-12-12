@@ -338,17 +338,17 @@ void Dealer::passar_Vez()
             while (true)
             {
                 jogadores[i].set_Vez(false);
-
-
                 if(i == jogadores.size()-1 && jogadores[0].is_True_Ativo())
                 {
                     i=0;
                     jogadores[0].set_Vez(true);
+                    std::cout << "i\n";
                     return;
                 }
                 else if (jogadores[i+1].is_True_Ativo())
                 {
                     jogadores[i+1].set_Vez(true);
+                    std::cout << "i\n";
                     return;
                 }
                 if (i == jogadores.size() - 1) i=0;
@@ -453,7 +453,7 @@ bool Dealer::verificar_Check()
 }
 
 void Dealer::verificar_Rodadas()
-{
+{   
     if(verificar_Check())
     {
         //resetar o valor das apostas da mesa
