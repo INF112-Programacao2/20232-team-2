@@ -26,6 +26,7 @@ private:
     int valor_Acumulado_mesa;
     int check;
     bool partidaFinalizada;
+    int small_blind_apostou;
 public:
     //Construtor
     Dealer();

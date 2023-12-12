@@ -158,6 +158,7 @@ bool Jogador::apostar(int &valorMesa)
       std::cin >> aposta;
       if(aposta + apostado >= valorMesa)
       {
+         if(aposta == 0)   return true;
          if(aposta < saldo)
          {
             std::cout << "Suas fichas atuais sao:\n\n";
