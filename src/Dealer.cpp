@@ -71,7 +71,7 @@ void Dealer::set_Primeira_Aposta(int primeira_Aposta)
 
 void Dealer::designar_Small_Blind()
 {
-    for (int i = 0; i < jogadores.size(); i++)
+    for (size_t i = 0; i < jogadores.size(); i++)
     {
         if(jogadores[i].is_True_Small_Blind())
         {
@@ -90,7 +90,7 @@ void Dealer::designar_Small_Blind()
 
 void Dealer::designar_Big_Blind()
 {
-    for (int i = 0; i < jogadores.size(); i++)
+    for (size_t i = 0; i < jogadores.size(); i++)
     {
         if(jogadores[i].is_True_Big_Blind())
         {
@@ -112,14 +112,14 @@ void Dealer::designar_Primeiro_Jogador()
     //No começo da partida o Small Blind sempre será o primeiro
     if(primeiro_Jogador == -1)
     {    
-        for (int i = 0; i < jogadores.size(); i++)
+        for (size_t i = 0; i < jogadores.size(); i++)
         {
             //encontra o Small Blind
             if(jogadores[i].is_True_Small_Blind())
             {
                 jogadores[i].set_Vez(true);
                 primeiro_Jogador = i;
-                for (int  j = 0; j < jogadores.size(); j++)
+                for (size_t  j = 0; j < jogadores.size(); j++)
                 {
                     if(j != i)
                     {
@@ -137,7 +137,7 @@ void Dealer::designar_Primeiro_Jogador()
         {
 
             //Se o atual primeiro jogador for o último do vetor, retornamos ao primeiro 
-            if(primeiro_Jogador == jogadores.size()-1)
+            if((size_t)primeiro_Jogador == jogadores.size()-1)
             {
                 primeiro_Jogador = 0;
             }
@@ -150,9 +150,9 @@ void Dealer::designar_Primeiro_Jogador()
             if(jogadores[primeiro_Jogador].is_True_Ativo())
             {
                 jogadores[primeiro_Jogador].set_Vez(true);
-                for (int j = 0; j < jogadores.size(); j++)
+                for (size_t j = 0; j < jogadores.size(); j++)
                 {
-                    if(j != primeiro_Jogador)
+                    if(j != (size_t)primeiro_Jogador)
                     {
                         jogadores[j].set_Vez(false);
                     }
@@ -192,7 +192,7 @@ void Dealer::iniciar_Partida()
 
         //verificar se há apenas um jogador com dinheiro, em caso positivo o jogo será finalizado
         int jogadoresComDinheiro = 0;
-        for (int i = 0; i < jogadores.size(); i++)
+        for (size_t i = 0; i < jogadores.size(); i++)
         {
             if(jogadores[i].get_Saldo() > 0)
                 jogadoresComDinheiro++;
@@ -200,7 +200,7 @@ void Dealer::iniciar_Partida()
         if(jogadoresComDinheiro == 1)
         {
             std::cout << "A partida acabou\n";
-            for (int i = 0; i < jogadores.size(); i++)
+            for (size_t i = 0; i < jogadores.size(); i++)
             {
                 if(jogadores[i].get_Saldo() > 0)
                 {
@@ -232,7 +232,7 @@ void Dealer::criar_Sala()
         std::cout << "Apelido do jogador " << i << ": ";
         std::cin >> nick;
         bool nick_repetido = false;
-        for (int j = 0; j < jogadores.size(); j++)
+        for (size_t j = 0; j < jogadores.size(); j++)
         {
             if(nick.compare(jogadores[j].get_Nick()) == 0)
             {
@@ -257,9 +257,9 @@ void Dealer::criar_Sala()
     jogadores[big].set_Vez(true);
 
     //Identificar o Small Blind a partir do Big Blind 
-    for (int i = 0; i < jogadores.size(); i++)
+    for (size_t i = 0; i < jogadores.size(); i++)
     {
-        if(big == jogadores.size()-1)
+        if((size_t)big == jogadores.size()-1)
         {
             jogadores[0].set_Small_Blind(true);
         }
@@ -324,7 +324,7 @@ void Dealer::dar_Cartas()
     }
 
     //Mostrar UMA única vez as cartas de cada jogador e pede que eles anotem, pois serão apagadas 
-    for (int i = 0; i < jogadores.size(); i++)
+    for (size_t i = 0; i < jogadores.size(); i++)
     {
         std::cout << "\nA seguir, irei mostrar as cartas do jogador " << jogadores[i].get_Nick() << "\n\n";
         std::cout << "ATENÇÂO: essas cartas serão mostras apenas uma vez, por favor, anote-as!!!\n";
@@ -349,7 +349,7 @@ void Dealer::dar_Cartas()
 
 void Dealer::passar_Vez()
 {
-    for (int i = 0; i < jogadores.size(); i++)
+    for (size_t i = 0; i < jogadores.size(); i++)
     {
         //Identifica qual jogador está jogando agora
         if(jogadores[i].is_True_Vez() && jogadores[i].is_True_Ativo())
@@ -384,7 +384,7 @@ bool Dealer::verificar_Check()
         if(jogadores[i].is_True_Vez() && !jogadores[i].is_True_All_In())
         {
             int JogadoresAtivos = 0;
-            for (int i = 0; i < jogadores.size(); i++)
+            for (size_t i = 0; i < jogadores.size(); i++)
             {
                 if(jogadores[i].is_True_Ativo())
                     JogadoresAtivos++;
@@ -453,9 +453,9 @@ bool Dealer::verificar_Check()
             } 
 
             int jogadoresAtivos = 0;
-            for (int i = 0; i < jogadores.size(); i++)
+            for (size_t j = 0; j < jogadores.size(); j++)
             {
-                if(jogadores[i].is_True_Ativo())
+                if(jogadores[j].is_True_Ativo())
                     jogadoresAtivos++;
             }
             if(jogadoresAtivos == check)
@@ -467,16 +467,16 @@ bool Dealer::verificar_Check()
         {
             check++;
             int jogadoresAtivos = 0;
-            for (int i = 0; i < jogadores.size(); i++)
+            for (size_t j = 0; j < jogadores.size(); j++)
             {
-                if(jogadores[i].is_True_Ativo())
+                if(jogadores[j].is_True_Ativo())
                     jogadoresAtivos++;
             }
             if(jogadoresAtivos == check)
                 return true;
             passar_Vez();
         }
-        if( i == jogadores.size() - 1 )
+        if( (size_t)i == jogadores.size() - 1 )
             i = -1;
     } 
 }
@@ -489,12 +489,12 @@ void Dealer::verificar_Rodadas()
         valorMesa = 0;
         check = 0;
         //resetar o valor que cada jogador tem apostado
-        for (int i = 0; i < jogadores.size(); i++)
+        for (size_t i = 0; i < jogadores.size(); i++)
         {
             valor_Acumulado_mesa += jogadores[i].get_Apostado();
         }
         
-        for (int i = 0; i < jogadores.size(); i++) {jogadores[i].set_Apostado(0);}
+        for (size_t i = 0; i < jogadores.size(); i++) {jogadores[i].set_Apostado(0);}
         std::cout << "Todos os jogadores cobriram a aposta mais alta da mesa\n";
         std::cout << "Agora iremos para a próxima rodada\n";
         rodada++;
@@ -543,7 +543,7 @@ void Dealer::finalizar_Partida()
 {
     int jogadoresAtivos = 0;
 
-    for (int i = 0; i < jogadores.size(); i++)
+    for (size_t i = 0; i < jogadores.size(); i++)
     {
         if(jogadores[i].is_True_Ativo())
         jogadoresAtivos++;
@@ -553,7 +553,7 @@ void Dealer::finalizar_Partida()
     if(jogadoresAtivos == 1)
     {
         std::cout << "A partida acabou\n";
-        for (int i = 0; i < jogadores.size(); i++)
+        for (size_t i = 0; i < jogadores.size(); i++)
         {
             if(jogadores[i].is_True_Ativo())
             {
@@ -570,25 +570,25 @@ void Dealer::finalizar_Partida()
     {
         std::pair<int,int> maior_Valor;
         maior_Valor.first = 0;  //maior valor da mão (second é a posição do jogador)
-        for (int i = 0; i < jogadores.size(); i++)
+        for (size_t i = 0; i < jogadores.size(); i++)
         {
-            for (int j = 0; j < mesa.size(); j++)
+            for (size_t j = 0; j < mesa.size(); j++)
             {
                 jogadores[i].receber_Carta(mesa[j]);
             }
         }
         
-        for (int i = 0; i < jogadores.size(); i++)
+        for (size_t i = 0; i < jogadores.size(); i++)
         {
             std::cout << "Cartas do jogador " << jogadores[i].get_Nick() << "\n\n";
-            for (int j = 0; j < jogadores[i].get_Mao().get_Cartas().size(); j++)
+            for (size_t j = 0; j < jogadores[i].get_Mao().get_Cartas().size(); j++)
             {
                 mostrar_Cartas(7, jogadores[i].get_Mao().get_Cartas());
             } 
         }
         
         
-        for (int i = 0; i < jogadores.size(); i++)
+        for (size_t i = 0; i < jogadores.size(); i++)
         {
             if(jogadores[i].get_Valor_Mao() > maior_Valor.first)
             {
@@ -608,14 +608,14 @@ void Dealer::finalizar_Partida()
         primeiro_Jogador = -1;
         primeira_Aposta += 10;
         valorMesa = primeira_Aposta;
-        for (int i = 0; i < jogadores.size(); i++)
+        for (size_t i = 0; i < jogadores.size(); i++)
         {
             jogadores[i].set_Vez(false);
             jogadores[i].set_Ativo(true);
             jogadores[i].set_All_In(false);
             jogadores[i].set_Apostado(0);
             jogadores[i].reset_Mao();
-           for (int i = 0; i < baralho.size(); i++)
+           for (size_t i = 0; i < baralho.size(); i++)
            {
                 baralho.pop_back();
            }

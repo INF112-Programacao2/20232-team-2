@@ -143,7 +143,7 @@ bool Jogador::apostar(int &valorMesa)
          all_in = true;
          apostado += saldo;
          saldo  = 0;
-         for (int i = 0; i < fichas.size(); i++)
+         for (size_t i = 0; i < fichas.size(); i++)
          {
             fichas[i].second = 0;
          }
@@ -170,7 +170,7 @@ bool Jogador::apostar(int &valorMesa)
          if(aposta < saldo)
          {
             std::cout << "Suas fichas atuais sao:\n\n";
-            for (int i = 0; i < fichas.size(); i++)
+            for (size_t i = 0; i < fichas.size(); i++)
             {
                std::cout << "Fichas de " << fichas[i].first << " : " << fichas[i].second << "\n";
             }
@@ -188,7 +188,7 @@ bool Jogador::apostar(int &valorMesa)
                }
                else
                {
-                  for (int i = 0; i < fichas.size(); i++)
+                  for (size_t i = 0; i < fichas.size(); i++)
                   {
                      if (fichas[i].first == ficha)
                      {
@@ -247,7 +247,7 @@ bool Jogador::apostar(int &valorMesa)
                saldo  = 0;
                apostado += aposta;
                valorMesa = apostado;
-               for (int i = 0; i < fichas.size(); i++)
+               for (size_t i = 0; i < fichas.size(); i++)
                {
                   fichas[i].second = 0;
                }
@@ -274,7 +274,7 @@ bool Jogador::apostar(int &valorMesa)
 void Jogador::exibir_Info(int ValorMesa)
 {
    std::cout << "\nNickname: " << nickname << "\n";
-   for (int i = 0; i < fichas.size(); i++)
+   for (size_t i = 0; i < fichas.size(); i++)
    {
       std::cout << "Fichas de " << fichas[i].first << " : " << fichas[i].second << "\n";
    }
@@ -309,7 +309,7 @@ void Jogador::aumenta_Saldo(int _saldo)
 void Jogador::converte()
 {
    std::cout << "Suas fichas atuais sao:\n\n";
-   for (int i = 0; i < fichas.size(); i++)
+   for (size_t i = 0; i < fichas.size(); i++)
    {
       std::cout << "Fichas de " << fichas[i].first << " : " << fichas[i].second << "\n";
    }
@@ -337,7 +337,7 @@ void Jogador::converte()
    std::cin >> quantidade_a_converter;
 
    //Verifica se ele possui fichas suficientes do tipo que deseja converter, caso nao possua, finaliza o método sem converter
-   for (int i = 0; i < fichas.size(); i++)
+   for (size_t i = 0; i < fichas.size(); i++)
    {
       if(fichas[i].first == a_converter)
       {
@@ -369,7 +369,7 @@ void Jogador::converte()
    }
 
    // caso o valor a converter nao supra o valor de 1(uma) ficha convertida, o método é finalizado e nao converte nada 
-   for (int i = 0; i < fichas.size(); i++)
+   for (size_t i = 0; i < fichas.size(); i++)
    {
       if(fichas[i].first == convertido)
       {
@@ -381,7 +381,7 @@ void Jogador::converte()
          else
          {
             quantidade_convertida = ((quantidade_a_converter * a_converter) / convertido);
-            for (int i = 0; i < fichas.size(); i++)
+            for (size_t i = 0; i < fichas.size(); i++)
             {
                if(fichas[i].first == convertido)
                {
@@ -389,7 +389,7 @@ void Jogador::converte()
                  break;
                }
             }
-            for (int i = 0; i < fichas.size(); i++)
+            for (size_t i = 0; i < fichas.size(); i++)
             {
                if(fichas[i].first == a_converter)
                {
