@@ -50,32 +50,32 @@ int Jogador::get_saldo()
    return saldo;
 }
 
-bool Jogador::isTrue_Vez()
+bool Jogador::is_True_Vez()
 {
    return vez;
 }
       
-bool Jogador::isTrue_Ativo()
+bool Jogador::is_True_Ativo()
 {
    return ativo;
 }
      
-bool Jogador::isTrue_Cobriu()
+bool Jogador::is_True_Cobriu()
 {
    return cobriu;
 }
 
-bool Jogador::isTrue_Big_Blind()
+bool Jogador::is_True_Big_Blind()
 {
    return big_Blind;
 }
 
-bool Jogador::isTrue_Small_Blind()
+bool Jogador::is_True_Small_Blind()
 {
    return small_Blind;
 }
 
-bool Jogador::isTrue_All_In()
+bool Jogador::is_True_All_In()
 {
    return all_in;
 }

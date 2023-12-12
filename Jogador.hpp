@@ -67,22 +67,22 @@ class Jogador
       int get_saldo();
 
       //Verifica se é a vez do jogador
-      bool isTrue_Vez();
+      bool is_True_Vez();
       
       //Retornar o status do jogador(ativo ou inativo -> PS: Acredito que melhoraremos a qualidade do código se Criarmos os jogadores como objetos dinâmicos e sempre removê-los da memória após desistirem, mantendo seus dados em um arquivo)
-      bool isTrue_Ativo();
+      bool is_True_Ativo();
      
       //Identificar se o jogador deu check com a aposta atual
-      bool isTrue_Cobriu();
+      bool is_True_Cobriu();
 
       //Definir se esse jogador será ou não um big blind
-      bool isTrue_Big_Blind();
+      bool is_True_Big_Blind();
 
       //Definir se esse jogador será ou não um small blind
-      bool isTrue_Small_Blind();
+      bool is_True_Small_Blind();
 
       //Retornar true caso o jogador esteja no modo all_in
-      bool isTrue_All_In();
+      bool is_True_All_In();
 
 
       //Métodos set
