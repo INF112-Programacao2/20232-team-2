@@ -370,7 +370,7 @@ bool Dealer::verificar_Check()
     //verificar se o valor da aposta de todos os jogadores são a mesma que a  atual da mão
     for (int i = 0;; i++)
     {
-        if(jogadores[i].isTrue_Vez())
+        if(jogadores[i].isTrue_Vez() && !jogadores[i].isTrue_All_In())
         {
             if (rodada == 2)
             {
@@ -409,9 +409,12 @@ bool Dealer::verificar_Check()
             }
             else if(escolha == 2)
             {
-                jogadores[i].apostar(valorMesa);
-                if(valorMesa == valorMesaAntigo) check++;
-                else check = 1;
+                if (jogadores[i].apostar(valorMesa);)
+                {
+                    if(valorMesa == valorMesaAntigo) check++;
+                    else check = 1;
+                }
+                
                 passar_Vez();
             }
             else if(escolha == 3)
@@ -434,6 +437,11 @@ bool Dealer::verificar_Check()
             if(jogadoresAtivos == check)
                 return true;
             
+        }
+        if(jogadores[i].isTrue_All_In())
+        {
+            check++;
+            passar_Vez();
         }
         if( i == jogadores.size() - 1 )
             i = 0;

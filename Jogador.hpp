@@ -77,13 +77,15 @@ class Jogador
       //Definir se esse jogador será ou não um small blind
       bool isTrue_Small_Blind();
 
+      bool isTrue_All_In();
+
       //Métodos de controle da classe
       
       //Verificar se o jogador desiste da rodada
       void desistir();
       
       //Verificar se o jogador quer apostar
-      void apostar(int &valorMesa);
+      bool apostar(int &valorMesa);
 
       //Exibe as informações do jogador
       void exibirInfo(int ValorMesa);
