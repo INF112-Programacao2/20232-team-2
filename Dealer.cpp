@@ -302,6 +302,7 @@ void Dealer::embaralhar_Cartas()
 
 void Dealer::dar_Cartas()
 {
+    //Distribuir duas cartas para cada jogador
     for (int i = 0; i < quantidadeJogadores; i++)
     {
         for (int j = 0; j < 2; j++)
@@ -310,25 +311,28 @@ void Dealer::dar_Cartas()
             baralho.pop_back();
         }
     }
+
+    //Mostrar UMA única vez as cartas de cada jogador e pede que eles anotem, pois serão apagadas 
     for (int i = 0; i < jogadores.size(); i++)
     {
         std::cout << "\nA seguir, irei mostrar as cartas do jogador " << jogadores[i].get_Nick() << "\n\n";
+        std::cout << "ATENÇÂO: essas cartas serão mostras apenas uma vez, por favor, anote-as!!!\n";
         std::cout << "TODOS OS OUTROS JOGADORES NAO DEVEM OLHAR PARA A TELA NESSE INSTANTE\n";
         std::string confirma = {};
-        /*while(!(confirma.compare("CONFIRMA") == 0))
+        while(!(confirma.compare("CONFIRMA") == 0))
         {
             std::cout << "\nDigite CONFIRMA para mostrar as cartas: ";
             std::cin >> confirma;
-        }*/
+        }
         std::cout << "Sua primeira carta: " << jogadores[i].get_Mao().get_Cartas()[0].get_Valor_Carta() << " de " << jogadores[i].get_Mao().get_Cartas()[0].get_Naipe() << "\n";
         std::cout << "Sua segunda carta: " << jogadores[i].get_Mao().get_Cartas()[1].get_Valor_Carta() << " de " << jogadores[i].get_Mao().get_Cartas()[1].get_Naipe() << "\n";
         confirma = {};
-        /*while(!(confirma.compare("CONFIRMA") == 0))
+        while(!(confirma.compare("CONFIRMA") == 0))
         {
             std::cout << "\nDigite CONFIRMA para apagar a tela: ";
             std::cin >> confirma;
         }
-        std::system("clear");*/
+        std::system("clear");
     }
 }
 
@@ -468,15 +472,14 @@ void Dealer::verificar_Rodadas()
 
         if(rodada == 2)
         {
+            std::cout << "Todos os jogadores cobriram a aposta mais alta da mesa\n";
             std::cout << "Agora iremos para a próxima rodada\n";
-            std::cout << "Agora iremos para a próxima rodada\n";
-            std::cout << "Agora iremos para a próxima\n";
             mostrar_Cartas(3);
         }
 
         else if(rodada == 3)
         {
-            std::cout << "Agora iremos para a próxima rodada\n";
+            std::cout << "Todos os jogadores cobriram a aposta mais alta da mesa\n";
             std::cout << "Agora iremos para a próxima rodada\n";
             mostrar_Cartas(4);
         }
@@ -534,7 +537,7 @@ void Dealer::finalizar_Partida()
         if(jogadores[i].is_True_Ativo())
         jogadoresAtivos++;
     }
-    
+    std::cout << "A partida acabou\n";
     // Quem ganhou se tiver apenas um jogador
     if(jogadoresAtivos == 1)
     {
