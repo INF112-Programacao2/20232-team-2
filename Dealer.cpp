@@ -299,7 +299,7 @@ void Dealer::dar_Cartas()
     {
         for (int j = 0; j < 2; j++)
         {
-            jogadores[i].receberCarta(baralho.back());
+            jogadores[i].receber_Carta(baralho.back());
             baralho.pop_back();
         }
     }
@@ -329,20 +329,20 @@ void Dealer::passar_Vez()
 {
     for (int i = 0; i < jogadores.size(); i++)
     {
-        if(jogadores[i].isTrue_Vez() && jogadores[i].isTrue_Ativo())
+        if(jogadores[i].is_True_Vez() && jogadores[i].is_True_Ativo())
         {
             while (true)
             {
                 jogadores[i].set_Vez(false);
 
 
-                if(i == jogadores.size()-1 && jogadores[0].isTrue_Ativo())
+                if(i == jogadores.size()-1 && jogadores[0].is_True_Ativo())
                 {
                     i=0;
                     jogadores[0].set_Vez(true);
                     return;
                 }
-                else if (jogadores[i+1].isTrue_Ativo())
+                else if (jogadores[i+1].is_True_Ativo())
                 {
                     jogadores[i+1].set_Vez(true);
                     return;
@@ -353,27 +353,32 @@ void Dealer::passar_Vez()
     }
 }
 
+void Dealer::abandonar(int indice)
+{
+    jogadores.erase(jogadores.begin() + indice);
+}
+
 bool Dealer::verificar_Check()
 {
     //verificar se o valor da aposta de todos os jogadores são a mesma que a  atual da mão
     for (int i = 0;; i++)
     {
-        if(jogadores[i].isTrue_Vez() && !jogadores[i].isTrue_All_In())
+        if(jogadores[i].is_True_Vez() && !jogadores[i].is_True_All_In())
         {
             if (rodada == 2)
             {
                 std::cout << "As cartas da mesa são: \n";
-                mostrarCartas(3);
+                mostrar_Cartas(3);
             }
             if (rodada == 3)
             {
                 std::cout << "As cartas da mesa são: \n"; 
-                mostrarCartas(4);
+                mostrar_Cartas(4);
             }
             if (rodada == 4)
             {
                 std::cout << "As cartas da mesa são: \n";
-                mostrarCartas(5);
+                mostrar_Cartas(5);
             }
 
             again:
@@ -392,7 +397,7 @@ bool Dealer::verificar_Check()
             int valorMesaAntigo = valorMesa;   
             if(escolha == 1)
             { 
-                jogadores[i].exibirInfo(valorMesa);
+                jogadores[i].exibir_Info(valorMesa);
                 goto again;
             }
             else if(escolha == 2)
@@ -417,20 +422,20 @@ bool Dealer::verificar_Check()
             else if(escolha == 4)
             {
                 passar_Vez();
-                jogadores[i].abandonar();
+                abandonar(i);
             } 
 
             int jogadoresAtivos = 0;
             for (int i = 0; i < jogadores.size(); i++)
             {
-                if(jogadores[i].isTrue_Ativo())
+                if(jogadores[i].is_True_Ativo())
                     jogadoresAtivos++;
             }
             if(jogadoresAtivos == check)
                 return true;
             
         }
-        if(jogadores[i].isTrue_All_In())
+        if(jogadores[i].is_True_All_In())
         {
             check++;
             passar_Vez();
@@ -457,21 +462,21 @@ void Dealer::verificar_Rodadas()
             std::cout << "Agora iremos para a próxima rodada\n";
             std::cout << "Agora iremos para a próxima rodada\n";
             std::cout << "Agora iremos para a próxima\n";
-            mostrarCartas(3);
+            mostrar_Cartas(3);
         }
 
         else if(rodada == 3)
         {
             std::cout << "Agora iremos para a próxima rodada\n";
             std::cout << "Agora iremos para a próxima rodada\n";
-            mostrarCartas(4);
+            mostrar_Cartas(4);
         }
 
         else if(rodada == 4)
         {
             std::cout << "Agora iremos para a próxima rodada\n";
             std::cout << "Agora iremos para a próxima rodada\n";
-            mostrarCartas(5);
+            mostrar_Cartas(5);
             verificar_Check();
             partidaFinalizada = true;
         }
@@ -518,7 +523,7 @@ void Dealer::finalizar_Partida()
 
     for (int i = 0; i < jogadores.size(); i++)
     {
-        if(jogadores[i].isTrue_Ativo())
+        if(jogadores[i].is_True_Ativo())
         jogadoresAtivos++;
     }
     
@@ -528,7 +533,7 @@ void Dealer::finalizar_Partida()
         std::cout << "A partida acabou\n";
         for (int i = 0; i < jogadores.size(); i++)
         {
-            if(jogadores[i].isTrue_Ativo())
+            if(jogadores[i].is_True_Ativo())
             {
                 std::cout << "O jogador " << jogadores[i].get_Nick() << " ganhou a partida\n";
                 std::cout << "Obrigado por jogar\n";
@@ -584,9 +589,9 @@ int main()
     Dealer dealer;
     dealer.set_Primeiro_Jogador(2);
     dealer.get_jogadores().at(2).set_Ativo(false);
-    std::cout << dealer.get_jogadores().at(dealer.get_Primeiro_Jogador()).isTrue_Ativo() << "\n\n";
+    std::cout << dealer.get_jogadores().at(dealer.get_Primeiro_Jogador()).is_True_Ativo() << "\n\n";
     
-    dealer.designarPrimeiroJogador(); // Call the function to assign the first player
+    dealer.designar_Primeiro_Jogador(); // Call the function to assign the first player
     
     //Entrada 3 jogadores e nome aleatórios
     //Saída esperada: 0     problema: Quando declaramos o primeiro_Jogador manualmente, caso para teste, a função designar_Primeiro_Jogador não está sendo chamada

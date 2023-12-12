@@ -45,7 +45,7 @@ int Jogador::get_Apostado()
    return apostado;
 }
 
-int Jogador::get_saldo()
+int Jogador::get_Saldo()
 {
    return saldo;
 }
@@ -196,7 +196,7 @@ bool Jogador::apostar(int &valorMesa)
                }
             }
             endloop:
-            converte_sobressalente(aposta_em_fichas);
+            converte_Sobressalente(aposta_em_fichas);
             std::cout << "Foram convertidas " << aposta_em_fichas << " fichas para a sua carteira\n\n";
             cobriu = true;
             apostado += aposta;
@@ -277,7 +277,7 @@ void Jogador::exibir_Info(int ValorMesa)
 void Jogador::aumenta_Saldo(int _saldo)
 {
    saldo += _saldo;
-   converte_sobressalente(_saldo);
+   converte_Sobressalente(_saldo);
 }
 
 void Jogador::converte()

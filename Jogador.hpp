@@ -64,7 +64,7 @@ class Jogador
       int get_Apostado();
 
       //Retorna o saldo do jogador
-      int get_saldo();
+      int get_Saldo();
 
       //Verifica se é a vez do jogador
       bool is_True_Vez();
@@ -88,10 +88,10 @@ class Jogador
       //Métodos set
 
       //settar o status do jogador na partida
-      void set_Ativo(bool ativo);
+      void set_Ativo(bool);
 
       //settar o valor apostado
-      void set_Apostado(int valor);
+      void set_Apostado(int);
 
       //Alterar a posição do Small Blind
       void set_Small_Blind(bool);
@@ -100,7 +100,13 @@ class Jogador
       void set_Big_Blind(bool);
 
       //Alterar a vez do jogador
-      void set_Vez(bool vez);
+      void set_Vez(bool);
+
+      //setta o all_in do jogador
+      void set_All_In(bool);
+
+      //Reseta a mao do jogador
+      void set_Mao(Mao);
 
 
       //Métodos de controle da classe
@@ -117,6 +123,7 @@ class Jogador
       //Exibe as informações do jogador
       void exibir_Info(int ValorMesa);
       
+      //Aumenta o saldo do jogador caso ele ganhe
       void aumenta_Saldo(int saldo);
 
       //Converte fichas de um tipo em fichas de outro tipo
