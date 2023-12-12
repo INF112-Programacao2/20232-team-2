@@ -409,7 +409,7 @@ bool Dealer::verificar_Check()
             }
             else if(escolha == 2)
             {
-                if (jogadores[i].apostar(valorMesa);)
+                if (jogadores[i].apostar(valorMesa))
                 {
                     if(valorMesa == valorMesaAntigo) check++;
                     else check = 1;
