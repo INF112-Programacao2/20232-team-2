@@ -60,7 +60,7 @@ class Mao
         std::pair<int, bool> is_Straight_Flush();
 
         // Verifica se a mao é um royal flush (Sequência de 10 a Ás do mesmo naipe)
-        std::pair<int, bool> is_Royal_Flush();
+        bool is_Royal_Flush();
 
         // Adiciona uma carta à mão
         void adicionar_Carta(Carta carta);   
