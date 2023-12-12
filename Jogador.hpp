@@ -51,7 +51,7 @@ class Jogador
 
       //Métodos get e isTrue para acesso aos atributos de Jogador
 
-      //Nome do jogador
+      //Retorna nickname do jogador
       std::string get_Nick();
       
       //Só poderá ser chamado pelo Dealer na última rodada

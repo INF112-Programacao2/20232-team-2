@@ -7,6 +7,7 @@
 
 Jogador::Jogador(std::string nick)
 {
+   //Construtor do jogador, setta variáveis da forma que elas devem estar ao criar um jogador
    nickname = nick;
    ativo = true;
    vez  = cobriu = small_Blind = big_Blind = all_in = false;
@@ -22,7 +23,7 @@ Jogador::Jogador(std::string nick)
 
 Jogador::~Jogador()
 {
-
+   //destrutor vazio, pois nao possui nenhuma alocação dinâmica
 }
 
 std::string Jogador::get_Nick()
@@ -131,7 +132,7 @@ void Jogador::desistir()
 
 bool Jogador::apostar(int &valorMesa)
 {
-   //Falta implementar tratamento de exceçoes
+   //Caso o jogador nao tenha o valor necessário para aposta, ele entra "automaticamente" no modo all in
    if(saldo <= valorMesa)
    {
       std::cout << "Você nao possui saldo suficiente para cobrir o valor da mesa, com essa aposta voce entrará em modo all in. Deseja prosseguir? digite SIM para confirmar\n";
@@ -150,15 +151,22 @@ bool Jogador::apostar(int &valorMesa)
       }
       return false;
    }
+   //Enquanto o jogador nao fizer uma aposta válida, tenta apostar novamente
    while(true)
    {
       std::cout << "\nSeu saldo é: " << saldo  << "\nO valor da mesa é: " << valorMesa << "\nVocê já apostou essa rodada: " << apostado; 
       std::cout << "\nDigite o valor que deseja apostar (aposte tudo para entrar em all in):";
       int aposta;
       std::cin >> aposta;
+
+      //Se o valor já apostado mais o valor que ira apostar suprir o valor da mesa, ele aposta de fato
       if(aposta + apostado >= valorMesa)
       {
+
+         //se a aposta for zero, ele so quer passar a vez
          if(aposta == 0)   return true;
+
+         // se a aposta for menor que o saldo disponivel, ele aposta normalmente
          if(aposta < saldo)
          {
             std::cout << "Suas fichas atuais sao:\n\n";
@@ -174,7 +182,7 @@ bool Jogador::apostar(int &valorMesa)
                std::cout << "OBSERVAÇÂO : quantidades sobressalentes serão convertidas em outras fichas e guardadas novamente em sua carteira\n";
                std::cout << "Insira o tipo de ficha que quer apostar, e a quantidade de fichas desse tipo que deseja apostar (ex: '3 10', equivalem a 3 fichas de 10): ";
                std::cin >> quantidadeFicha >> ficha;
-               if(ficha != 5 && ficha != 10 && ficha != 20 && ficha != 50 && ficha != 100 && ficha != 500)
+               if(ficha != 5 && ficha != 10 && ficha != 20 && ficha != 50 && ficha != 100 && ficha != 500) // verifica em loop se a ficha que deseja apostar é uma ficha válida
                {
                   std::cout << "Insira uma ficha de valor valido para apostar (5, 10, 20, 50, 100 ou 500)\n";
                }
@@ -184,21 +192,29 @@ bool Jogador::apostar(int &valorMesa)
                   {
                      if (fichas[i].first == ficha)
                      {
+
+                        // se a quantidade de fichas apostadas for maior que a quantidade de fichas na carteira do jogador, ele aposta
                         if(fichas[i].second >= quantidadeFicha)
                         {
                            aposta_em_fichas += ficha * quantidadeFicha;
                            fichas[i].second -= quantidadeFicha;
                            std::cout << "\nVocê apostou " << quantidadeFicha << " fichas de " << ficha << "\n";
+
+                           // se a quantidade apostada em fichas ate então suprir o valor da aposta proposta, ele finaliza com um goto endloop
                            if(aposta_em_fichas >= aposta)
                            {
                               aposta_em_fichas -= aposta;
                               goto endloop;
                            }
+
+                           //se a quantidade apostada nao suprir o valor, ele pede para apostar mais fichas
                            else
                            {
                               std::cout << "É necessário apostar mais " << aposta - aposta_em_fichas << " para atingir a aposta proposta\n\n";
                            }
                         }
+
+                        //caso a quantidade de fichas apostadas for menor que a quantidade armazenada na carteira, ele pede outro tipo de ficha, ou uma quantidade menor da mesma ficha
                         else
                         {
                            std::cout << "\nVoce nao possui fichas do tipo " << ficha << " suficientes\n\n";
@@ -207,6 +223,8 @@ bool Jogador::apostar(int &valorMesa)
                   }               
                }
             }
+
+            //no endloop é convertido o valor sobressalentes da aposta em outros valores da carteira
             endloop:
             converte_Sobressalente(aposta_em_fichas);
             std::cout << "Foram convertidas " << aposta_em_fichas << " fichas para a sua carteira\n\n";
@@ -216,6 +234,8 @@ bool Jogador::apostar(int &valorMesa)
             valorMesa = apostado;
             return true;
          }
+
+         //Se a aposta for igual ao saldo do jogador, isso quer dizer que o jogador entrará em modo all in
          else if(aposta == saldo)
          {
             std::cout << "Seu saldo se esgotou, com essa aposta voce entrará em modo all in. Deseja prosseguir? digite SIM para confirmar\n";
@@ -235,26 +255,20 @@ bool Jogador::apostar(int &valorMesa)
             }
             return false;
          }
+
+         // se a aposta for maior que o saldo, o jogador nao possui saldo para apostar o valor desejado
          else
          {
             std::cout << "Saldo insuficiente, aposte um valor mais baixo\n";
          }
       }
+
+      //se o valor já apostado mais o valor que ira apostar nao suprir o valor da mesa, o jogador deve apostar um valor mais alto
       else
       {
          std::cout << "Valor da mesa não atingido, aposte um valor maior\n\n";
       }
    }
-
-   /*catch(const std::invalid_argument& e)
-   {
-      std::cerr << e.what() << '\n';
-   }
-   catch(const All_inn& e)
-   {
-      all_in = true;
-      std::cerr << e.what() << '\n';
-   }*/
 }
 
 void Jogador::exibir_Info(int ValorMesa)
@@ -303,6 +317,8 @@ void Jogador::converte()
 
    int a_converter, convertido;
    int quantidade_a_converter, quantidade_convertida;
+
+   // Precisa converter um tipo de ficha válido
    while (true)
    {
       std::cout << "Deseja converter fichas de qual valor?: ";
@@ -319,6 +335,8 @@ void Jogador::converte()
 
    std::cout << "Quantas fichas do tipo "<< a_converter << " serão convertidas?: ";
    std::cin >> quantidade_a_converter;
+
+   //Verifica se ele possui fichas suficientes do tipo que deseja converter, caso nao possua, finaliza o método sem converter
    for (int i = 0; i < fichas.size(); i++)
    {
       if(fichas[i].first == a_converter)
@@ -331,6 +349,7 @@ void Jogador::converte()
       }
    }
    
+   //Verifica em qual tipo de ficha ele deseja converter, deve ser uma ficha válida
    while (true)
    {
       std::cout << "\nEssas fichas do tipo " << a_converter << " serao convertidas em fichas de qual valor?: ";
@@ -349,6 +368,7 @@ void Jogador::converte()
       }
    }
 
+   // caso o valor a converter nao supra o valor de 1(uma) ficha convertida, o método é finalizado e nao converte nada 
    for (int i = 0; i < fichas.size(); i++)
    {
       if(fichas[i].first == convertido)
