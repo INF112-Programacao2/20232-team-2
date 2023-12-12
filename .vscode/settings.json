@@ -100,7 +100,13 @@
     "system_error": "cpp",
     "tuple": "cpp",
     "type_traits": "cpp",
-    "list": "cpp"
+    "list": "cpp",
+    "bit": "cpp",
+    "compare": "cpp",
+    "concepts": "cpp",
+    "optional": "cpp",
+    "string_view": "cpp",
+    "numbers": "cpp"
   },
   "C_Cpp.errorSquiggles": "enabled"
 }

@@ -382,6 +382,7 @@ bool Dealer::verificar_Check()
             }
 
             again:
+            std::cout << "Está na vez do jogador " << jogadores[i].get_Nick() << "\n\n";
             std::cout << "Digite 1 para ver suas informações\nDigite 2 para apostar algum valor\nDigite 3 para desistir da partida\nDigite 4 para abandonar completamente o jogo\n\n";
             int escolha;
             std::cout << "Digite o numero escolhido: ";
@@ -436,10 +437,11 @@ bool Dealer::verificar_Check()
             
             for (int i = 0; i < jogadores.size(); i++)
             {
-                std::cout << jogadores[i].is_True_Vez();
+                if(jogadores[i].is_True_Vez())
+                    std::cout << "true ";
+                else
+                    std::cout << "false ";
             }
-            
-
         }
         if(jogadores[i].is_True_All_In())
         {
