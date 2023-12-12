@@ -90,6 +90,9 @@ public:
     //Passa a vez para o proximo jogador ativo
     void passar_Vez();
 
+    //Dealer exclui jogador da partida
+    void abandonar(int);
+
     //Verificar se todos os jogadores já cobriram a aposta mais alta da mesa
     bool verificar_Check();
     
@@ -98,7 +101,7 @@ public:
 
     //Mostrar cartas de acordo com a rodada
     void mostrar_Cartas(int quantidade_Cartas_Mostradas);
-    
+
     //Finaliza a partida atual e reseta alguns dados
     void finalizar_Partida();
 
