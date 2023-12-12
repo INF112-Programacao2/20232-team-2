@@ -11,6 +11,9 @@ Dealer::Dealer()
     rodada = 1;
     check = 1;
     primeiro_Jogador = -1;
+    valor_Acumulado_mesa = 0;
+    valorMesa = 0;
+    primeira_Aposta = 10;
     criarBaralho();
     criarSala();
     darCartas();
@@ -169,6 +172,10 @@ void Dealer::verificar_Rodadas()
 {
     if(verificar_Check())
     {
+        //resetar o valor das apostas da mesa
+        valorMesa = 0;
+        //resetar o valor que cada jogador tem apostado
+        for (int i = 0; i < jogadores.size(); i++) {jogadores[i].set_Apostado(0);}
         std::cout << "Todos os jogadores cobriram a aposta mais alta da mesa\n";
         std::cout << "Agora iremos para a próxima rodada\n";
         rodada++;
@@ -201,12 +208,14 @@ void Dealer::finalizar_Partida()
 {
 
     int jogadoresAtivos = 0;
+
     for (int i = 0; i < jogadores.size(); i++)
     {
         if(jogadores[i].isTrue_Ativo())
         jogadoresAtivos++;
     }
     
+    // Quem ganhou se tiver apenas um jogador
     if(jogadoresAtivos == 1)
     {
         std::cout << "A partida acabou\n";
@@ -216,11 +225,13 @@ void Dealer::finalizar_Partida()
             {
                 std::cout << "O jogador " << jogadores[i].get_Nick() << " ganhou a partida\n";
                 std::cout << "Obrigado por jogar\n";
-                exit(0);
+                jogadores[i].aumenta_Saldo(valor_Acumulado_mesa);
+                return;
             }
         }
     }
 
+    // Quem ganhou se tiver mais de um jogador
     if(rodada == 4 && verificar_Check())
     {
         std::pair<int,int> maior_Valor;
@@ -235,8 +246,8 @@ void Dealer::finalizar_Partida()
         <<" ganhou a partida com uma pontuação de: " << maior_Valor.first << std::endl;
         std::cout << "A partida acabou\n";
         std::cout << "Obrigado por jogar\n";
-        
-        exit(0);
+        jogadores[maior_Valor.second].aumenta_Saldo(valor_Acumulado_mesa);
+        return;
     }
 
 
