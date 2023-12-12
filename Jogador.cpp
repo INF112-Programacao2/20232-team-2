@@ -37,7 +37,7 @@ Mao Jogador::get_Mao()
 
 int Jogador::get_Valor_Mao()
 {
-   return mao.valorMao();
+   return mao.get_Valor_Mao();
 }
 
 int Jogador::get_Apostado()
@@ -107,7 +107,7 @@ void Jogador::set_Vez(bool _vez)
 
 void Jogador::receber_Carta(Carta carta)
 {
-   mao.adicionarCarta(carta);
+   mao.adicionar_Carta(carta);
 }
 
 void Jogador::desistir()
