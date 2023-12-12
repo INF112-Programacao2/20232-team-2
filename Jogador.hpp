@@ -21,6 +21,9 @@ class Jogador
       //Saldo total em fichas
       int saldo;
 
+      //Valor que o jogador já tem apostado
+      int apostado;
+
       //Verifica se está na vez do jogador x
       bool vez; 
 
@@ -39,9 +42,6 @@ class Jogador
       //Indica se o jogador está no modo All in
       bool all_in;
 
-      //Valor que o jogador já tem apostado
-      int apostado;
-
    public:
       //Construtor
       Jogador(std::string nick);
@@ -53,44 +53,39 @@ class Jogador
 
       //Nome do jogador
       std::string get_Nick();
-
-      //Receber cartas
-      void receberCarta(Carta carta);
       
       //Só poderá ser chamado pelo Dealer na última rodada
       Mao get_Mao();
 
+      //Retorna a mao do jogador
       int get_Valor_Mao();
 
+      //Retorna o valor apostado em cada rodada do jogador
+      int get_Apostado();
+
+      //Retorna o saldo do jogador
+      int get_saldo();
+
       //Verifica se é a vez do jogador
-      bool isTrue_Vez();
+      bool is_True_Vez();
       
       //Retornar o status do jogador(ativo ou inativo -> PS: Acredito que melhoraremos a qualidade do código se Criarmos os jogadores como objetos dinâmicos e sempre removê-los da memória após desistirem, mantendo seus dados em um arquivo)
-      bool isTrue_Ativo();
+      bool is_True_Ativo();
      
       //Identificar se o jogador deu check com a aposta atual
-      bool isTrue_Cobriu();
+      bool is_True_Cobriu();
 
       //Definir se esse jogador será ou não um big blind
-      bool isTrue_Big_Blind();
+      bool is_True_Big_Blind();
 
       //Definir se esse jogador será ou não um small blind
-      bool isTrue_Small_Blind();
+      bool is_True_Small_Blind();
 
-      bool isTrue_All_In();
+      //Retornar true caso o jogador esteja no modo all_in
+      bool is_True_All_In();
 
-      //Métodos de controle da classe
-      
-      //Verificar se o jogador desiste da rodada
-      void desistir();
-      
-      //Verificar se o jogador quer apostar
-      bool apostar(int &valorMesa);
 
-      //Exibe as informações do jogador
-      void exibirInfo(int ValorMesa);
-
-      int get_Apostado();
+      //Métodos set
 
       //settar o status do jogador na partida
       void set_Ativo(bool ativo);
@@ -99,13 +94,28 @@ class Jogador
       void set_Apostado(int valor);
 
       //Alterar a posição do Small Blind
-      void set_small_blind(bool);
+      void set_Small_Blind(bool);
 
       //Alterar a posição do Big Blind
-      void set_big_blind(bool);
+      void set_Big_Blind(bool);
 
       //Alterar a vez do jogador
       void set_Vez(bool vez);
+
+
+      //Métodos de controle da classe
+
+      //Receber cartas
+      void receber_Carta(Carta carta);
+      
+      //Verificar se o jogador desiste da rodada
+      void desistir();
+      
+      //Verificar se o jogador quer apostar
+      bool apostar(int &valorMesa);
+
+      //Exibe as informações do jogador
+      void exibir_Info(int ValorMesa);
       
       void aumenta_Saldo(int saldo);
 
@@ -113,7 +123,7 @@ class Jogador
       void converte();
 
       //Converte valor extra da aposta em outras fichas menores
-      void converte_sobressalente(int valor_sobressalente);
+      void converte_Sobressalente(int valor_sobressalente);
 };
 
 #endif
