@@ -381,7 +381,6 @@ bool Dealer::verificar_Check()
             }
             if(JogadoresAtivos <= 1)
             {
-                std::cout << "\n\n\n\n\n\n ALOU \n\n\n\n\n\n";
                 return true;
             }
             if (rodada == 2)
