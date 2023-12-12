@@ -72,16 +72,16 @@ void Dealer::designar_Small_Blind()
 {
     for (int i = 0; i < jogadores.size(); i++)
     {
-        if(jogadores[i].isTrue_Small_Blind())
+        if(jogadores[i].is_True_Small_Blind())
         {
-            jogadores[i].set_small_blind(false);
+            jogadores[i].set_Small_Blind(false);
             if(i == jogadores.size()-1)
             {
-                jogadores[0].set_small_blind(true);
+                jogadores[0].set_Small_Blind(true);
             }
             else
             {
-                jogadores[i+1].set_small_blind(true);
+                jogadores[i+1].set_Small_Blind(true);
             }
         }
     }
@@ -91,16 +91,16 @@ void Dealer::designar_Big_Blind()
 {
     for (int i = 0; i < jogadores.size(); i++)
     {
-        if(jogadores[i].isTrue_Big_Blind())
+        if(jogadores[i].is_True_Big_Blind())
         {
-            jogadores[i].set_big_blind(false);
+            jogadores[i].set_Big_Blind(false);
             if(i == jogadores.size()-1)
             {
-                jogadores[0].set_big_blind(true);
+                jogadores[0].set_Big_Blind(true);
             }
             else
             {
-                jogadores[i+1].set_big_blind(true);
+                jogadores[i+1].set_Big_Blind(true);
             }
         }
     }
@@ -114,7 +114,7 @@ void Dealer::designar_Primeiro_Jogador()
         for (int i = 0; i < jogadores.size(); i++)
         {
             //encontra o Small Blind
-            if(jogadores[i].isTrue_Small_Blind())
+            if(jogadores[i].is_True_Small_Blind())
             {
                 jogadores[i].set_Vez(true);
                 primeiro_Jogador = i;
@@ -130,7 +130,7 @@ void Dealer::designar_Primeiro_Jogador()
         }
     }    
     //Verifica se quem era para ser o maior jogador desta rodada ainda está ativo na partida
-    else if (!jogadores[primeiro_Jogador].isTrue_Ativo()) //Verificar o problema desse condicional
+    else if (!jogadores[primeiro_Jogador].is_True_Ativo()) //Verificar o problema desse condicional
     {
         while (true)
         {
@@ -146,7 +146,7 @@ void Dealer::designar_Primeiro_Jogador()
                 primeiro_Jogador++;
             }
             //Se o atual jogador avaliado estiver ativo na partida, então ele iniciará as apostas da rodada            
-            if(jogadores[primeiro_Jogador].isTrue_Ativo())
+            if(jogadores[primeiro_Jogador].is_True_Ativo())
             {
                 jogadores[primeiro_Jogador].set_Vez(true);
                 for (int j = 0; j < jogadores.size(); j++)
@@ -165,20 +165,20 @@ void Dealer::designar_Primeiro_Jogador()
 void Dealer::iniciar_Partida()
 {
     int partidas = 1;
-    criarSala();
+    criar_Sala();
     while (true)
     {
         if(partidas > 1)
         {
             //Na primeira partida o small blind será sorteado
-            designarSmallBlind();
-            designarBigBlind();
+            designar_Small_Blind();
+            designar_Big_Blind();
         }
         
-        criarBaralho();
-        darCartas();
-        criarMesa();
-        designarPrimeiroJogador();
+        criar_Baralho();
+        dar_Cartas();
+        criar_Mesa();
+        designar_Primeiro_Jogador();
         verificar_Rodadas();
         finalizar_Partida();
 
@@ -241,17 +241,17 @@ void Dealer::criar_Sala()
         jogadores.push_back(temporario);
     }
     int big = rand()%jogadores.size();
-    jogadores[big].set_big_blind(true);
+    jogadores[big].set_Big_Blind(true);
     jogadores[big].set_Vez(true);
     for (int i = 0; i < jogadores.size(); i++)
     {
         if(big == jogadores.size()-1)
         {
-            jogadores[0].set_small_blind(true);
+            jogadores[0].set_Small_Blind(true);
         }
         else
         {
-            jogadores[big+1].set_small_blind(true);
+            jogadores[big+1].set_Small_Blind(true);
         }
     }
 }
@@ -265,9 +265,9 @@ void Dealer::criar_Baralho()
             baralho.push_back(Carta(i, Carta::naipes_possiveis[j]));
         }
     }
-    embaralharCartas();
-    embaralharCartas();
-    embaralharCartas();
+    embaralhar_Cartas();
+    embaralhar_Cartas();
+    embaralhar_Cartas();
 }
 
 void Dealer::criar_Mesa()
