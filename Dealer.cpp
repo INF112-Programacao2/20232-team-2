@@ -6,11 +6,14 @@
 #include "Jogador.hpp"
 #include "Carta.hpp"
 
+
+int cont = 0;
+
 Dealer::Dealer() 
 {
     partidaFinalizada = false;
     rodada = 1;
-    check = 1;
+    check = 0;
     primeiro_Jogador = -1;
     valor_Acumulado_mesa = 0;
     primeira_Aposta = 10;
@@ -312,20 +315,20 @@ void Dealer::dar_Cartas()
         std::cout << "\nA seguir, irei mostrar as cartas do jogador " << jogadores[i].get_Nick() << "\n\n";
         std::cout << "TODOS OS OUTROS JOGADORES NAO DEVEM OLHAR PARA A TELA NESSE INSTANTE\n";
         std::string confirma = {};
-        while(!(confirma.compare("CONFIRMA") == 0))
+        /*while(!(confirma.compare("CONFIRMA") == 0))
         {
             std::cout << "\nDigite CONFIRMA para mostrar as cartas: ";
             std::cin >> confirma;
-        }
+        }*/
         std::cout << "Sua primeira carta: " << jogadores[i].get_Mao().get_Cartas()[0].get_Valor_Carta() << " de " << jogadores[i].get_Mao().get_Cartas()[0].get_Naipe() << "\n";
         std::cout << "Sua segunda carta: " << jogadores[i].get_Mao().get_Cartas()[1].get_Valor_Carta() << " de " << jogadores[i].get_Mao().get_Cartas()[1].get_Naipe() << "\n";
         confirma = {};
-        while(!(confirma.compare("CONFIRMA") == 0))
+        /*while(!(confirma.compare("CONFIRMA") == 0))
         {
             std::cout << "\nDigite CONFIRMA para apagar a tela: ";
             std::cin >> confirma;
         }
-        std::system("clear");
+        std::system("clear");*/
     }
 }
 
@@ -340,15 +343,12 @@ void Dealer::passar_Vez()
                 jogadores[i].set_Vez(false);
                 if(i == jogadores.size()-1 && jogadores[0].is_True_Ativo())
                 {
-                    i=0;
                     jogadores[0].set_Vez(true);
-                    std::cout << "i\n";
                     return;
                 }
                 else if (jogadores[i+1].is_True_Ativo())
                 {
                     jogadores[i+1].set_Vez(true);
-                    std::cout << "i\n";
                     return;
                 }
                 if (i == jogadores.size() - 1) i=0;
@@ -436,7 +436,7 @@ bool Dealer::verificar_Check()
                 if(jogadores[i].is_True_Ativo())
                     jogadoresAtivos++;
             }
-            if(jogadoresAtivos + 1 == check)
+            if(jogadoresAtivos == check)
                 return true;
             
             std::cout << "check = " << check << "\n\n\n\n"; 
@@ -447,17 +447,19 @@ bool Dealer::verificar_Check()
             passar_Vez();
         }
         if( i == jogadores.size() - 1 )
-            i = 0;
-            
+            i = -1;
     } 
 }
 
 void Dealer::verificar_Rodadas()
 {   
+    cont++;
+    std::cout << "\n\n FUNÇÃO VERIFICAR RODADAS FOI CHAMADA " << cont << " VEZES\n\n";
     if(verificar_Check())
     {
         //resetar o valor das apostas da mesa
         valorMesa = 0;
+        check = 0;
         //resetar o valor que cada jogador tem apostado
         for (int i = 0; i < jogadores.size(); i++) {jogadores[i].set_Apostado(0);}
         std::cout << "Todos os jogadores cobriram a aposta mais alta da mesa\n";
@@ -484,7 +486,6 @@ void Dealer::verificar_Rodadas()
             std::cout << "Agora iremos para a próxima rodada\n";
             std::cout << "Agora iremos para a próxima rodada\n";
             mostrar_Cartas(5);
-            verificar_Check();
             partidaFinalizada = true;
         }
     }
@@ -551,7 +552,7 @@ void Dealer::finalizar_Partida()
     }
 
     // Quem ganhou se tiver mais de um jogador
-    if(rodada == 4 && verificar_Check())
+    if(partidaFinalizada)
     {
         std::pair<int,int> maior_Valor;
         maior_Valor.first = 0;  //maior valor da mão (second é a posição do jogador)
@@ -590,4 +591,3 @@ void Dealer::finalizar_Partida()
 
 
 }
-
