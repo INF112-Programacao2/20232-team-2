@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <ctime>
 #include <limits>
+#include <string>
 #include "../include/Dealer.hpp"
 #include "../include/Jogador.hpp"
 #include "../include/Carta.hpp"
@@ -335,10 +336,16 @@ void Dealer::criar_Mesa()
     }
 }
 
+
+
+#include <random>
+
+#include <algorithm>
+
 void Dealer::embaralhar_Cartas() 
 {
     srand(time(NULL));
-    std::random_shuffle(baralho.begin(), baralho.end());
+    std::shuffle(baralho.begin(), baralho.end(), std::default_random_engine());
 }
 
 void Dealer::dar_Cartas()
