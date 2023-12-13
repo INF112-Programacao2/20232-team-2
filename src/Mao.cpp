@@ -1,7 +1,7 @@
 #include <vector>
-#include "Mao.hpp"
-#include "Carta.hpp"
 #include <algorithm>
+#include "../include/Mao.hpp"
+#include "../include/Carta.hpp"
 
 Mao::Mao() {}
 
@@ -253,4 +253,3 @@ void Mao::adicionar_Carta(Carta carta)
 {
     cartas.push_back(carta);
 }
-

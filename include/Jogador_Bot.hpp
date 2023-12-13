@@ -5,14 +5,14 @@
 #include "Carta.hpp"
 #include "Mao.hpp"
 
-class Jogador_Bot : Jogador
+class Jogador_Bot : public Jogador
 {
-private:
+    private:
 
-public:
-    Jogador_Bot();
-    ~Jogador_Bot();
-    virtual bool apostar(int &valorMesa) override;
+    public:
+        Jogador_Bot(std::string);
+        ~Jogador_Bot();
+        virtual bool apostar(int &valorMesa) override;
 };
 
 #endif
