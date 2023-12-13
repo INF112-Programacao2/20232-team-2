@@ -229,9 +229,11 @@ void Dealer::criar_Sala()
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 throw std::invalid_argument("Entrada inválida, insira um número inteiro\n");
             }
-            if (quantidadeJogadores < 2 || quantidadeJogadores > 8) 
+
+
+            if (quantidadeJogadores < 0 || quantidadeJogadores > 4) 
             {
-                throw std::invalid_argument("Deve haver entre 2 e 8 jogadores para jogar Poker\n");
+                throw std::invalid_argument("Deve haver entre 0 e 4 jogadores para jogar Poker\n");
             }
 
             std::cin.ignore();
@@ -242,6 +244,33 @@ void Dealer::criar_Sala()
             std::cerr << e.what() << "\n";
         }
     }
+    while (true) 
+    {
+        try 
+        {
+            std::cout << "Digite a quantidade de bots que haverá na partida: \n";
+            if (!(std::cin >> quantidade_bots)) 
+            {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                throw std::invalid_argument("Entrada inválida, insira um número inteiro\n");
+            }
+
+            
+            if (quantidade_bots < 0 || quantidade_bots > 4) 
+            {
+                throw std::invalid_argument("Deve haver entre 0 e 4 bots para jogar Poker\n");
+            }
+
+            std::cin.ignore();
+            break;
+        }
+        catch (std::invalid_argument &e) 
+        {
+            std::cerr << e.what() << "\n";
+        }
+    }
+
     
     //Identificar os jogadores por nick, além de verificar se há repetição deles
     for (int i = 1; i <= quantidadeJogadores; i++)
@@ -264,21 +293,7 @@ void Dealer::criar_Sala()
                 std::cerr << e.what() << "\n";
             }
         }
-        bool nick_repetido = false;
-        for (size_t j = 0; j < jogadores.size(); j++)
-        {
-            if(nick.compare(jogadores[j].get_Nick()) == 0)
-            {
-                std::cout << "Nick já utilizado por outro jogador, troque o apelido\n";
-                nick_repetido = true;
-                break;
-            }
-        }
-        if(nick_repetido)
-        {
-            i--;
-            continue;
-        }
+        if(nick.compare((*jogadores[j]).get_Nick()) == 0)
         Jogador temporario(nick);
         jogadores.push_back(temporario);
     }
