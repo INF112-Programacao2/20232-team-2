@@ -2,6 +2,7 @@
 #include <vector>
 #include <stdexcept>
 #include <limits>
+#include<string>
 #include "../include/Carta.hpp"
 #include "../include/Mao.hpp"
 #include "../include/Jogador.hpp"
@@ -35,6 +36,11 @@ std::string Jogador::get_Nick()
 Mao Jogador::get_Mao()
 { 
    return mao;
+}
+
+std::vector<std::pair<int,int>> Jogador::get_Fichas()
+{
+   return fichas;
 }
 
 int Jogador::get_Valor_Mao()
@@ -317,17 +323,18 @@ bool Jogador::apostar(int &valorMesa)
                std::getline(std::cin, confirmacao);
                if (confirmacao == "SIM")
                {
-                  all_in;
+                  all_in = true;
                   saldo  = 0;
                   apostado += aposta;
-                  valorMesa = apostado;
+                  //Consertado o bug para o caso de o valor da mesa ser superior ao da aposta do jogador em All In. Sem esse condicional, teríamos uma atualização do valor da mesa para o valor do All in do jogador, ou seja, uma redução do seu valor, caso impossível
+                  if(valorMesa > apostado)   valorMesa = apostado;   //Se o valor do All In for superior ao valo da mesa(caso em que o próprio jogador oferece All In), então a aposta é atualizada. Caso o valor da mesa já chegue mais alto para ele, então o valor atual se mantém
                   for (size_t i = 0; i < fichas.size(); i++)
                   {
                      fichas[i].second = 0;
                   }
                   return true;
                }
-                return false;
+               return false;
             }
             catch (std::invalid_argument &e)
             {
