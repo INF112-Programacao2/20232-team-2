@@ -175,6 +175,7 @@ bool Jogador::apostar(int &valorMesa)
             }
             else if(confirmacao == "NAO")
             {
+               ativo = false;
                return false;
             }
             else
