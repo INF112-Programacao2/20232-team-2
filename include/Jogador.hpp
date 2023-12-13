@@ -118,7 +118,7 @@ class Jogador
       void desistir();
       
       //Verificar se o jogador quer apostar
-      bool apostar(int &valorMesa);
+      virtual bool apostar(int &valorMesa);
 
       //Exibe as informações do jogador
       void exibir_Info(int ValorMesa);
