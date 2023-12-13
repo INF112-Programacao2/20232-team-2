@@ -54,6 +54,9 @@ class Jogador
       //Só poderá ser chamado pelo Dealer na última rodada
       Mao get_Mao();
 
+      //Retorna a quantidade de fichas do jogador
+      std::vector<std::pair<int,int>> get_Fichas();
+
       //Retorna a mao do jogador
       int get_Valor_Mao();
 
