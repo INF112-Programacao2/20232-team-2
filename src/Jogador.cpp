@@ -111,6 +111,7 @@ void Jogador::set_Vez(bool _vez)
 void Jogador::set_All_In(bool _all_in)
 {
    all_in = _all_in;
+   if(ativo && all_in) saldo = 0;   //o booleano all in dentro do condicional evita bug do tipo se precisar de chamar o set all in como false alguma vez ele zeraria o saldo
 }
 
 void Jogador::reset_Mao()
@@ -157,26 +158,36 @@ bool Jogador::apostar(int &valorMesa)
       std::string confirmacao;
       
       //Garante que confirmação seja string, e caso nao seja, limpa a entrada cin para nao prejudicar as proximas entradas
-      try
-      {
-         std::getline(std::cin, confirmacao);
-         if (confirmacao == "SIM")
+      while(true){
+         try
          {
-            all_in = true;
-            apostado += saldo;
-            saldo = 0;
-            for (size_t i = 0; i < fichas.size(); i++)
+            std::getline(std::cin, confirmacao);
+            if (confirmacao == "SIM")
             {
-               fichas[i].second = 0;
+               all_in = true;
+               apostado += saldo;
+               saldo = 0;
+               for (size_t i = 0; i < fichas.size(); i++)
+               {
+                  fichas[i].second = 0;
+               }
+               return true;
             }
-            return true;
+            else if(confirmacao == "NAO")
+            {
+               return false;
+            }
+            else
+            {
+               throw std::invalid_argument("Entrada inválida, digite 'SIM' para confirmar ou 'NAO' para desistir\n");
+            }
          }
-         return false;
-      }
-      catch (std::invalid_argument &e)
-      {
-         std::cerr << e.what() << "\n";
-      }
+      
+         catch (std::invalid_argument &e)
+         {
+            std::cerr << e.what() << "\n";
+         }
+      }   
    }
    //Enquanto o jogador nao fizer uma aposta válida, tenta apostar novamente
    while(true)
