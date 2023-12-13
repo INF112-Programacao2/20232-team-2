@@ -2,16 +2,16 @@
 #include <vector>
 #include <stdexcept>
 #include <limits>
-#include "Carta.hpp"
-#include "Mao.hpp"
-#include "Jogador.hpp"
+#include "../include/Carta.hpp"
+#include "../include/Mao.hpp"
+#include "../include/Jogador.hpp"
 
 Jogador::Jogador(std::string nick)
 {
    //Construtor do jogador, setta variáveis da forma que elas devem estar ao criar um jogador
    nickname = nick;
    ativo = true;
-   vez  = cobriu = small_Blind = big_Blind = all_in = false;
+   vez  = small_Blind = big_Blind = all_in = false;
    fichas.push_back({5, 10});// 10 de 5, 5 de 10, 5 de 20, 2 de 50, 2 de 100, 1 de 500
    fichas.push_back({10, 5});
    fichas.push_back({20, 5});
@@ -60,11 +60,6 @@ bool Jogador::is_True_Vez()
 bool Jogador::is_True_Ativo()
 {
    return ativo;
-}
-     
-bool Jogador::is_True_Cobriu()
-{
-   return cobriu;
 }
 
 bool Jogador::is_True_Big_Blind()
@@ -123,19 +118,17 @@ void Jogador::receber_Carta(Carta carta)
    mao.adicionar_Carta(carta);
 }
 
-void Jogador::desistir()
+bool Jogador::desistir()
 {
    std::cout << "Realmente deseja desistir? digite SIM para confirmar\n";
    std::string confirmacao;
    try
    {
-      std::cin >> confirmacao;
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
+      std::getline(std::cin, confirmacao);
       if (confirmacao == "SIM")
       {
          ativo = false;
-         std::cout << "Desistência confirmada\n";
+         std::cout << "Desistência confirmada\n\n\n";
       }
       else
       {
@@ -146,6 +139,7 @@ void Jogador::desistir()
    {
       std::cerr << e.what() << "\n";
    }
+   return !ativo;
 }
 
 bool Jogador::apostar(int &valorMesa)
@@ -159,9 +153,7 @@ bool Jogador::apostar(int &valorMesa)
       //Garante que confirmação seja string, e caso nao seja, limpa a entrada cin para nao prejudicar as proximas entradas
       try
       {
-         std::cin >> confirmacao;
-         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
+         std::getline(std::cin, confirmacao);
          if (confirmacao == "SIM")
          {
             all_in = true;
@@ -190,7 +182,7 @@ bool Jogador::apostar(int &valorMesa)
       while (true)
       {
          std::cout << "\nSeu saldo é: " << saldo  << "\nO valor da mesa é: " << valorMesa << "\nVocê já apostou essa rodada: " << apostado; 
-         std::cout << "\nDigite o valor que deseja apostar (aposte tudo para entrar em all in):";
+         std::cout << "\nDigite o valor que deseja apostar (aposte tudo para entrar em all in): ";
          try
          {
             std::cin >> aposta;
@@ -204,6 +196,8 @@ bool Jogador::apostar(int &valorMesa)
             {
                throw std::invalid_argument("Entrada inválida, a aposta deve ser maior ou igual a 0\n");
             }
+
+            std::cin.ignore();
             break;
          }
          catch (std::invalid_argument &e)
@@ -250,6 +244,7 @@ bool Jogador::apostar(int &valorMesa)
                      {
                         throw std::invalid_argument("Entrada inválida, as quantias devem ser maior ou iguais a 0\n");
                      }
+                     std::cin.ignore();
                      break;
                   }
                   catch (std::invalid_argument &e)
@@ -304,7 +299,6 @@ bool Jogador::apostar(int &valorMesa)
             endloop:
             converte_Sobressalente(aposta_em_fichas);
             std::cout << "Foram convertidas " << aposta_em_fichas << " fichas para a sua carteira\n\n";
-            cobriu = true;
             apostado += aposta;
             saldo -= aposta;
             valorMesa = apostado;
@@ -320,12 +314,10 @@ bool Jogador::apostar(int &valorMesa)
             //Garante que confirmação seja string, e caso nao seja, limpa a entrada cin para nao prejudicar as proximas entradas
             try
             {
-               std::cin >> confirmacao;
-               std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
+               std::getline(std::cin, confirmacao);
                if (confirmacao == "SIM")
                {
-                  all_in = cobriu = true;
+                  all_in;
                   saldo  = 0;
                   apostado += aposta;
                   valorMesa = apostado;
@@ -366,25 +358,20 @@ void Jogador::exibir_Info(int ValorMesa)
       std::cout << "Fichas de " << fichas[i].first << " : " << fichas[i].second << "\n";
    }
    std::cout << "Saldo total: " << saldo << "\n";
-   std::cout << "\n";
-   if(cobriu)
+   if(small_Blind)
    {
-      std::cout << "Você já cobriu o valor da aposta (" << ValorMesa << ") mais alta da mesa\n";
+      std::cout << "Você é o small blind nessa partida\n";
+   }
+   else if(big_Blind)
+   {
+      std::cout << "Você é o big blind nessa partida\n";
    }
    else
    {
-      std::cout << "Você ainda não cobriu o valor da aposta (" << ValorMesa << ") mais alta da mesa\n";
-      std::cout << "Voce já apostou " << apostado << " nessa rodada\n";
+      std::cout << "Você é um jogador regular nessa partida\n";
    }
-   if(small_Blind)
-   {
-      std::cout << "Você é o small blind nessa rodada\n";
-   }
-   if(big_Blind)
-   {
-      std::cout << "Você é o big blind nessa rodada\n";
-   }
-   std::cout << "\n";
+
+   std::cout << "\n\n";
 }
 
 void Jogador::aumenta_Saldo(int _saldo)
@@ -419,6 +406,7 @@ void Jogador::converte()
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             throw std::invalid_argument("Insira uma ficha de valor válido para converter (5, 10, 20, 50, 100 ou 500)\n");
          }
+         std::cin.ignore();
          break;
       }
       catch (std::invalid_argument &e) 
@@ -443,6 +431,7 @@ void Jogador::converte()
          {
             throw std::invalid_argument("Entrada inválida, a quantia deve ser maior ou igual a 0");
          }
+         std::cin.ignore();
          break;
       }
       catch (std::invalid_argument &e)
@@ -484,6 +473,7 @@ void Jogador::converte()
          {
             throw std::invalid_argument("Insira uma ficha de valor válido para converter (5, 10, 20, 50, 100 ou 500)\n");
          }
+         std::cin.ignore();
          break;
       }
       catch (std::invalid_argument &e) 

@@ -30,9 +30,6 @@ class Jogador
       //Verifica se o jogador está na rodada ou se desistiu da rodada
       bool ativo; 
 
-      //Verifica se o jogador cobriu o valor proposto por outro jogador
-      bool cobriu; 
-
       //Verificar se o tipo do jogador é Big Blind
       bool big_Blind; 
 
@@ -71,9 +68,6 @@ class Jogador
       
       //Retornar o status do jogador(ativo ou inativo -> PS: Acredito que melhoraremos a qualidade do código se Criarmos os jogadores como objetos dinâmicos e sempre removê-los da memória após desistirem, mantendo seus dados em um arquivo)
       bool is_True_Ativo();
-     
-      //Identificar se o jogador deu check com a aposta atual
-      bool is_True_Cobriu();
 
       //Definir se esse jogador será ou não um big blind
       bool is_True_Big_Blind();
@@ -115,7 +109,7 @@ class Jogador
       void receber_Carta(Carta carta);
       
       //Verificar se o jogador desiste da rodada
-      void desistir();
+      bool desistir();
       
       //Verificar se o jogador quer apostar
       virtual bool apostar(int &valorMesa);

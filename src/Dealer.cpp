@@ -3,15 +3,15 @@
 #include <algorithm>
 #include <ctime>
 #include <limits>
-#include "Dealer.hpp"
-#include "Jogador.hpp"
-#include "Carta.hpp"
+#include "../include/Dealer.hpp"
+#include "../include/Jogador.hpp"
+#include "../include/Carta.hpp"
 
 //Método construtor, iniciazlizando as variáveis necessárias para dar início ao programa
 Dealer::Dealer() 
 {
     rodada = 1;
-    check = 0;
+    check = -1;
     primeiro_Jogador = -1;
     valor_Acumulado_mesa = 0;
     primeira_Aposta = 10;
@@ -200,13 +200,14 @@ void Dealer::iniciar_Partida()
         }
         if(jogadoresComDinheiro == 1)
         {
-            std::cout << "A partida acabou\n";
+            std::cout << "O jogo acabou\n";
             for (size_t i = 0; i < jogadores.size(); i++)
             {
                 if(jogadores[i].get_Saldo() > 0)
                 {
                     std::cout << "O jogador " << jogadores[i].get_Nick() << " ganhou o jogo\n";
-                    std::cout << "Seu saldo é de " << jogadores[i].get_Saldo() << std::endl; 
+                    std::cout << "Seu saldo é de " << jogadores[i].get_Saldo() << "\n"; 
+                    std::cout << "Obrigado por jogar :)\n";
                     return;
                 }
             }
@@ -220,7 +221,7 @@ void Dealer::criar_Sala()
     {
         try 
         {
-            std::cout << "Digite a quantidade de jogadores da partida: " << std::endl;
+            std::cout << "Digite a quantidade de jogadores da partida: \n";
             if (!(std::cin >> quantidadeJogadores)) 
             {
                 std::cin.clear();
@@ -231,6 +232,8 @@ void Dealer::criar_Sala()
             {
                 throw std::invalid_argument("Deve haver entre 2 e 8 jogadores para jogar Poker\n");
             }
+
+            std::cin.ignore();
             break;
         }
         catch (std::invalid_argument &e) 
@@ -242,7 +245,7 @@ void Dealer::criar_Sala()
     //Identificar os jogadores por nick, além de verificar se há repetição deles
     for (int i = 1; i <= quantidadeJogadores; i++)
     {
-        std::string nick;
+        std::string nick {"Default"};
         while (true) 
         {
             try 
@@ -251,8 +254,6 @@ void Dealer::criar_Sala()
                 std::getline(std::cin, nick);
                 if (nick.empty()) 
                 {
-                    std::cin.clear();
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                     throw std::invalid_argument("O apelido não pode estar vazio\n");
                 }
                 break;
@@ -283,20 +284,21 @@ void Dealer::criar_Sala()
     srand(time(NULL));
 
     //Sortear quem será o Big Blind na primeira partida de cada jogo e dar a vez a ele
-    int big = rand()%jogadores.size();
-    jogadores[big].set_Big_Blind(true);
-    jogadores[big].set_Vez(true);
+    int small = rand()%jogadores.size();
+    jogadores[small].set_Small_Blind(true);
 
-    //Identificar o Small Blind a partir do Big Blind 
+    //Identificar o Big Blind a partir do Small Blind 
     for (size_t i = 0; i < jogadores.size(); i++)
     {
-        if((size_t)big == jogadores.size()-1)
+        if((size_t)small == jogadores.size()-1)
         {
-            jogadores[0].set_Small_Blind(true);
+            jogadores[0].set_Big_Blind(true);
+            jogadores[0].set_Vez(true);
         }
         else
         {
-            jogadores[big+1].set_Small_Blind(true);
+            jogadores[small+1].set_Big_Blind(true);
+            jogadores[small+1].set_Vez(true);
         }
     }
 }
@@ -361,32 +363,15 @@ void Dealer::dar_Cartas()
         std::cout << "ATENÇÂO: essas cartas serão mostras apenas uma vez, por favor, anote-as!!!\n";
         std::cout << "TODOS OS OUTROS JOGADORES NAO DEVEM OLHAR PARA A TELA NESSE INSTANTE\n";
         std::string confirma = {};
-        while(!(confirma.compare("CONFIRMA") == 0))
-        {
-            std::cout << "\nDigite CONFIRMA para mostrar as cartas: ";
-            std::cin >> confirma;
-        }
-        std::cout << "Suas cartas sao: \n";
-        mostrar_Cartas(2,jogadores[i].get_Mao().get_Cartas());
-        confirma = {};
-        while(!(confirma.compare("CONFIRMA") == 0))
-        {
-            std::cout << "\nDigite CONFIRMA para apagar a tela: ";
-            std::cin >> confirma;
-        }
-        std::system("clear");
-
         while (true) 
         {
-            std::cout << "\nDigite CONFIRMA para mostrar as cartas: ";
+            std::cout << "\nDigite MOSTRAR para mostrar as cartas: ";
             try 
             {
                 std::getline(std::cin, confirma);
-                if (confirma != "CONFIRMA") 
+                if (confirma != "MOSTRAR") 
                 {
-                    std::cin.clear();
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                    throw std::invalid_argument("digite 'CONFIRMA'\n");
+                    throw std::invalid_argument("digite 'MOSTRAR'\n");
                 }
                 break;
             }
@@ -401,15 +386,13 @@ void Dealer::dar_Cartas()
         confirma = {};
         while (true) 
         {
-            std::cout << "\nDigite CONFIRMA para apagar a tela: ";
+            std::cout << "\nDigite LIMPAR para apagar a tela: ";
             try 
             {
                 std::getline(std::cin, confirma);
-                if (confirma != "CONFIRMA") 
+                if (confirma != "LIMPAR") 
                 {
-                    std::cin.clear();
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                    throw std::invalid_argument("digite 'CONFIRMA'\n");
+                    throw std::invalid_argument("digite 'LIMPAR'\n");
                 }
                 break;
             }
@@ -428,7 +411,7 @@ void Dealer::passar_Vez()
     for (size_t i = 0; i < jogadores.size(); i++)
     {
         //Identifica qual jogador está jogando agora
-        if(jogadores[i].is_True_Vez() && jogadores[i].is_True_Ativo())
+        if(jogadores[i].is_True_Vez())
         {
             while (true)
             {
@@ -446,7 +429,11 @@ void Dealer::passar_Vez()
                     jogadores[i+1].set_Vez(true);
                     return;
                 }
-                if (i == jogadores.size() - 1) i=0;
+                else
+                {
+                    i++;
+                }
+                if (i == jogadores.size()) i=0;
             }
         }
     }
@@ -471,17 +458,17 @@ bool Dealer::verificar_Check()
             }
             if (rodada == 2)
             {
-                std::cout << "As cartas da mesa são: \n";
+                std::cout << "\n\n\nAs cartas da mesa são: \n";
                 mostrar_Cartas(3, mesa);
             }
             if (rodada == 3)
             {
-                std::cout << "As cartas da mesa são: \n"; 
+                std::cout << "\n\n\nAs cartas da mesa são: \n"; 
                 mostrar_Cartas(4, mesa);
             }
             if (rodada == 4)
             {
-                std::cout << "As cartas da mesa são: \n";
+                std::cout << "\n\n\nAs cartas da mesa são: \n";
                 mostrar_Cartas(5, mesa);
             }
 
@@ -504,6 +491,7 @@ bool Dealer::verificar_Check()
                     {
                         throw std::invalid_argument("Escolha um numero entre 1 e 3\n\n");
                     }
+                    std::cin.ignore();
                     break;
                 }
                 catch (std::invalid_argument &e) 
@@ -526,7 +514,13 @@ bool Dealer::verificar_Check()
                     if(small_blind_apostou == 1)
                         valorMesa *= 2;
                     if(valorMesa == valorMesaAntigo) check++;
-                    else check = 1;
+                    else 
+                    {
+                        if(rodada > 1)
+                            check = 1;
+                        else
+                            check = 0;
+                    }
                     passar_Vez();
                 }
                 else
@@ -537,8 +531,14 @@ bool Dealer::verificar_Check()
             }
             else if(escolha == 3)
             {
-                passar_Vez();
-                jogadores[i].desistir();
+                if(!jogadores[i].desistir())
+                {
+                    goto again;
+                }
+                else
+                {
+                    passar_Vez();
+                }
             } 
 
             int jogadoresAtivos = 0;
@@ -549,10 +549,9 @@ bool Dealer::verificar_Check()
             }
             if(jogadoresAtivos == check)
                 return true;
-            
-            std::cout << "check = " << check << "\n\n\n\n"; 
+                 
         }
-        if(jogadores[i].is_True_All_In())
+        if(jogadores[i].is_True_Vez() && jogadores[i].is_True_All_In())
         {
             check++;
             int jogadoresAtivos = 0;
@@ -584,6 +583,7 @@ void Dealer::verificar_Rodadas()
         }
         
         for (size_t i = 0; i < jogadores.size(); i++) {jogadores[i].set_Apostado(0);}
+        std:system("clear");
         std::cout << "Todos os jogadores cobriram a aposta mais alta da mesa\n";
         std::cout << "Agora iremos para a próxima rodada\n";
         rodada++;
@@ -601,28 +601,28 @@ void Dealer::mostrar_Cartas(int quantidade_Cartas_Mostradas, std::vector<Carta> 
     {
         if(vetor[i].get_Valor_Carta() <= 10)
         {
-            std::cout << vetor[i].get_Valor_Carta() << "   " << vetor[i].get_Naipe() << std::endl;
+            std::cout << vetor[i].get_Valor_Carta() << "   " << vetor[i].get_Naipe() << "\n";
         }
         else
         {
             if (vetor[i].get_Valor_Carta() == 11)
             {
-                std::cout << 'J' << "   " << vetor[i].get_Naipe() << std::endl;
+                std::cout << 'J' << "   " << vetor[i].get_Naipe() << "\n";
             }
                 
             if (vetor[i].get_Valor_Carta() == 12)
             {
-                std::cout << 'Q' << "   " << vetor[i].get_Naipe() << std::endl;
+                std::cout << 'Q' << "   " << vetor[i].get_Naipe() << "\n";
             }
 
             if (vetor[i].get_Valor_Carta() == 13)
             {
-                std::cout << 'K' << "   " << vetor[i].get_Naipe() << std::endl;
+                std::cout << 'K' << "   " << vetor[i].get_Naipe() << "\n";
             }
                 
             if (vetor[i].get_Valor_Carta() == 14)
             {
-                std::cout << 'A' << "   " << vetor[i].get_Naipe() << std::endl;
+                std::cout << 'A' << "   " << vetor[i].get_Naipe() << "\n";
             }
         }
     }
@@ -637,17 +637,15 @@ void Dealer::finalizar_Partida()
         if(jogadores[i].is_True_Ativo())
         jogadoresAtivos++;
     }
-    std::cout << "A partida acabou\n";
+    std::cout << "A partida acabou\n\n";
     // Quem ganhou se tiver apenas um jogador
     if(jogadoresAtivos == 1)
     {
-        std::cout << "A partida acabou\n";
         for (size_t i = 0; i < jogadores.size(); i++)
         {
             if(jogadores[i].is_True_Ativo())
             {
-                std::cout << "O jogador " << jogadores[i].get_Nick() << " ganhou a partida\n";
-                std::cout << "Obrigado por jogar\n";
+                std::cout << "O jogador " << jogadores[i].get_Nick() << " ganhou a partida, pois nenhum outro jogador quis continuar nas apostas\n";
                 jogadores[i].aumenta_Saldo(valor_Acumulado_mesa);
                 return;
             }
@@ -666,37 +664,34 @@ void Dealer::finalizar_Partida()
                 jogadores[i].receber_Carta(mesa[j]);
             }
         }
-        
+
         for (size_t i = 0; i < jogadores.size(); i++)
         {
             std::cout << "Cartas do jogador " << jogadores[i].get_Nick() << "\n\n";
-            for (size_t j = 0; j < jogadores[i].get_Mao().get_Cartas().size(); j++)
-            {
-                mostrar_Cartas(7, jogadores[i].get_Mao().get_Cartas());
-            } 
+            mostrar_Cartas(7, jogadores[i].get_Mao().get_Cartas());
         }
         
         
         for (size_t i = 0; i < jogadores.size(); i++)
         {
-            if(jogadores[i].get_Valor_Mao() > maior_Valor.first)
+            if(jogadores[i].get_Valor_Mao() > maior_Valor.first && jogadores[i].is_True_Ativo())
             {
                 maior_Valor.first = jogadores[i].get_Valor_Mao();
                 maior_Valor.second = i;
             }
         }
-        std::cout << "O jogador " << jogadores[maior_Valor.second].get_Nick() 
-        <<" ganhou a partida com uma pontuação de: " << maior_Valor.first << std::endl;
-        std::cout << "A partida acabou\n";
-        std::cout << "Obrigado por jogar\n";
-        std::cout << "valor acumulado da mesa = " << valor_Acumulado_mesa << "\n";
+        std::cout << "O jogador " << jogadores[maior_Valor.second].get_Nick() << " ganhou a partida com uma pontuação de: " << maior_Valor.first << "\n";
+        std::cout << jogadores[maior_Valor.second].get_Nick()<< "Ganhou o valor acumulado da mesa, avaliado em: " << valor_Acumulado_mesa << "\n\n\n\n\n";
         jogadores[maior_Valor.second].aumenta_Saldo(valor_Acumulado_mesa);
+
+        partidaFinalizada = false;
         valor_Acumulado_mesa = 0;
         rodada = 1;
-        check = 0;
+        check = -1;
         primeiro_Jogador = -1;
         primeira_Aposta += 10;
         valorMesa = primeira_Aposta;
+
         for (size_t i = 0; i < jogadores.size(); i++)
         {
             jogadores[i].set_Vez(false);
@@ -704,14 +699,17 @@ void Dealer::finalizar_Partida()
             jogadores[i].set_All_In(false);
             jogadores[i].set_Apostado(0);
             jogadores[i].reset_Mao();
-           for (size_t i = 0; i < baralho.size(); i++)
-           {
-                baralho.pop_back();
-           }
-           
+        }
+
+        for (size_t i = 0; i < baralho.size(); i++)
+        {
+            baralho.pop_back();
+        }
+
+        for (size_t i = 0; i < mesa.size(); i++)
+        {
+            mesa.pop_back();
         }
         return;
     }
-
-
 }
