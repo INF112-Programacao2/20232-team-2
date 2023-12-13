@@ -4,7 +4,14 @@ Jogador_Bot::Jogador_Bot(std::string _nick) : Jogador(_nick)
 {
 }
 
+Jogador_Bot::~Jogador_Bot()
+{
+}
 
+void Jogador_Bot::funcao_teste()
+{
+
+}
 bool Jogador_Bot::apostar(int &valorMesa) 
 {
    int aposta = valorMesa - this->get_Apostado();
@@ -13,7 +20,7 @@ bool Jogador_Bot::apostar(int &valorMesa)
    if(aposta == 0) return true;
 
    //Em caso contrário verificaremos se ele ainda pode apostar nessa rodada
-   else if(this->get_Saldo() + this->get_Apostado() >= valorMesa)
+   else if(this->get_Saldo() + this->get_Apostado() > valorMesa)
    {
       int aposta_em_fichas = 0, ficha, quantidadeFicha;
         
@@ -31,6 +38,7 @@ bool Jogador_Bot::apostar(int &valorMesa)
          if(aposta_em_fichas >= aposta)
          {
             aposta_em_fichas -= aposta;
+            this->aumenta_Saldo( -aposta);
             set_Apostado(this->get_Apostado() + aposta);
             converte_Sobressalente(aposta_em_fichas);
             return true;
@@ -39,7 +47,7 @@ bool Jogador_Bot::apostar(int &valorMesa)
    }                 
     
    //Se a aposta for igual ao saldo do jogador, isso quer dizer que o jogador entrará em modo all in
-   else if(aposta == this->get_Saldo() && !(this->is_True_All_In()))
+   else if(!(this->is_True_All_In()))
    {
       this->set_All_In(true);
       this->aumenta_Saldo(0);
@@ -49,4 +57,15 @@ bool Jogador_Bot::apostar(int &valorMesa)
       return false;
 }
 
+/*int main()
+{
+   int valorMesa = 100;
+   Jogador_Bot bot1("bot1");
+   Jogador_Bot bot2("bot2");
+
+   bot1.exibir_Info(valorMesa); // Add missing argument here
+   bot1.apostar(valorMesa);
+   bot1.exibir_Info(valorMesa);
+   std::cout << valorMesa << std::endl;
+}*/
 
