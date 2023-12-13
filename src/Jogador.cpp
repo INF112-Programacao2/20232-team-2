@@ -93,6 +93,16 @@ void Jogador::set_Apostado(int valor)
    apostado = valor;
 }
 
+void Jogador::set_Fichas(int posicao, int valor)
+{
+   fichas[posicao].second = valor;
+}
+
+void Jogador::set_Saldo(int valor)
+{
+   saldo = valor;
+}
+
 void Jogador::set_Small_Blind(bool small)
 {
    small_Blind = small;
