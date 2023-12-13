@@ -25,7 +25,12 @@ Dealer::Dealer()
 
 Dealer::~Dealer() 
 {
-
+    int tamanho = jogadores.size();
+    for (size_t i = 0; i < tamanho; i++)
+    {
+        delete jogadores[i];
+    }
+    std::cout << "\n\n\n\nTamo junto Julio, obrigado pela compreensão, ano que vem tamo na CCP :)\n\n\n\n";
 }
 
 std::vector<Carta> Dealer::get_baralho()
