@@ -493,6 +493,12 @@ bool Dealer::verificar_Check()
             if (bot != nullptr) 
             {
                 std::cout << "Está na vez do jogador " <<  (*jogadores[i]).get_Nick() << "\n";
+                std::cout << "O saldo dele saldo é: "<<  (*jogadores[i]).get_Saldo() << "\nAs fichas dele sao:\n";
+                for (size_t j = 0; j < (*jogadores[i]).get_Fichas().size(); j++)
+                {
+                    std::cout << "Fichas de " << (*jogadores[i]).get_Fichas()[j].first << " : " << (*jogadores[i]).get_Fichas()[j].second << "\n";
+                }
+                std::cout << "\n";
                 if ((*jogadores[i]).apostar(valorMesa))
                 {
                     small_blind_apostou++;
