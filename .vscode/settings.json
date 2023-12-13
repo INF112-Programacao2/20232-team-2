@@ -141,7 +141,9 @@
     "xstring": "cpp",
     "xtr1common": "cpp",
     "xtree": "cpp",
-    "xutility": "cpp"
+    "xutility": "cpp",
+    "coroutine": "cpp",
+    "resumable": "cpp"
   },
   "C_Cpp.errorSquiggles": "enabled"
 }

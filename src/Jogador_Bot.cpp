@@ -57,20 +57,10 @@ bool Jogador_Bot::apostar(int &valorMesa)
          set_Fichas(i,0);
       }
       this->set_Apostado(get_Apostado() + aposta);
+      std::cout << "O jogador " <<  get_Nick() << " apostou " << aposta << " nessa rodada.\n";
       return true;
    }
       return false;
 }
 
-/*int main()
-{
-   int valorMesa = 100;
-   Jogador_Bot bot1("bot1");
-   Jogador_Bot bot2("bot2");
-
-   bot1.exibir_Info(valorMesa); // Add missing argument here
-   bot1.apostar(valorMesa);
-   bot1.exibir_Info(valorMesa);
-   std::cout << valorMesa << std::endl;
-}*/
 
