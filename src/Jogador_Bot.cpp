@@ -17,7 +17,11 @@ bool Jogador_Bot::apostar(int &valorMesa)
    int aposta = valorMesa - this->get_Apostado();
 
    //Se o bot já estiver apostado o valor da mesa, então ele dará check()
-   if(aposta == 0) return true;
+   if(aposta == 0)
+   {
+      std::cout << "O jogador " <<  get_Nick() << " apostou 0 nessa rodada.\n";
+      return true;
+   }
 
    //Em caso contrário verificaremos se ele ainda pode apostar nessa rodada
    else if(this->get_Saldo() + this->get_Apostado() >= valorMesa)
@@ -37,6 +41,7 @@ bool Jogador_Bot::apostar(int &valorMesa)
          // se a quantidade apostada em fichas ate então suprir o valor da aposta proposta, ele finaliza com um goto endloop
          if(aposta_em_fichas >= aposta)
          {
+            std::cout << "O jogador " <<  get_Nick() << " apostou " << aposta << " nessa rodada.\n";
             aposta_em_fichas -= aposta;
             set_Saldo(get_Saldo()-aposta);
             set_Apostado(this->get_Apostado() + aposta);
@@ -51,13 +56,14 @@ bool Jogador_Bot::apostar(int &valorMesa)
    else if(!(this->is_True_All_In()))
    {
       this->set_All_In(true);
+      this->set_Apostado(get_Apostado() + get_Saldo());
+      std::cout << "O jogador " <<  get_Nick() << " apostou " << get_Saldo() << " nessa rodada.\n";
+      std::cout << "O jogador " <<  get_Nick() << " apostou todo seu dinheiro, entrando em all in\n";
       set_Saldo(0);
       for (size_t i = 0; i < get_Fichas().size(); i++)
       {
          set_Fichas(i,0);
       }
-      this->set_Apostado(get_Apostado() + aposta);
-      std::cout << "O jogador " <<  get_Nick() << " apostou " << aposta << " nessa rodada.\n";
       return true;
    }
       return false;

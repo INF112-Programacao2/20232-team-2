@@ -4,6 +4,7 @@
 #include <ctime>
 #include <limits>
 #include <string>
+#include <random>
 #include "../include/Dealer.hpp"
 #include "../include/Jogador.hpp"
 #include "../include/Carta.hpp"
@@ -335,12 +336,10 @@ void Dealer::criar_Sala()
         if((size_t)small == jogadores.size()-1)
         {
             (*jogadores[0]).set_Big_Blind(true);
-            (*jogadores[0]).set_Vez(true);
         }
         else
         {
-            (*jogadores[small]).set_Big_Blind(true);
-            (*jogadores[small]).set_Vez(true);
+            (*jogadores[small+1]).set_Big_Blind(true);
         }
     }
 }
@@ -377,14 +376,10 @@ void Dealer::criar_Mesa()
     }
 }
 
-#include <random>
-
-#include <algorithm>
-
 void Dealer::embaralhar_Cartas() 
 {
     srand(time(NULL));
-    std::shuffle(baralho.begin(), baralho.end(), std::default_random_engine());
+    std::random_shuffle(baralho.begin(), baralho.end());
 }
 
 void Dealer::dar_Cartas()
@@ -399,7 +394,6 @@ void Dealer::dar_Cartas()
         {
             (*jogadores[i]).receber_Carta(baralho.back());
             baralho.pop_back();
-            std::cout <<"passei aqui\n\n";
         }
     }
 
@@ -488,128 +482,122 @@ void Dealer::passar_Vez()
 
 bool Dealer::verificar_Check()
 {
-    for (size_t i = 0; i < quantidadeJogadores; i++) 
-    {
-        Jogador* jogador = jogadores[i];
-        Jogador_Bot* bot = dynamic_cast<Jogador_Bot*>(jogador);
-
-        if (bot != nullptr) 
-        {
-            std::cout << "Está na vez do jogador " <<  (*jogadores[i]).get_Nick() << ;
-            if ((*jogadores[i]).apostar(valorMesa))
-            {
-                small_blind_apostou++;
-                if(small_blind_apostou == 1) valorMesa *= 2;
-                check++;
-            }
-            passar_Vez();
-        }
-        else 
-        {
-            int JogadoresAtivos = 0;
-            for (size_t i = 0; i < jogadores.size(); i++)
-            {
-                if((*jogadores[i]).is_True_Ativo())
-                    JogadoresAtivos++;
-            }
-            if(JogadoresAtivos <= 1)
-            {
-                return true;
-            }
-            if (rodada == 2)
-            {
-                std::cout << "\n\n\nAs cartas da mesa são: \n";
-                mostrar_Cartas(3, mesa); 
-            }
-            if (rodada == 3)
-            {
-                std::cout << "\n\n\nAs cartas da mesa são: \n"; 
-                mostrar_Cartas(4, mesa);
-            }
-            if (rodada == 4)
-            {
-                std::cout << "\n\n\nAs cartas da mesa são: \n";
-                mostrar_Cartas(5, mesa);
-            }
-
-            again:
-            std::cout << "Está na vez do jogador " << (*jogadores[i]).get_Nick() << "\n\n";
-            int escolha;
-            while (true) 
-            {
-                try 
-                {
-                    std::cout << "Digite 1 para ver suas informações\nDigite 2 para apostar algum valor\nDigite 3 para desistir da partida\n";
-                    std::cout << "Digite o numero escolhido: ";
-                    if (!(std::cin >> escolha)) 
-                    {
-                        std::cin.clear();
-                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                        throw std::invalid_argument("Entrada inválida, entre com um número inteiro\n");
-                    }
-                    if (escolha < 1 || escolha > 3) 
-                    {
-                        throw std::invalid_argument("Escolha um numero entre 1 e 3\n\n");
-                    }
-                    std::cin.ignore();
-                    break;
-                }
-                catch (std::invalid_argument &e) 
-                {
-                    std::cerr << e.what() << "\n";
-                }
-            }
-            
-            int valorMesaAntigo = valorMesa;   
-            if(escolha == 1)
-            { 
-                (*jogadores[i]).exibir_Info(valorMesa);
-                goto again;
-            }
-            else if(escolha == 2)
-            {
-                if ((*jogadores[i]).apostar(valorMesa))
-                {
-                    small_blind_apostou++;
-                    if(small_blind_apostou == 1)
-                        valorMesa *= 2;
-                    if(valorMesa == valorMesaAntigo) check++;
-                    else 
-                    {
-                        if(rodada > 1)
-                            check = 1;
-                        else
-                            check = 0;
-                    }
-                    passar_Vez();
-                }
-                else
-                {
-                    goto again;
-                }
-                
-            }
-            else if(escolha == 3)
-            {
-                if(!(*jogadores[i]).desistir())
-                {
-                    goto again;
-                }
-                else
-                {
-                    passar_Vez();
-                }
-            } 
-        }
-    }
-
-
     //verificar se o valor da aposta de todos os jogadores são a mesma que a  atual da mão
     for (int i = 0;; i++)
     {
         if((*jogadores[i]).is_True_Vez() && !(*jogadores[i]).is_True_All_In())
         {
-            
+            Jogador* jogador = jogadores[i];
+            Jogador_Bot* bot = dynamic_cast<Jogador_Bot*>(jogador);
+
+            if (bot != nullptr) 
+            {
+                std::cout << "Está na vez do jogador " <<  (*jogadores[i]).get_Nick() << "\n";
+                if ((*jogadores[i]).apostar(valorMesa))
+                {
+                    small_blind_apostou++;
+                    if(small_blind_apostou == 1) valorMesa *= 2;
+                    check++;
+                }
+                passar_Vez();
+            }
+            else 
+            {
+                int JogadoresAtivos = 0;
+                for (size_t i = 0; i < jogadores.size(); i++)
+                {
+                    if((*jogadores[i]).is_True_Ativo())
+                        JogadoresAtivos++;
+                }
+                if(JogadoresAtivos <= 1)
+                {
+                    return true;
+                }
+                if (rodada == 2)
+                {
+                    std::cout << "\n\n\nAs cartas da mesa são: \n";
+                    mostrar_Cartas(3, mesa); 
+                }
+                if (rodada == 3)
+                {
+                    std::cout << "\n\n\nAs cartas da mesa são: \n"; 
+                    mostrar_Cartas(4, mesa);
+                }
+                if (rodada == 4)
+                {
+                    std::cout << "\n\n\nAs cartas da mesa são: \n";
+                    mostrar_Cartas(5, mesa);
+                }
+
+                again:
+                std::cout << "Está na vez do jogador " << (*jogadores[i]).get_Nick() << "\n\n";
+                int escolha;
+                while (true) 
+                {
+                    try 
+                    {
+                        std::cout << "Digite 1 para ver suas informações\nDigite 2 para apostar algum valor\nDigite 3 para desistir da partida\n";
+                        std::cout << "Digite o numero escolhido: ";
+                        if (!(std::cin >> escolha)) 
+                        {
+                            std::cin.clear();
+                            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            throw std::invalid_argument("Entrada inválida, entre com um número inteiro\n");
+                        }
+                        if (escolha < 1 || escolha > 3) 
+                        {
+                            throw std::invalid_argument("Escolha um numero entre 1 e 3\n\n");
+                        }
+                        std::cin.ignore();
+                        break;
+                    }
+                    catch (std::invalid_argument &e) 
+                    {
+                        std::cerr << e.what() << "\n";
+                    }
+                }
+                
+                int valorMesaAntigo = valorMesa;   
+                if(escolha == 1)
+                { 
+                    (*jogadores[i]).exibir_Info(valorMesa);
+                    goto again;
+                }
+                else if(escolha == 2)
+                {
+                    if ((*jogadores[i]).apostar(valorMesa))
+                    {
+                        small_blind_apostou++;
+                        if(small_blind_apostou == 1)
+                            valorMesa *= 2;
+                        if(valorMesa == valorMesaAntigo) check++;
+                        else 
+                        {
+                            if(rodada > 1)
+                                check = 1;
+                            else
+                                check = 0;
+                        }
+                        passar_Vez();
+                    }
+                    else
+                    {
+                        goto again;
+                    }
+                    
+                }
+                else if(escolha == 3)
+                {
+                    if(!(*jogadores[i]).desistir())
+                    {
+                        goto again;
+                    }
+                    else
+                    {
+                        passar_Vez();
+                    }
+                } 
+            }
 
             int jogadoresAtivos = 0;
             for (size_t j = 0; j < jogadores.size(); j++)
@@ -619,7 +607,6 @@ bool Dealer::verificar_Check()
             }
             if(jogadoresAtivos == check)
                 return true;
-                 
         }
         if((*jogadores[i]).is_True_Vez() && (*jogadores[i]).is_True_All_In())
         {
@@ -751,7 +738,7 @@ void Dealer::finalizar_Partida()
             }
         }
         std::cout << "O jogador " << (*jogadores[maior_Valor.second]).get_Nick() << " ganhou a partida com uma pontuação de: " << maior_Valor.first << "\n";
-        std::cout << (*jogadores[maior_Valor.second]).get_Nick()<< "Ganhou o valor acumulado da mesa, avaliado em: " << valor_Acumulado_mesa << "\n\n\n\n\n";
+        std::cout << (*jogadores[maior_Valor.second]).get_Nick()<< " ganhou o valor acumulado da mesa, avaliado em: " << valor_Acumulado_mesa << "\n\n\n\n\n";
         (*jogadores[maior_Valor.second]).aumenta_Saldo(valor_Acumulado_mesa);
 
         partidaFinalizada = false;

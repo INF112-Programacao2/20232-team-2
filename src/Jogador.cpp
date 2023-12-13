@@ -121,7 +121,6 @@ void Jogador::set_Vez(bool _vez)
 void Jogador::set_All_In(bool _all_in)
 {
    all_in = _all_in;
-   if(ativo && all_in) saldo = 0;   //o booleano all in dentro do condicional evita bug do tipo se precisar de chamar o set all in como false alguma vez ele zeraria o saldo
 }
 
 void Jogador::reset_Mao()
