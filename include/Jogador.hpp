@@ -90,6 +90,12 @@ class Jogador
       //settar o valor apostado
       void set_Apostado(int);
 
+      //settar o valor de alguma ficha
+      void set_Fichas(int, int);
+
+      //Mudar o saldo a bel prazer
+      void set_Saldo(int);
+
       //Alterar a posição do Small Blind
       void set_Small_Blind(bool);
 

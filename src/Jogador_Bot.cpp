@@ -20,7 +20,7 @@ bool Jogador_Bot::apostar(int &valorMesa)
    if(aposta == 0) return true;
 
    //Em caso contrário verificaremos se ele ainda pode apostar nessa rodada
-   else if(this->get_Saldo() + this->get_Apostado() > valorMesa)
+   else if(this->get_Saldo() + this->get_Apostado() >= valorMesa)
    {
       int aposta_em_fichas = 0, ficha, quantidadeFicha;
         
@@ -38,8 +38,9 @@ bool Jogador_Bot::apostar(int &valorMesa)
          if(aposta_em_fichas >= aposta)
          {
             aposta_em_fichas -= aposta;
-            this->aumenta_Saldo( -aposta);
+            set_Saldo(get_Saldo()-aposta);
             set_Apostado(this->get_Apostado() + aposta);
+            valorMesa = get_Apostado();
             converte_Sobressalente(aposta_em_fichas);
             return true;
          }
@@ -50,7 +51,11 @@ bool Jogador_Bot::apostar(int &valorMesa)
    else if(!(this->is_True_All_In()))
    {
       this->set_All_In(true);
-      this->aumenta_Saldo(0);
+      set_Saldo(0);
+      for (size_t i = 0; i < get_Fichas().size(); i++)
+      {
+         set_Fichas(i,0);
+      }
       this->set_Apostado(get_Apostado() + aposta);
       return true;
    }
