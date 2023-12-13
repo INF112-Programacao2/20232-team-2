@@ -17,9 +17,10 @@ class Dealer
 private:
     std::vector<Carta> baralho; 
     std::vector<Carta> mesa;
-    std::vector<Jogador> jogadores;
+    std::vector<Jogador*> jogadores;
     int rodada;
     int quantidadeJogadores;
+    int quantidade_bots;
     int valorMesa;
     int primeiro_Jogador;
     int primeira_Aposta;
