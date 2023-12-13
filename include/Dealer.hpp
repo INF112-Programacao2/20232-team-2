@@ -42,7 +42,7 @@ public:
     std::vector<Carta> get_mesa();
 
     //Retorna os jogadores
-    std::vector<Jogador> get_jogadores();
+    std::vector<Jogador*> get_jogadores();
 
     //get do valor atual da aposta
     int get_Valor_Mesa();

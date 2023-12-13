@@ -1,7 +1,7 @@
 #include <vector>
 #include <algorithm>
-#include "Mao.hpp"
-#include "Carta.hpp"
+#include "../include/Mao.hpp"
+#include "../include/Carta.hpp"
 
 Mao::Mao() {}
 
