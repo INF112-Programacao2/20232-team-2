@@ -312,15 +312,15 @@ void Dealer::criar_Sala()
             i--;
             continue;
         }
-        Jogador temporario(nick);
-        jogadores.push_back(&temporario);
+        Jogador* temporario = new Jogador(nick);
+        jogadores.push_back(temporario);
     }
 
-    for (int i = 0; i < quantidade_bots; i++)
+    for (int i = 1; i <= quantidade_bots; i++)
     {
-        std::string nick= "bot " + std::to_string(i);
-        Jogador_Bot temporario(nick);
-        jogadores.push_back(&temporario);
+        std::string nick = "bot " + std::to_string(i);
+        Jogador* temporario = new Jogador_Bot(nick);
+        jogadores.push_back(temporario);
     }
 
     srand(time(NULL));
@@ -377,8 +377,6 @@ void Dealer::criar_Mesa()
     }
 }
 
-
-
 #include <random>
 
 #include <algorithm>
@@ -392,7 +390,7 @@ void Dealer::embaralhar_Cartas()
 void Dealer::dar_Cartas()
 {
     //Distribuir duas cartas para cada jogador
-    for (int i = 0; i < quantidadeJogadores; i++)
+    for (int i = 0; i < jogadores.size(); i++)
     {
         (*jogadores[i]).set_Ativo(true);
         (*jogadores[i]).set_All_In(false);
@@ -401,11 +399,12 @@ void Dealer::dar_Cartas()
         {
             (*jogadores[i]).receber_Carta(baralho.back());
             baralho.pop_back();
+            std::cout <<"passei aqui\n\n";
         }
     }
 
     //Mostrar UMA única vez as cartas de cada jogador e pede que eles anotem, pois serão apagadas 
-    for (size_t i = 0; i < jogadores.size(); i++)
+    for (size_t i = 0; i < quantidadeJogadores; i++)
     {
         std::cout << "\nA seguir, irei mostrar as cartas do jogador " << (*jogadores[i]).get_Nick() << "\n\n";
         std::cout << "ATENÇÂO: essas cartas serão mostras apenas uma vez, por favor, anote-as!!!\n";
@@ -489,10 +488,23 @@ void Dealer::passar_Vez()
 
 bool Dealer::verificar_Check()
 {
-    //verificar se o valor da aposta de todos os jogadores são a mesma que a  atual da mão
-    for (int i = 0;; i++)
+    for (size_t i = 0; i < quantidadeJogadores; i++) 
     {
-        if((*jogadores[i]).is_True_Vez() && !(*jogadores[i]).is_True_All_In())
+        Jogador* jogador = jogadores[i];
+        Jogador_Bot* bot = dynamic_cast<Jogador_Bot*>(jogador);
+
+        if (bot != nullptr) 
+        {
+            std::cout << "Está na vez do jogador " <<  (*jogadores[i]).get_Nick() << ;
+            if ((*jogadores[i]).apostar(valorMesa))
+            {
+                small_blind_apostou++;
+                if(small_blind_apostou == 1) valorMesa *= 2;
+                check++;
+            }
+            passar_Vez();
+        }
+        else 
         {
             int JogadoresAtivos = 0;
             for (size_t i = 0; i < jogadores.size(); i++)
@@ -507,7 +519,7 @@ bool Dealer::verificar_Check()
             if (rodada == 2)
             {
                 std::cout << "\n\n\nAs cartas da mesa são: \n";
-                mostrar_Cartas(3, mesa);
+                mostrar_Cartas(3, mesa); 
             }
             if (rodada == 3)
             {
@@ -588,6 +600,16 @@ bool Dealer::verificar_Check()
                     passar_Vez();
                 }
             } 
+        }
+    }
+
+
+    //verificar se o valor da aposta de todos os jogadores são a mesma que a  atual da mão
+    for (int i = 0;; i++)
+    {
+        if((*jogadores[i]).is_True_Vez() && !(*jogadores[i]).is_True_All_In())
+        {
+            
 
             int jogadoresAtivos = 0;
             for (size_t j = 0; j < jogadores.size(); j++)
