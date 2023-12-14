@@ -13,7 +13,6 @@ class Jogador_Bot : public Jogador
         Jogador_Bot(std::string);
         ~Jogador_Bot();
         virtual bool apostar(int &valorMesa) override;
-        void funcao_teste() ;
 };
 
 #endif

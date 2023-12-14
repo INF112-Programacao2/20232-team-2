@@ -8,10 +8,6 @@ Jogador_Bot::~Jogador_Bot()
 {
 }
 
-void Jogador_Bot::funcao_teste()
-{
-
-}
 bool Jogador_Bot::apostar(int &valorMesa) 
 {
    int aposta = valorMesa - this->get_Apostado();
