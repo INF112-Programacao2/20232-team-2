@@ -8,7 +8,6 @@
 #include <algorithm>
 #include "Carta.hpp"
 #include "Jogador.hpp"
-#include "Usuario.hpp"
 
 
 
