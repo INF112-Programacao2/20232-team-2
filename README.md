@@ -2,7 +2,7 @@
 20232-team-2
 ## Colaboradores
 ### Anderson Gabriel Souza Rosario
-### Hygor Souza
+### Hygor de Oliveira Souza
 # Resumo das Regras do Poker
 
 ### O poker é um jogo de cartas amplamente praticado em diversas variações. A seguir, apresentamos um resumo das regras básicas do poker, que podem ser adaptadas conforme a variante específica do jogo:
