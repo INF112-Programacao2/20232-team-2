@@ -8,6 +8,9 @@ class Mao
     private:
         // Armazena as cartas da mão
         std::vector<Carta> cartas; 
+
+        // Variável que indica o valor da mão do jogador
+        int valor_Da_Mao;
         
         // Função compare para organizar o vetor de acordo com os valores
         static bool compare_Valor_Cartas(Carta &a, Carta &b);
@@ -15,11 +18,6 @@ class Mao
         // Função compare para organizar o vetor de acordo com os naipes
         static bool compare_Naipe(Carta &carta1, Carta &carta2);
 
-        // Verifica se a mão é uma sequência (três ou mais cartas em sequência)
-        bool is_Sequencia(int inicio, int n, std::string tipo);
-
-        // Variável que indica o valor da mão do jogador
-        int valor_Da_Mao;
     public:
         // Construtor
         Mao();
