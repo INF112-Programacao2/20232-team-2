@@ -9,8 +9,6 @@
 #include "Carta.hpp"
 #include "Jogador.hpp"
 
-
-
 class Dealer
 {
 private:
@@ -104,6 +102,4 @@ public:
     void finalizar_Partida();
 
 };
-
 #endif
-
