@@ -1,5 +1,60 @@
 # 20232-team-2
 20232-team-2
+## Colaboradores
+### Anderson Gabriel Souza Rosario
+### Hygor Souza
+# Resumo das Regras do Poker
+
+### O poker é um jogo de cartas amplamente praticado em diversas variações. A seguir, apresentamos um resumo das regras básicas do poker, que podem ser adaptadas conforme a variante específica do jogo:
+
+## Objetivo do Jogo:
+
+O objetivo principal do poker é ganhar fichas ou dinheiro, que são apostados pelos jogadores ao longo das rodadas.
+
+### Ranking de Mãos:
+
+As mãos de poker são classificadas de acordo com a combinação de cartas que um jogador possui. Sendo elas:
+1)Royal Flush = 100 pontos.
+2)Straight Flush = 90 pontos.
+3)Quadra = 80 pontos.
+4)Full House = 70 pontos.
+5)Flush = 60 pontos.
+6)Straight = 50 pontos.
+7)Trinca = 40 Pontos.
+8)Dois Pares = 30 pontos.
+9)Um Par = 20 Pontos.
+10)Nenhum dos anteriores = {A pontuação será dada de acordo com a maior carta na mão do jogador, com seus valores dados entre 2 e 14, 2 equivale a própria carta 2, 14 equivalente ao Ás}
+
+
+## Rodadas de Apostas:
+
+O jogo consiste em rodadas de apostas, onde os jogadores têm a oportunidade de apostar, aumentar, igualar ou desistir.
+
+## Apostas e Fichas:
+
+Cada jogador receberá 1000 unidades em fichas no início de cada jogo e as apostará durante as rodadas.
+As apostas podem ser forçadas (small e big blind) ou voluntárias (apostas normais).
+Blinds e Antes:
+
+Alguns jogos de poker começam com apostas forçadas chamadas "blinds" e/ou "antes" para iniciar o pote.
+
+## Cartas Comunitárias:
+
+Composta por cinco cartas. A partir da da segundada rodada elas começam a serem mostradas respectivamente na ordem três, uma e uma totalizando as cinco cartas.
+Desempate:
+
+## Mãos Iniciais e Combinações:
+
+Conhecimento das mãos iniciais fortes e estratégias de combinação de cartas é crucial para o sucesso no poker.
+Desistência (Fold):
+
+### Os jogadores podem desistir de uma mão a qualquer momento, abrindo mão das fichas apostadas até o momento.
+Showdown:
+
+Após a última rodada de apostas, se mais de um jogador permanecer, ocorre o showdown, revelando as cartas e determinando o vencedor.
+
+# Informaçções sobre o código
+
 # Documentação da Classe Carta em C++
 ## Resumo
 #### A classe Carta representa uma carta de baralho para um jogo de Poker. Abaixo está um resumo dos seus conteúdos:
